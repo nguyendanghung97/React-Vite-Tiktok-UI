@@ -1,0 +1,8 @@
+export { default as Home } from './home';
+export { default as Following } from './following';
+export { default as Profile } from './profile';
+export { default as Search } from './search';
+export { default as Upload } from './upload';
+export { default as Explore } from './explore';
+export { default as Friends } from './friends';
+export { default as LIVE } from './live';

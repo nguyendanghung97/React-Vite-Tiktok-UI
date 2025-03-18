@@ -1,0 +1,231 @@
+{
+    "layouts": {
+        "header": {
+            "Placeholder": "Search"
+        },
+        "sidebar": {
+            "navbar": {
+                "For You": "For You",
+                "Explore": "Explore",
+                "Following": "Following",
+                "Friends": "Friends",
+                "LIVE": "LIVE",
+                "Profile": "Profile"
+            },
+            "suggestedAccounts": {
+                "Title": "Suggested Accounts",
+                "changeAmount": {
+                    "See more": "See more",
+                    "See less": "See less"
+                }
+            }
+        },
+        "footer": {
+            "Effect House": "Create TikTok effects, get a reward",
+            "Company": "Company",
+            "Program": "Program",
+            "Terms & Policies": "Terms & Policies",
+            "About": "About",
+            "Newsroom": "Newsroom",
+            "Contact": "Contact",
+            "Careers": "Careers",
+            "TikTok for Good": "TikTok for Good",
+            "Advertise": "Advertise",
+            "TikTok LIVE Creator Networks": "TikTok LIVE Creator Networks",
+            "Developers": "Developers",
+            "Transparency": "Transparency",
+            "TikTok Rewards": "TikTok Rewards",
+            "TikTok Embeds": "TikTok Embeds",
+            "Help": "Help",
+            "Safety": "Safety",
+            "Terms": "Terms",
+            "Privacy Policy": "Privacy Policy",
+            "Accessibility": "Accessibility",
+            "Privacy Center": "Privacy Center",
+            "Creator Academy": "Creator Academy",
+            "Community Guidelines": "Community Guidelines"
+        }
+    },
+    "components": {
+        "modal": {
+            "share": {
+                "Title": "Share to",
+                "Repost": "Repost",
+                "Embed": "Embed",
+                "Send to friends": "Send to friends",
+                "Facebook": "Facebook",
+                "Copy link": "Copy link"
+            },
+            "forms": {
+                "nameCollection": {
+                    "Title": "New collection",
+                    "Name": "Name",
+                    "Placeholder": "Enter collection name",
+                    "Validate": "Character limit exceeded",
+                    "Make public": "Make public",
+                    "Desc": "Collections made public will be shown on your profile and can be shared with friends."
+                },
+                "addVideos": {
+                    "Title": "Select videos",
+                    "empty": {
+                        "Title": "No favorite videos to add",
+                        "Desc": "All your favorite videos are already in collections"
+                    }
+                }
+            },
+            "confirm": {
+                "Desc": "Your videos will still be saved in Favorites",
+                "delete": {
+                    "Title": "Delete {{nameCollection}}"
+                },
+                "remove": {
+                    "Title": "Remove {{length}} video from {{nameCollection}}"
+                }
+            }
+        },
+        "button": {
+            "Upload": "Upload",
+            "Delete": "Delete",
+            "Select All": "Select All",
+            "Remove": "Remove",
+            "Cancel": "Cancel",
+            "Manage videos": "Manage videos",
+            "Close": "Close",
+            "Done": "Done",
+            "Add Videos": "Add Videos",
+            "Next": "Next",
+            "Save": "Save",
+            "Create": "Create new collection",
+            "Reset": "Reset Collections",
+            "Edit profile": "Edit profile",
+            "Promote post": "Promote post",
+            "Message": "Message",
+            "Following": "Following"
+        },
+        "tabs": {
+            "Videos": "Videos",
+            "Reposts": "Reposts",
+            "Favorites": "Favorites",
+            "Liked": "Liked",
+            "Latest": "Latest",
+            "Popular": "Popular",
+            "Oldest": "Oldest",
+            "Posts": "Posts",
+            "Collections": "Collections"
+        },
+        "tooltip": {
+            "Messages": "Messages",
+            "Inbox": "Inbox",
+            "Floating Player": "Floating Player",
+            "Unfollow": "Unfollow"
+        },
+        "popper": {
+            "search-result": {
+                "Accounts": "Accounts"
+            },
+            "menu": {
+                "menuUser": {
+                    "View profile": "View profile",
+                    "Get coins": "Get coins",
+                    "Setting": "Setting",
+                    "Log out": "Log out",
+                    "Creator tools": "Creator tools",
+                    "View Analytics": "View Analytics",
+                    "LIVE Studio": "LIVE Studio",
+                    "LIVE Creator Hub": "LIVE Creator Hub",
+                    "Language": "Language",
+                    "Language Active": "English",
+                    "English": "English",
+                    "Tiếng Việt": "Tiếng Việt",
+                    "Feedback anh help": "Feedback anh help",
+                    "Mode": "Mode",
+                    "User device theme": "User device theme",
+                    "Dark mode": "Dark mode",
+                    "Light mode": "Light mode"
+                },
+                "menuShare": {
+                    "Repost": "Repost",
+                    "Embed": "Embed",
+                    "Send to friends": "Send to friends",
+                    "Facebook": "Facebook",
+                    "Copy link": "Copy link"
+                },
+                "collectionActions": {
+                    "Make public": "Make public",
+                    "Change name": "Change name",
+                    "Delete collection": "Delete collection"
+                },
+                "report": {
+                    "Report": "Report",
+                    "Mark as irrelevant": "Mark as irrelevant"
+                }
+            },
+            "previewAccount": {
+                "Likes": "Likes",
+                "Followers": "Followers"
+            }
+        },
+        "videoControls": {
+            "Music": "Music",
+            "PiP": {
+                "Title": "Floating Player turned on",
+                "Turn Off": "Turn Off"
+            }
+        },
+        "article": {
+            "contentArticle": {
+                "collapse": {
+                    "less": "less",
+                    "more": "more"
+                }
+            }
+        }
+    },
+    "pages": {
+        "profile": {
+            "Following": "Following",
+            "Followers": "Followers",
+            "Likes": "Likes",
+            "videos": {
+                "empty": {
+                    "Title": "Upload your first video",
+                    "Desc": "Your videos will appear here."
+                }
+            },
+            "favorites": {
+                "posts": {
+                    "empty": {
+                        "Title": "No Favorites Found",
+                        "Desc": "You haven’t added any favorites yet."
+                    }
+                },
+                "collections": {
+                    "empty": {
+                        "Title": "Your collections",
+                        "Desc": "Create a new collection with your favorite videos. Your collections appear here."
+                    }
+                }
+            },
+            "reposts": {
+                "empty": {
+                    "Title": "No reposts to show",
+                    "Desc": "There are no reposts in your feed yet."
+                }
+            },
+            "liked": {
+                "empty": {
+                    "Title": "No liked videos found",
+                    "Desc": "You haven't liked any videos yet."
+                }
+            }
+        },
+        "myCollection": {
+            "Videos": "Videos",
+            "Created by": "Created by",
+            "empty": {
+                "Title": "No videos in this collection",
+                "Desc": "Videos you add from Favorites will appear here"
+            }
+        }
+    }
+}

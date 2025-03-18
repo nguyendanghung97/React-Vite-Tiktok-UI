@@ -1,0 +1,122 @@
+// reset CSS
+@import 'normalize.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    // --font-family: 'TikTokFont', sans-serif;
+    // --primary-color: #fe2c55;
+    // --bg-color: 255, 255, 255;
+    // --text-color: 255, 255, 255;
+}
+
+// [data-theme='dark'] {
+//     @apply text-textColor/90 bg-bgColor;
+// }
+
+// [data-theme='light'] {
+//     @apply text-textColor bg-bgColor;
+// }
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    @apply font-tiktok;
+
+    div:has(> input) {
+        @apply bg-black/5 dark:bg-white/10;
+    }
+
+    input::placeholder {
+        @apply text-light-text dark:text-dark-text !opacity-75;
+    }
+
+    strong {
+        @apply font-bold;
+    }
+
+    small {
+        @apply font-normal !opacity-75;
+    }
+}
+
+// custom Tooltip
+.tippy-box {
+    @apply text-base leading-5 font-semibold rounded-lg bg-colorTooltip;
+
+    .tippy-arrow:before {
+        @apply text-colorTooltip -top-2;
+    }
+
+    .tippy-content {
+        @apply p-2;
+    }
+}
+
+// Custom scroll
+html *::-webkit-scrollbar {
+    // border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    @apply rounded bg-light-text/5 dark:bg-dark-text/5;
+}
+
+html *::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+// Fonts embeded
+@layer base {
+    @font-face {
+        font-family: 'TikTokDisplayFont';
+        src: url('src/assets/fonts/TikTokDisplayFont-Regular.woff2');
+        font-weight: 400;
+    }
+}
+
+@layer base {
+    @font-face {
+        font-family: 'TikTokDisplayFont';
+        src: url('src/assets/fonts/TikTokDisplayFont-Bold.woff2');
+        font-weight: 700;
+    }
+}
+
+@layer base {
+    @font-face {
+        font-family: 'TikTokDisplayFont';
+        src: url('src/assets/fonts/TikTokDisplayFont-Semibold.woff2');
+        font-weight: 600;
+    }
+}
+
+@layer base {
+    @font-face {
+        font-family: 'TikTokFont';
+        src: url('src/assets/fonts/TikTokFont-Bold.woff2');
+        font-weight: 700;
+    }
+}
+
+@layer base {
+    @font-face {
+        font-family: 'TikTokFont';
+        src: url('src/assets/fonts/TikTokFont-Regular.woff2');
+        font-weight: 500400;
+    }
+}
+
+@layer base {
+    @font-face {
+        font-family: 'TikTokFont';
+        src: url('src/assets/fonts//TikTokFont-Semibold.woff2');
+        font-weight: 600;
+    }
+}

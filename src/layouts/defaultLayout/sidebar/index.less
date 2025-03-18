@@ -1,0 +1,15 @@
+.scrollbar-aside::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollbar-aside::-webkit-scrollbar-thumb {
+    @apply invisible transition-all ease-in duration-1000;
+}
+
+.scrollbar-aside:hover::-webkit-scrollbar-thumb {
+    @apply visible;
+}
+
+.scrollbar-aside::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}

@@ -1,0 +1,231 @@
+{
+    "layouts": {
+        "header": {
+            "Placeholder": "Tìm kiếm"
+        },
+        "sidebar": {
+            "navbar": {
+                "For You": "Dành cho bạn",
+                "Explore": "Khám phá",
+                "Following": "Đang Follow",
+                "Friends": "Bạn bè",
+                "LIVE": "LIVE",
+                "Profile": "Hồ sơ"
+            },
+            "suggestedAccounts": {
+                "Title": "Các tài khoản Đã follow",
+                "changeAmount": {
+                    "See more": "Xem thêm",
+                    "See less": "Ẩn bớt"
+                }
+            }
+        },
+        "footer": {
+            "Effect House": "Tạo hiệu ứng TikTok, nhận phần thưởng",
+            "Company": "Công ty",
+            "Program": "Chương trình",
+            "Terms & Policies": "Điều khoản và chính sách",
+            "About": "Giới thiệu",
+            "Newsroom": "Bảng tin",
+            "Contact": "Liên hệ",
+            "Careers": "Sự nghiệp",
+            "TikTok for Good": "TikTok for Good",
+            "Advertise": "Quảng cáo",
+            "TikTok LIVE Creator Networks": "TikTok LIVE Creator Networks",
+            "Developers": "Developers",
+            "Transparency": "Minh bạch",
+            "TikTok Rewards": "Phần thưởng trên TikTok",
+            "TikTok Embeds": "TikTok Embeds",
+            "Help": "Trợ giúp",
+            "Safety": "An toàn",
+            "Terms": "Điều khoản",
+            "Privacy Policy": "Chính sách Quyền riêng tư",
+            "Accessibility": "Accessibility",
+            "Privacy Center": "Trung tâm quyền riêng tư",
+            "Creator Academy": "Creator Academy",
+            "Community Guidelines": "Hướng dẫn Cộng đồng"
+        }
+    },
+    "components": {
+        "modal": {
+            "share": {
+                "Title": "Chia sẻ với",
+                "Repost": "Đăng lại",
+                "Embed": "Nhúng",
+                "Send to friends": "Gửi đến bạn bè",
+                "Facebook": "Facebook",
+                "Copy link": "Sao chép link"
+            },
+            "forms": {
+                "nameCollection": {
+                    "Title": "Bộ sưu tập mới",
+                    "Name": "Tên",
+                    "Placeholder": "Nhập tên bộ sưu tập",
+                    "Validate": "Đã vượt quá giới hạn ký tự",
+                    "Make public": "Đặt ở chế độ công khai",
+                    "Desc": "Những bộ sưu tập ở chế độ công khai sẽ hiển thị trên hồ sơ của bạn và có thể được chia sẻ với bạn bè."
+                },
+                "addVideos": {
+                    "Title": "Chọn video",
+                    "empty": {
+                        "Title": "Không có video yêu thích để thêm vào",
+                        "Desc": "Toàn bộ video yêu thích của bạn hiện đã có trong bộ sưu tập"
+                    }
+                }
+            },
+            "confirm": {
+                "Desc": "Video của bạn sẽ vẫn được lưu trong mục Yêu thích",
+                "delete": {
+                    "Title": "Xóa {{nameCollection}}"
+                },
+                "remove": {
+                    "Title": "Xóa {{length}} video khỏi {{nameCollection}}"
+                }
+            }
+        },
+        "button": {
+            "Upload": "Tải lên",
+            "Delete": "Xóa",
+            "Select All": "Chọn tất cả",
+            "Remove": "Xóa",
+            "Cancel": "Hủy",
+            "Manage videos": "Quản lý video",
+            "Close": "Đóng",
+            "Done": "Xong",
+            "Add Videos": "Thêm video",
+            "Next": "Tiếp",
+            "Save": "Lưu",
+            "Create": "Tạo bộ sưu tập mới",
+            "Reset": "Đặt lại bộ sưu tập",
+            "Edit profile": "Sửa hồ sơ",
+            "Promote post": "Quảng bá bài đăng",
+            "Message": "Tin nhắn",
+            "Following": "Đang Follow"
+        },
+        "tabs": {
+            "Videos": "Video",
+            "Reposts": "Bài đăng lại",
+            "Favorites": "Yêu thích",
+            "Liked": "Đã thích",
+            "Latest": "Mới nhất",
+            "Popular": "Thịnh hành",
+            "Oldest": "Cũ nhất",
+            "Posts": "Bài đăng",
+            "Collections": "Bộ sưu tập"
+        },
+        "tooltip": {
+            "Messages": "Tin nhắn",
+            "Inbox": "Hộp thư",
+            "Floating Player": "Trình phát nổi",
+            "Unfollow": "Bỏ Follow"
+        },
+        "popper": {
+            "search-result": {
+                "Accounts": "Tài khoản"
+            },
+            "menu": {
+                "menuUser": {
+                    "View profile": "Xem hồ sơ",
+                    "Get coins": "Nhận Xu",
+                    "Setting": "Cài đặt",
+                    "Log out": "Đăng xuất",
+                    "Creator tools": "Công cụ dành cho nhà sáng tạo",
+                    "View Analytics": "Xem phân tích",
+                    "LIVE Studio": "LIVE Studio",
+                    "LIVE Creator Hub": "Trung tâm nhà sáng tạo LIVE",
+                    "Language": "Ngôn ngữ",
+                    "Language Active": "Tiếng Việt",
+                    "English": "English",
+                    "Tiếng Việt": "Tiếng Việt",
+                    "Feedback anh help": "Phản hồi và trợ giúp",
+                    "Mode": "Chế độ",
+                    "User device theme": "Sử dụng chủ đề của thiết bị",
+                    "Dark mode": "Chế độ tối",
+                    "Light mode": "Chế độ sáng"
+                },
+                "menuShare": {
+                    "Repost": "Đăng lại",
+                    "Embed": "Nhúng",
+                    "Send to friends": "Gửi đến bạn bè",
+                    "Facebook": "Facebook",
+                    "Copy link": "Sao chép link"
+                },
+                "collectionActions": {
+                    "Make public": "Đặt ở chế độ công khai",
+                    "Change name": "Đổi tên",
+                    "Delete collection": "Xóa bộ sưu tập"
+                },
+                "report": {
+                    "Report": "Báo cáo",
+                    "Mark as irrelevant": "Đánh dấu là không phù hợp"
+                }
+            },
+            "previewAccount": {
+                "Likes": "Thích",
+                "Followers": "Follower"
+            }
+        },
+        "videoControls": {
+            "Music": "Nhạc nền",
+            "PiP": {
+                "Title": "Đã bật Trình phát nổi",
+                "Turn Off": "Tắt"
+            }
+        },
+        "article": {
+            "contentArticle": {
+                "collapse": {
+                    "less": "ẩn bớt",
+                    "more": "thêm"
+                }
+            }
+        }
+    },
+    "pages": {
+        "profile": {
+            "Following": "Đang Follow",
+            "Followers": "Follower",
+            "Likes": "Thích",
+            "videos": {
+                "empty": {
+                    "Title": "Tải video đầu tiên của bạn lên",
+                    "Desc": "Video của bạn sẽ xuất hiện tại đây."
+                }
+            },
+            "favorites": {
+                "posts": {
+                    "empty": {
+                        "Title": "Không tìm thấy mục yêu thích",
+                        "Desc": "Bạn vẫn chưa thêm mục yêu thích nào."
+                    }
+                },
+                "collections": {
+                    "empty": {
+                        "Title": "Bộ sưu tập của bạn",
+                        "Desc": "Tạo bộ sưu tập mới từ các video yêu thích của bạn. Các bộ sưu tập của bạn sẽ xuất hiện tại đây."
+                    }
+                }
+            },
+            "reposts": {
+                "empty": {
+                    "Title": "Không có bài đăng lại nào để hiển thị",
+                    "Desc": "Hiện tại chưa có bài đăng lại nào trên trang tin của bạn."
+                }
+            },
+            "liked": {
+                "empty": {
+                    "Title": "Không tìm thấy video đã thích",
+                    "Desc": "Bạn chưa thích bất kỳ video nào."
+                }
+            }
+        },
+        "myCollection": {
+            "Videos": "Video",
+            "Created by": "Được tạo bởi",
+            "empty": {
+                "Title": "Không có video trong bộ sưu tập này",
+                "Desc": "Những video mà bạn thêm vào từ mục Yêu thích sẽ xuất hiện tại đây"
+            }
+        }
+    }
+}

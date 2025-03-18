@@ -1,0 +1,47 @@
+.hamburger {
+    @apply inline-block text-center transition-all duration-300 ease-in-out cursor-pointer w-6;
+
+    .line {
+        @apply block transition-all duration-300 ease-in-out rounded-sm h-1 ~"my-1.5";
+        @apply bg-light-text !bg-opacity-80 dark:bg-dark-text;
+
+        &:nth-child(1),
+        &:nth-child(2) {
+            @apply w-full;
+        }
+        &:nth-child(3) {
+            @apply w-1/2;
+        }
+    }
+
+    &.is-active {
+        .line {
+            // @apply bg-teal-900;
+
+            &:nth-child(1),
+            &:nth-child(3) {
+                @apply h-1 w-1/2;
+            }
+            &:nth-child(2) {
+                @apply transform translate-x-0 h-1 w-full;
+            }
+            &:nth-child(1) {
+                @apply translate-y-1 ~"translate-x-3.5" rotate-45;
+            }
+            &:nth-child(3) {
+                @apply -translate-y-1 ~"translate-x-3.5" -rotate-45;
+            }
+        }
+    }
+    &:not(.is-active):hover .line {
+        &:nth-child(1) {
+            @apply animate-burger-hover-2;
+        }
+        &:nth-child(2) {
+            @apply animate-burger-hover-4;
+        }
+        &:nth-child(3) {
+            @apply animate-burger-hover-6;
+        }
+    }
+}
