@@ -1,6 +1,7 @@
 import { combineReducers, configureStore, Middleware } from '@reduxjs/toolkit';
 import { collectionsSlice } from './collections';
 import { videoSlice } from './videos';
+import { UsersSlice } from './users';
 
 // export const loadFromLocalStorage = <T>(key: string, defaultValue: T): T => {
 //     try {
@@ -31,9 +32,12 @@ export const saveMiddleware: Middleware = (store) => (next) => (action) => {
     return result;
 };
 
+// console.log('collectionsSlice', collectionsSlice.reducer);
+
 const rootReducer = combineReducers({
     [collectionsSlice.name]: collectionsSlice.reducer,
     [videoSlice.name]: videoSlice.reducer,
+    [UsersSlice.name]: UsersSlice.reducer,
 });
 const store = configureStore({
     reducer: rootReducer,
@@ -42,3 +46,4 @@ const store = configureStore({
 
 export { store };
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

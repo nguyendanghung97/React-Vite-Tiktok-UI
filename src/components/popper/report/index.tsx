@@ -22,6 +22,12 @@ const Report = ({ children }: Type) => {
     const { t } = useTranslation();
     return (
         <PopperWrapper
+            onCreate={(instance) => {
+                // Lấy phần tử popper chính là thẻ chứa ngoài dùng
+                const popperElement = instance.popper;
+                // Thêm class cho phần tử ngoài cùng
+                popperElement.classList.add('!fixed');
+            }}
             // visible
             placement="top-end"
             // placement="right"

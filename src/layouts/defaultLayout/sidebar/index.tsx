@@ -1,40 +1,34 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TooltipTippy from '@tippyjs/react';
 
 import { NavData } from './navbar/navData';
 import NavBar from './navbar';
 import SuggestedAccounts from './suggestedAccounts';
-import * as searchService from '~/services/searchService';
 import Separate from '~/components/separate';
 
 import './index.less';
 import { ArrowDownIcon, ArrowSideBarICon } from '~/assets/images/svgs';
 import classNames from 'classnames';
-import { User } from '~/pages/home/dataHomePage';
 import Footer from '~/layouts/layoutComponets/footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '~/store';
+import { getSideBarUsers } from '~/store/users';
 
 const SideBar = ({ isCollapsed, toggleCollapse, className }: Type) => {
+    const dispatch = useDispatch<AppDispatch>();
     const { t } = useTranslation();
-    const [result, setResult] = useState<User[]>([]);
-    // console.log('result', result);
-    const [param, setParam] = useState('less');
 
-    const fetchApi = async (param: string) => {
-        // setIsLoading(true);
-        try {
-            const result = await searchService.get('hoang', param);
-            setResult(result);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        } finally {
-            // setIsLoading(false);
-        }
-    };
+    const [param, setParam] = useState<'less' | 'more'>('less');
+
+    // Lấy dữ liệu từ Redux store
+    const { sidebarUsers, loadingSidebar } = useSelector((state: RootState) => state.users);
+
+    console.log('sidebarUsers', sidebarUsers);
 
     useEffect(() => {
-        fetchApi(param);
-    }, [param]);
+        dispatch(getSideBarUsers({ query: 'h', type: param }));
+    }, [dispatch, param]);
 
     const handleClick = () => {
         const newParam = param === 'less' ? 'more' : 'less';
@@ -63,10 +57,6 @@ const SideBar = ({ isCollapsed, toggleCollapse, className }: Type) => {
                 <div
                     className={classNames(
                         'pl-2.5 h-full overflow-x-hidden overflow-y-scroll scrollbar-aside relative z-10',
-                        {
-                            // 'pl-2.5': isCollapsed,
-                            // 'pl-1': !isCollapsed,
-                        },
                     )}
                 >
                     <div
@@ -77,7 +67,7 @@ const SideBar = ({ isCollapsed, toggleCollapse, className }: Type) => {
                     >
                         <NavBar isCollapsed={isCollapsed} data={NavData} />
 
-                        <SuggestedAccounts isCollapsed={isCollapsed} data={result}>
+                        <SuggestedAccounts isCollapsed={isCollapsed} data={sidebarUsers}>
                             <button
                                 className={classNames(
                                     'relative z-50 w-full px-2 mt-2 text-sm font-semibold text-primary',
@@ -88,8 +78,9 @@ const SideBar = ({ isCollapsed, toggleCollapse, className }: Type) => {
                                 )}
                                 onClick={handleClick}
                             >
-                                {/* {isLoading ? 'Loading...' : param === 'less' ? 'See more' : 'See less'} */}
-                                {isCollapsed ? (
+                                {loadingSidebar ? (
+                                    '...'
+                                ) : isCollapsed ? (
                                     <TooltipTippy
                                         content={
                                             param === 'less'

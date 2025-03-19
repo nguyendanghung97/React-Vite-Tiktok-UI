@@ -5,7 +5,7 @@ import AccountItem from '~/components/accountItem';
 import Heading from '~/components/heading';
 import Separate from '~/components/separate';
 import TooltipTippy from '@tippyjs/react';
-import { User } from '~/pages/home/dataHomePage';
+import { User } from '~/store/users';
 
 const SuggestedAccounts = forwardRef<HTMLDivElement, Type>(({ data, children, isCollapsed, className }, ref) => {
     const { t } = useTranslation();

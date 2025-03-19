@@ -92,28 +92,6 @@ export const collectionsSlice = createSlice({
     },
 });
 
-// // Lưu trạng thái vào Local Storage
-// const saveToLocalStorage = (state: CollectionsState) => {
-//     try {
-//         const serializedState = JSON.stringify(state.collections);
-//         localStorage.setItem('collections', serializedState);
-//     } catch (e) {
-//         console.error('Error saving state to localStorage', e);
-//     }
-// };
-
-// // Middleware để lưu vào Local Storage
-// export const saveMiddleware: Middleware = (store) => (next) => (action: any) => {
-//     const result = next(action);
-//     // Nếu hành động là resetCollections, xóa dữ liệu trong localStorage
-//     if (action.type === resetCollections.type) {
-//         localStorage.removeItem('collections');
-//     } else {
-//         saveToLocalStorage(store.getState());
-//     }
-//     return result;
-// };
-
 export const {
     addCollection,
     updateCollections,

@@ -5,7 +5,6 @@ import { ClearIcon, ElipsesIcon, LoadingIcon, SearchIcon } from '~/assets/images
 import AccountItem from '~/components/accountItem';
 import Report from '~/components/popper/report';
 import useDebounce from '~/hooks/useDebounce';
-import * as searchService from '~/services/searchService';
 import PopperWrapper from '~/components/popper';
 import ContentPopperWrapper from '~/components/popper/contentWrapper';
 
@@ -13,14 +12,20 @@ import './index.less';
 import { useTranslation } from 'react-i18next';
 import Separate from '~/components/separate';
 import Heading from '~/components/heading';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '~/store';
+import { getSearchUsers, resetSearchUsers } from '~/store/users';
 
 const Search = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const { t } = useTranslation();
 
+    const { searchUsers } = useSelector((state: RootState) => state.users);
+    // console.log('searchUsers', searchUsers);
+
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const searchWrapperRef = useRef<HTMLDivElement>(null);
@@ -28,26 +33,24 @@ const Search = () => {
     const debounceValue = useDebounce(searchValue, 500);
 
     useEffect(() => {
-        setLoading(true);
+        setIsLoading(true);
     }, [searchValue]);
 
     useEffect(() => {
-        // trim(): loại bỏ ký tự khoảng trắng đầu đuôi
-        if (!debounceValue.trim()) {
-            setSearchResult([]);
-            return;
+        if (debounceValue.trim() === '') {
+            dispatch(resetSearchUsers()); // Action để reset danh sách users khi value là chuỗi rỗng ""
+        } else {
+            dispatch(getSearchUsers({ query: debounceValue, type: 'more' }))
+                .unwrap() //Dùng .unwrap() để chờ getSearchUsers hoàn thành.
+                .finally(() => {
+                    setIsLoading(false);
+                }); //.finally() luôn chạy, giúp tránh quên tắt loading khi API lỗi.
         }
-        // setLoading(true);
 
-        const fetchApi = async () => {
-            const result = await searchService.get(debounceValue, 'more');
-            setSearchResult(result);
-
-            setLoading(false);
-        };
-
-        fetchApi();
-    }, [debounceValue]);
+        // return () => {
+        //     dispatch(resetSearchUsers());
+        // };
+    }, [dispatch, debounceValue]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = e.target.value;
@@ -69,26 +72,11 @@ const Search = () => {
             onCreate={(instance) => {
                 // Lấy phần tử popper chính là thẻ chứa ngoài dùng
                 const popperElement = instance.popper;
-                // console.log('popperElement', popperElement);
+                // Thêm class cho phần tử ngoài cùng
                 popperElement.classList.add('w-full');
             }}
-            // popperOptions={{
-            //     modifiers: [
-            //         {
-            //             name: 'customClassModifier', // 👈 Đặt tên tùy ý
-            //             enabled: true,
-            //             // Modifier "addClassToPopper" chạy trong phase "write", tức là ngay sau khi popper được tạo
-            //             phase: 'write',
-            //             fn({ state }) {
-            //                 if (state.elements.popper) {
-            //                     state.elements.popper.classList.add('w-full');
-            //                 }
-            //             },
-            //         },
-            //     ],
-            // }}
             appendTo={searchWrapperRef.current!}
-            visible={showResult && searchResult.length > 0}
+            visible={showResult && searchUsers.length > 0}
             onClickOutside={() => {
                 setShowResult(false);
             }}
@@ -99,7 +87,7 @@ const Search = () => {
                     </Heading>
 
                     <ul className="text-base font-semibold cursor-pointer">
-                        {searchResult.map((accountData, index) => {
+                        {searchUsers.map((accountData, index) => {
                             return (
                                 <li
                                     key={index}
@@ -144,11 +132,11 @@ const Search = () => {
                 {!!searchValue && (
                     <button
                         className={classNames('mx-3 opacity-35', {
-                            'animate-spin': loading,
+                            'animate-spin': isLoading,
                         })}
                         onClick={handleClear}
                     >
-                        {!loading ? <ClearIcon title="Clear Icon" /> : <LoadingIcon title="Loading Icon" />}
+                        {!isLoading ? <ClearIcon title="Clear Icon" /> : <LoadingIcon title="Loading Icon" />}
                     </button>
                 )}
 

@@ -1,5 +1,6 @@
 import videos from '~/assets/videos';
 import images from '~/assets/images';
+import { User } from '~/store/users';
 
 export const articles: IArticle[] = [
     {
@@ -98,31 +99,4 @@ export type IArticle = {
     shares: number;
     tags?: string[];
     hashtags?: string[];
-};
-
-export type User = {
-    avatar: string;
-    bio: string;
-    created_at?: '2022-12-23 00:12:36';
-    facebook_url?: '';
-    first_name?: string;
-    followers_count: number;
-    followings_count?: number;
-    full_name: string;
-    id: number;
-    instagram_url?: string;
-    last_name?: string;
-    likes_count: number;
-    nickname: string;
-    tick?: false;
-    twitter_url?: string;
-    updated_at?: '2024-05-17 21:49:59';
-    website_url?: string;
-    youtube_url?: string;
-    // nickname: string;
-    // name: string;
-    // avatar: string;
-    // followers: number;
-    // likes: number;
-    // bio: string;
 };
