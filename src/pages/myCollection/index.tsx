@@ -57,7 +57,7 @@ const MyCollection = () => {
     const [collectionVideos, setCollectionVideos] = useState<VideoRemove[]>(
         currentCollection!.collectionVideos.map((video) => ({ ...video, isRemoved: false })),
     );
-    console.log('collectionVideos', collectionVideos);
+    // console.log('collectionVideos', collectionVideos);
     const [videosRemoved, setVideosRemoved] = useState<any>([]);
     // console.log('videosRemoved', videosRemoved);
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
@@ -126,26 +126,33 @@ const MyCollection = () => {
     };
 
     return (
-        <div className="px-6 pt-8 pb-9 h-[2000px]">
+        <div
+            className={classNames('px-6 pt-8 pb-9 h-[2000px] flex-1', {
+                'overflow-hidden': !isControlsDeleteVideos,
+            })}
+        >
             <div
                 className={classNames('h-16 mb-5', {
-                    // khi sử dụng sticky các phần tử chứa nó sẽ được có các thuộc tính overflow: hidden | auto | scroll
-                    'sticky top-24 z-50 bg-white': isControlsDeleteVideos,
+                    'sticky z-20 top-24 bg-light-bg dark:bg-dark-bg': isControlsDeleteVideos,
                 })}
             >
                 {!isControlsDeleteVideos ? (
                     <div className="h-full flex items-center justify-between">
-                        <div className="shrink-0 h-full flex items-center gap-x-5">
-                            <Avatar className="h-full aspect-square" />
+                        <div className="h-full flex items-center sm:gap-x-5">
+                            <Avatar className="shrink-0 h-full aspect-square" />
                             <div className="flex flex-col justify-center">
-                                <h1 className="text-2xl font-bold mb-1">{currentCollection?.collectionName}</h1>
-                                <h2 className="flex items-center gap-x-1 text-sm !opacity-50">
-                                    {!currentCollection?.isPublic ? (
+                                <h1 className="text-2xl font-bold mb-1 line-clamp-1 break-all">
+                                    {currentCollection?.collectionName}
+                                </h1>
+                                <h2 className="inline-flex items-center gap-x-1 text-sm !opacity-50 line-clamp-1 break-all">
+                                    {!currentCollection?.isPublic && (
                                         <span className="text-xs">
-                                            <LockIcon />{' '}
+                                            <LockIcon />
                                         </span>
-                                    ) : null}
-                                    {currentCollection?.collectionVideos.length} {t('pages.myCollection.Videos')}
+                                    )}
+                                    <span className="line-clamp-1">
+                                        {currentCollection?.collectionVideos.length} {t('pages.myCollection.Videos')}
+                                    </span>
                                 </h2>
                                 <h2 className="flex items-center gap-x-1">
                                     <span className="text-sm !opacity-50 line-clamp-1 break-all">
@@ -223,7 +230,7 @@ const MyCollection = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="h-full flex items-center justify-between stickyOke">
+                    <div className="h-full flex items-center justify-between">
                         <div className="flex gap-x-4">
                             <Button
                                 primary={videosRemoved.length > 0}

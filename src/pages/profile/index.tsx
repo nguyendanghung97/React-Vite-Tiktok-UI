@@ -37,13 +37,6 @@ const Profile = () => {
 
     const { videosToAddVideosModal, setVideosToAddVideosModal } = useVideosSelection();
 
-    // const collectedVideos = useSelector((state: RootState) => state.videos.collectedVideos);
-    // console.log('collectedVideos', collectedVideos);
-    // const uncollectedVideos = useSelector((state: RootState) => state.videos.uncollectedVideos);
-    // // console.log('uncollectedVideos', uncollectedVideos);
-    // const [videosToAddVideosModal, setVideosToAddVideosModal] = useState<VideoSelect[]>(
-    //     uncollectedVideos.map(({ id, video }) => ({ id, video, isSelected: false })),
-    // );
     const [selectedVideos, setSelectedVideos] = useState<VideoSelect[]>([]);
     // console.log('selectedVideos', selectedVideos);
 
@@ -211,8 +204,7 @@ const Profile = () => {
     return (
         <>
             {isOpenModal && modals[activeModalIndex]}
-            {/* <div className="fixed top-[60px] bottom-0 right-0 left-60"> */}
-            <div className="py-9 pl-6 pr-8">
+            <div className="py-9 pl-6 pr-8 flex-1 overflow-hidden">
                 <InfoAccount account={selectedAccount}></InfoAccount>
 
                 <div className="flex flex-col">
@@ -284,7 +276,7 @@ const Profile = () => {
                             </>
                         ) : activeTab === 'Favorites' ? (
                             <Button
-                                className="hidden lg:flex  px-3 h-8 text-[15px] font-semibold"
+                                className="hidden lg:flex px-3 h-8 text-[15px] font-semibold"
                                 leftIcon={<CreateIcon />}
                                 onClick={() => setIsOpenModal(true)}
                             >
@@ -333,7 +325,7 @@ const Profile = () => {
                                 />
 
                                 <Button
-                                    className="lg:hidden ml-2 px-3 h-8 text-[15px] font-semibold"
+                                    className="lg:hidden ml-3.5 px-3 h-8 text-[15px] font-semibold"
                                     leftIcon={<CreateIcon />}
                                     onClick={() => setIsOpenModal(true)}
                                 >

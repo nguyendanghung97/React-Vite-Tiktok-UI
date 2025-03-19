@@ -50,7 +50,7 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                 <div
                     onClick={toggleCollapse}
                     className={classNames(
-                        'fixed z-10 inset-0 bg-black/50 dark:bg-black/70 transition-all ease-linear duration-300',
+                        'fixed top-16 z-30 inset-0 bg-black/50 dark:bg-black/70 transition-all ease-linear duration-300',
                         {
                             'translate-x-0 opacity-100': !isCollapsed, // Trượt vào vị trí (hiển thị)
                             '-translate-x-full opacity-0': isCollapsed, // Trượt ra khỏi màn hình (ẩn)
@@ -78,7 +78,8 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                         toggleCollapse={toggleCollapse}
                     />
                 </div>
-                <div className="flex-1">{children}</div>
+                {children}
+                {/* <div className="flex-1">{children}</div> */}
             </div>
         </>
     );

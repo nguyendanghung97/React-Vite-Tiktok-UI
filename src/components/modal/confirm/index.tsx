@@ -11,7 +11,7 @@ const ConfirmModal = ({ title, isOpenModal, setIsOpenModal, handleDelete, handle
 
     return (
         <ModalWrapper isOpen={isOpenModal} onClose={handleCloseModal}>
-            <div className="w-96 p-8 flex flex-col gap-y-6">
+            <div className="max-w-96 p-8 flex flex-col gap-y-6">
                 <h2 className="font-tiktokDisplay text-2xl font-bold text-center break-words">{title}</h2>
                 <p className="text-base font-normal !opacity-65 text-center">{t('components.modal.confirm.Desc')}</p>
                 <div className="flex items-center justify-between gap-x-2">
