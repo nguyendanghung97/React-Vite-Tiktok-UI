@@ -6,3 +6,4 @@ export { default as Upload } from './upload';
 export { default as Explore } from './explore';
 export { default as Friends } from './friends';
 export { default as LIVE } from './live';
+export { default as MyCollection } from './myCollection';

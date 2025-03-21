@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CreateIcon, FavoriteDoubleIcon, LockIcon } from '~/assets/images/svgs';
@@ -64,15 +64,15 @@ const Profile = () => {
         }
     }, [state, myCollectionRedirectTab, myCollectionRedirectSubTab]);
 
-    const { username } = useParams<{ username: string }>();
-    // console.log('username', username);
-    useEffect(() => {
-        if (selectedAccount) {
-            document.title = `${selectedAccount.full_name} (${username})`;
-        } else {
-            document.title = `(17)Đăng Hùng (${username})`;
-        }
-    }, [username, selectedAccount]);
+    // const { username } = useParams<{ username: string }>();
+    // // console.log('username', username);
+    // useEffect(() => {
+    //     if (selectedAccount) {
+    //         document.title = `${selectedAccount.full_name} (${username})`;
+    //     } else {
+    //         document.title = `(17)Đăng Hùng (${username})`;
+    //     }
+    // }, [username, selectedAccount]);
 
     const handleCloseModal = () => {
         setVideosToAddVideosModal((prev) => prev.map((video) => ({ ...video, isSelected: false })));
@@ -107,9 +107,7 @@ const Profile = () => {
         };
 
         dispatch(addCollection(newCollection));
-        navigate(`${config.routes.myProfile}/collection/${collectionName}-${collectionId}`, {
-            state: { collectionId },
-        });
+        navigate(`${config.routes.myProfile}/collection/${collectionId}`);
 
         // dispatch(setVideos(videosToAdd));
         dispatch(reduceUncollectedVideos(selectedVideos));
@@ -368,7 +366,7 @@ const Profile = () => {
                                         {collections.map((collection, index) => (
                                             <Link
                                                 key={index}
-                                                to={`${config.routes.myProfile}/collection/${collection.collectionName}-${collection.id}`}
+                                                to={`${config.routes.myProfile}/collection/${collection.id}`}
                                                 state={{
                                                     collectionId: collection.id,
                                                     collectionName: collection.collectionName,

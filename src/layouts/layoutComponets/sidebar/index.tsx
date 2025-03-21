@@ -8,14 +8,14 @@ import SuggestedAccounts from './suggestedAccounts';
 import Separate from '~/components/separate';
 
 import './index.less';
-import { ArrowDownIcon, ArrowSideBarICon } from '~/assets/images/svgs';
+import { ArrowDownIcon } from '~/assets/images/svgs';
 import classNames from 'classnames';
 import Footer from '~/layouts/layoutComponets/footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '~/store';
 import { getSideBarUsers } from '~/store/users';
 
-const SideBar = ({ isCollapsed, toggleCollapse, className }: Type) => {
+const SideBar: React.FC<Type> = ({ isCollapsed, className, ...passProps }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { t } = useTranslation();
 
@@ -36,7 +36,10 @@ const SideBar = ({ isCollapsed, toggleCollapse, className }: Type) => {
     };
 
     return (
-        <div className={classNames(className, 'fixed z-30 h-[calc(100vh-4rem)] bg-light-bg dark:bg-dark-bg')}>
+        <div
+            className={classNames(className, 'fixed z-30 h-[calc(100vh-4rem)] bg-light-bg dark:bg-dark-bg')}
+            {...passProps}
+        >
             {/* <Separate className="lg:hidden absolute z-10 inset-0 border-r" /> */}
             <Separate className="absolute z-10 inset-0 border-r" />
 
@@ -125,7 +128,7 @@ const SideBar = ({ isCollapsed, toggleCollapse, className }: Type) => {
 type Type = {
     className?: string;
     isCollapsed: boolean;
-    toggleCollapse: () => void;
-};
+    toggleCollapse?: () => void;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export default SideBar;

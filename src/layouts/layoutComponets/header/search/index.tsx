@@ -81,7 +81,7 @@ const Search = () => {
                 setShowResult(false);
             }}
             renderContent={
-                <ContentPopperWrapper className="h-[calc(100vh-10rem)] w-full min-h-24 overflow-y-auto">
+                <ContentPopperWrapper className="min-h-24 max-h-[calc(100vh-10rem)] overflow-y-auto">
                     <Heading className="px-3 py-1.5 text-sm font-semibold !text-opacity-50">
                         {t('components.popper.search-result.Accounts')}
                     </Heading>

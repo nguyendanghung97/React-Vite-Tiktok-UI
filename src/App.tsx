@@ -3,13 +3,15 @@ import { Fragment } from 'react/jsx-runtime';
 
 import { publicRoutes } from './routes';
 import DefaultLayout from './layouts';
+import { Suspense } from 'react';
 
 function App() {
     return (
-        <>
-            <Router>
-                <div className="App">
-                    {/* text-textLight bg-bgLight dark:text-textDark dark:text-opacity-90 dark:bg-bgDark */}
+        <Router>
+            <div className="App">
+                {/* text-textLight bg-bgLight dark:text-textDark dark:text-opacity-90 dark:bg-bgDark */}
+                {/* Khi sử dụng React.lazy(), component được tải bất đồng bộ. Nếu không bọc trong <Suspense>, React sẽ không biết phải hiển thị gì trong khi chờ tải file. */}
+                <Suspense fallback={<div>Loading...</div>}>
                     <Routes>
                         {publicRoutes.map((route, index) => {
                             const Page = route.component;
@@ -36,9 +38,9 @@ function App() {
                             );
                         })}
                     </Routes>
-                </div>
-            </Router>
-        </>
+                </Suspense>
+            </div>
+        </Router>
     );
 }
 

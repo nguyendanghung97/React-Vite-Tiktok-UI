@@ -1,9 +1,10 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
-import Header from '~/layouts/layoutComponets';
-import SideBar from './sidebar';
+import classNames from 'classnames';
 
 import './index.less';
-import classNames from 'classnames';
+
+import Header from '~/layouts/layoutComponets';
+import SideBar from '../layoutComponets/sidebar';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
     const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 1024); // Khởi tạo dựa trên window.innerWidth
@@ -31,6 +32,14 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
         };
     }, []);
 
+    useEffect(() => {
+        if (!isDesktop && !isCollapsed) {
+            // location.pathname: setIsCollapsed(true) khi có pathname thay đổi (điều hướng)
+            setIsCollapsed(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.pathname]);
+
     return (
         <>
             <div className="sm:!hidden fixed z-50 top-0 h-16 flex items-center">
@@ -52,8 +61,8 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                     className={classNames(
                         'fixed top-16 z-30 inset-0 bg-black/50 dark:bg-black/70 transition-all ease-linear duration-300',
                         {
-                            'translate-x-0 opacity-100': !isCollapsed, // Trượt vào vị trí (hiển thị)
-                            '-translate-x-full opacity-0': isCollapsed, // Trượt ra khỏi màn hình (ẩn)
+                            'visible opacity-100': !isCollapsed, // Trượt vào vị trí (hiển thị)
+                            'invisible opacity-0': isCollapsed, // Trượt ra khỏi màn hình (ẩn)
                         },
                     )}
                 ></div>
@@ -69,6 +78,7 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                     })}
                 >
                     <SideBar
+                        key={location.pathname}
                         className={classNames('transition-all ease-linear duration-300', {
                             'w-60': !isCollapsed,
                             'w-20': isCollapsed,

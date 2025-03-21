@@ -108,6 +108,6 @@ type Type = React.ButtonHTMLAttributes<HTMLButtonElement> &
         disabled?: boolean;
         menuItem?: boolean;
         // size?: string;
-    };
+    } & React.HTMLAttributes<HTMLElement>;
 
 export default Button;

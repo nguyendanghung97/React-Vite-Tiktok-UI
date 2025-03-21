@@ -56,6 +56,6 @@ type Type = {
     isOpen: boolean;
     onClose: () => void;
     children: React.ReactNode;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export default ModalWrapper;

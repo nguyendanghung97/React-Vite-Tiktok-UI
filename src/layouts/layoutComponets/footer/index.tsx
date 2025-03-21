@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { DataFooter } from './dataFooter';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';

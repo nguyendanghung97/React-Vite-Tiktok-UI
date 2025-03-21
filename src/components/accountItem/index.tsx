@@ -81,6 +81,6 @@ type Type = {
     className?: string;
     accNav?: boolean;
     isCollapsed?: boolean;
-};
+} & React.HTMLAttributes<HTMLElement>;
 
 export default AccountItem;

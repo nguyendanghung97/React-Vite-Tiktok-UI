@@ -1,9 +1,9 @@
-const routes: Record<string, string> = {
+const routes: Record<string, any> = {
     home: '/',
     following: '/following',
     profile: '/profile/:username',
     myProfile: '/profile/@dhung61097',
-    myCollection: '/profile/@dhung61097/collection/:paramsCollection',
+    myCollection: '/profile/@dhung61097/collection/:collectionId',
     upload: '/upload',
     search: '/search',
     explore: '/explore',

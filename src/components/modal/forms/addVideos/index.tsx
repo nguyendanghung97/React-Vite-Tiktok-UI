@@ -23,15 +23,15 @@ const AddVideosModal = ({
 }: Type) => {
     const { t } = useTranslation();
     // Hàm toggle trạng thái isSelected
-    const handleSelect = (index: number) => {
-        setVideosToAddVideosModal!((prevVideos) =>
-            prevVideos.map((video, i) => (i === index ? { ...video, isSelected: !video.isSelected } : video)),
-        );
-    };
-
-    // const handleSelect = (index: number, item: VideoSelect) => {
-    //     toggleVideoProperty(setVideosToAddVideosModal, index, item.isSelected);
+    // const handleSelect = (index: number) => {
+    //     setVideosToAddVideosModal!((prevVideos) =>
+    //         prevVideos.map((video, i) => (i === index ? { ...video, isSelected: !video.isSelected } : video)),
+    //     );
     // };
+
+    const handleSelect = (index: number) => {
+        toggleVideoProperty(setVideosToAddVideosModal, index, 'isSelected');
+    };
 
     // // Hàm để toggle trạng thái select video
     // const handleSelect = (index: number) => {
@@ -47,7 +47,8 @@ const AddVideosModal = ({
                 // w-dvw (Dynamic Viewport Width) giúp modal luôn có chiều rộng bằng với viewport, nhưng không vượt quá max-w-80.
                 // khi thêm w-dvw, modal luôn mở rộng đến max-w nếu màn hình đủ lớn.
 
-                className="h-[calc(100vh-5rem)] max-w-[480px] w-dvw flex flex-col"
+                // h-[calc(100vh-5rem)]
+                className="max-w-[480px] sm:w-dvw aspect-[3/4] flex flex-col"
                 onSubmit={(e) => {
                     e.preventDefault();
                     handleSubmit();

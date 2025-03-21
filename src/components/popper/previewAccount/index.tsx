@@ -6,8 +6,8 @@ import Button from '~/components/button';
 import PopperWrapper from '..';
 import ContentPopperWrapper from '../contentWrapper';
 import { useTranslation } from 'react-i18next';
-import { User } from '~/pages/home/dataHomePage';
 import Separate from '~/components/separate';
+import { User } from '~/store/users';
 
 const PreviewAccount = ({ account, children, follow, setFollow }: Type) => {
     const { t } = useTranslation();

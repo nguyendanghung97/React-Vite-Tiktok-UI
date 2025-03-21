@@ -1,8 +1,18 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import config from '~/configs';
 import { HeaderOnly } from '~/layouts';
-import { Explore, Following, Friends, Home, LIVE, Profile, Search, Upload } from '~/pages';
-import MyCollection from '~/pages/myCollection';
+// import { Explore, Following, Friends, Home, LIVE, Search, Upload, MyCollection, Profile } from '~/pages';
+
+// Code Splitting - chỉ tải khi cần: Tăng tốc độ tải trang
+const Profile = React.lazy(() => import('~/pages/profile'));
+const Home = React.lazy(() => import('~/pages/home'));
+const MyCollection = React.lazy(() => import('~/pages/myCollection'));
+const Following = React.lazy(() => import('~/pages/following'));
+const Search = React.lazy(() => import('~/pages/search'));
+const Upload = React.lazy(() => import('~/pages/upload'));
+const Friends = React.lazy(() => import('~/pages/friends'));
+const LIVE = React.lazy(() => import('~/pages/live'));
+const Explore = React.lazy(() => import('~/pages/explore'));
 
 // Định nghĩa kiểu cho các route
 interface RouteType {

@@ -23,9 +23,9 @@ const Article: React.FC<Type> = ({
 }) => {
     return (
         <article className={classNames(className, 'h-full p-4 flex justify-center overflow-hidden')}>
-            <div className="max-w-custom flex">
+            <div className="flex">
                 <section className="hidden sm:flex w-16 shrink-0"></section>
-                <section className="flex-1 flex items-center">
+                <section className="flex-1 flex items-center h-full aspect-[3/5]">
                     <VideoPlayer
                         className="rounded-2xl"
                         controls={(props: ControlsProps) => (

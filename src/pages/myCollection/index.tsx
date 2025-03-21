@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import './index.less';
@@ -27,17 +27,22 @@ import { useTranslation } from 'react-i18next';
 import EmptyState from '~/components/emptyState';
 import { increaseUncollectedVideos, reduceUncollectedVideos, VideoRemove, VideoSelect } from '~/store/videos';
 import useVideosSelection from '~/hooks/useVideosSelection';
+import { toggleVideoProperty } from '~/utils';
 
 const MyCollection = () => {
-    const { t } = useTranslation();
-
-    // const history = use();
-
+    // const history = useHistory();
     const navigate = useNavigate(); // Sử dụng để điều hướng
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
-    const location = useLocation();
-    const { collectionId } = location.state || {}; // Lấy id từ state của the Link
+    // Dùng useParams() để lấy ra collectionId từ URL
+    // Thay vì dùng state được truyền từ navigate khi reload sẽ bị reset
+    const { collectionId } = useParams();
+
+    // console.log('collectionId', collectionId);
+
+    // const location = useLocation();
+    // const { collectionId } = location.state || {}; // Lấy id từ state của the Link
 
     const collections = useSelector((state: RootState) => state.collections.collections);
     // console.log('collections', collections);
@@ -84,10 +89,13 @@ const MyCollection = () => {
     };
 
     // Hàm toggle trạng thái isSelected
+    // const handleSelect = (index: number) => {
+    //     setCollectionVideos((prevVideos) =>
+    //         prevVideos.map((video, i) => (i === index ? { ...video, isRemoved: !video.isRemoved } : video)),
+    //     );
+    // };
     const handleSelect = (index: number) => {
-        setCollectionVideos((prevVideos) =>
-            prevVideos.map((video, i) => (i === index ? { ...video, isRemoved: !video.isRemoved } : video)),
-        );
+        toggleVideoProperty(setCollectionVideos, index, 'isRemoved');
     };
 
     const handleSelectAll = () => {
@@ -97,18 +105,17 @@ const MyCollection = () => {
     const handleRemove = () => {
         setIsOpenConfirmModal(false);
         handleCancelManageVideos();
-        dispatch(removeVideosFromCollection({ id: collectionId, videos: videosRemoved }));
+        dispatch(removeVideosFromCollection({ id: collectionId!, videos: videosRemoved }));
         dispatch(increaseUncollectedVideos(videosRemoved));
     };
 
     const handleDeleteCollection = () => {
-        dispatch(deleteCollection(collectionId));
+        dispatch(deleteCollection(collectionId!));
         dispatch(increaseUncollectedVideos(collectionVideos));
 
         navigate(config.routes.myProfile, {
             state: { myCollectionRedirectTab: 'Favorites', myCollectionRedirectSubTab: 'Collections' },
         });
-        // history.goBack();
     };
 
     const handleCloseModal = () => {
@@ -120,7 +127,7 @@ const MyCollection = () => {
         handleCloseModal();
 
         if (selectedVideos.length > 0) {
-            dispatch(addVideosToCollection({ id: collectionId, videos: selectedVideos }));
+            dispatch(addVideosToCollection({ id: collectionId!, videos: selectedVideos }));
             dispatch(reduceUncollectedVideos(selectedVideos));
         }
     };
@@ -168,6 +175,19 @@ const MyCollection = () => {
                                     >
                                         Đăng Hùng
                                     </Link>
+                                    {/* <div
+                                        onClick={() => {
+                                            navigate(config.routes.myProfile, {
+                                                state: {
+                                                    myCollectionRedirectTab: 'Favorites',
+                                                    myCollectionRedirectSubTab: 'Posts',
+                                                },
+                                            });
+                                        }}
+                                        className="text-xs font-semibold hover:underline line-clamp-1 break-all"
+                                    >
+                                        Đăng Hùng
+                                    </div> */}
                                 </h2>
                             </div>
                         </div>
@@ -208,7 +228,7 @@ const MyCollection = () => {
                             <Button className="shrink-0 w-10 h-10" leftIcon={<ShareOutlineIcon />}></Button>
 
                             <CollectionActions
-                                collectionId={collectionId}
+                                collectionId={collectionId!}
                                 isOpenMenu={isOpenMenu}
                                 setIsOpenMenu={setIsOpenMenu}
                                 isChecked={isChecked}
