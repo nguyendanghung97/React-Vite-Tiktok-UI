@@ -101,7 +101,7 @@ const Home = () => {
                 enabled: true, // Bật điều khiển bằng bàn phím
             }}
             touchStartPreventDefault={false} // Điều chỉnh để không chặn click
-            className="fixed inset-0 top-16"
+            className="fixed inset-0 top-16 overflow-hidden"
             // className="w-full h-[calc(100vh-4rem)]"
             direction="vertical"
             spaceBetween={0}
