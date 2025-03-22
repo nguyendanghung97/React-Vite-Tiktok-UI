@@ -98,6 +98,7 @@ const VideoPlayer: React.FC<Type> = ({
         <div className={classNames('w-full h-full relative overflow-hidden rounded', className)} {...passProps}>
             <div className="absolute bottom-0 top-3/4 left-0 right-0 bg-gradient-to-b from-light-text/0 to-light-text/50"></div>
             <video
+                playsInline
                 id={index !== undefined ? `video-${index}` : undefined}
                 className="w-full h-full object-cover"
                 ref={videoRef}
