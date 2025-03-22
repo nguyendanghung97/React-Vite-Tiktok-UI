@@ -85,7 +85,7 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                             '-left-20': isCollapsed && !isDesktop,
                         })}
                         isCollapsed={isCollapsed}
-                        toggleCollapse={toggleCollapse}
+                        // toggleCollapse={toggleCollapse}
                     />
                 </div>
                 {children}

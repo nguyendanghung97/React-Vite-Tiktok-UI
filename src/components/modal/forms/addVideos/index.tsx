@@ -176,7 +176,7 @@ const AddVideosModal = ({
                         <span className="w-full justify-center">
                             {context === 'myCollection'
                                 ? videosToAddVideosModal.length > 0
-                                    ? `Add Videos (${selectedVideos.length})`
+                                    ? `${t('components.button.Add Videos')} (${selectedVideos.length})`
                                     : t('components.button.Close')
                                 : selectedVideos.length > 0
                                 ? `${t('components.button.Add Videos')} (${selectedVideos.length})`

@@ -24,7 +24,7 @@ const SideBar: React.FC<Type> = ({ isCollapsed, className, ...passProps }) => {
     // Lấy dữ liệu từ Redux store
     const { sidebarUsers, loadingSidebar } = useSelector((state: RootState) => state.users);
 
-    console.log('sidebarUsers', sidebarUsers);
+    // console.log('sidebarUsers', sidebarUsers);
 
     useEffect(() => {
         dispatch(getSideBarUsers({ query: 'h', type: param }));

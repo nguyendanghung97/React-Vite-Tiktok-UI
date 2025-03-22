@@ -16,9 +16,15 @@ const MenuUser: React.FC<Type> = ({ children, menuData }) => {
 
     const { t, i18n } = useTranslation();
 
-    const [activeLanguage, setActiveLanguage] = useState('en');
+    const [activeLanguage, setActiveLanguage] = useState(() => {
+        // Lấy giá trị từ localStorage nếu có, nếu không thì mặc định là 'Light mode'
+        return localStorage.getItem('language') || 'en';
+    });
     // console.log('activeLanguage', activeLanguage);
-    const [activeMode, setActiveMode] = useState('Light mode');
+    const [activeMode, setActiveMode] = useState(() => {
+        // Lấy giá trị từ localStorage nếu có, nếu không thì mặc định là 'Light mode'
+        return localStorage.getItem('theme') || 'Light mode';
+    });
     // console.log('activeMode', activeMode);
     // const [menuItems, setMenuItems] = useState<IMenu[]>(menuData);
     // console.log('menuItems', menuItems);
@@ -35,6 +41,7 @@ const MenuUser: React.FC<Type> = ({ children, menuData }) => {
         }
         if (item.type === 'Language') {
             i18n.changeLanguage(item.code);
+            localStorage.setItem('language', item.code!);
             setActiveLanguage(item.code!);
         }
 

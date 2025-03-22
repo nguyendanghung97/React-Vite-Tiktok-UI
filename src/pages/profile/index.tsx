@@ -208,7 +208,7 @@ const Profile = () => {
         */}
             {isOpenModal && modals[activeModalIndex]}
             <div className="flex-1 overflow-x-hidden overflow-y-scroll overscroll-contain h-[calc(100vh-4rem)]">
-                <div className="py-9 pl-6 pr-8">
+                <div className="py-9 px-8">
                     <InfoAccount account={selectedAccount}></InfoAccount>
 
                     <div className="flex flex-col">
