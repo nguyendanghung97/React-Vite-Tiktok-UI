@@ -154,14 +154,14 @@ const VideoPlayerControls = ({
     ) : (
         <div
             className={classNames(
-                'absolute z-50 inset-0 flex items-center invisible opacity-0 transition-opacity ease-in duration-300',
+                'absolute z-10 inset-0 flex items-center invisible opacity-0 transition-opacity ease-in duration-300',
                 {
                     '!visible opacity-100': isPiP,
                 },
             )}
         >
             <div className={classNames('absolute inset-0 scale-110 blur-sm')}>
-                <Image className="!rounded-none" src={article.imageCover} alt="Girl" />
+                <Image className="!rounded-none" src={article.video.thumbnail} alt="Girl" />
             </div>
             <div className="w-full relative z-50 flex flex-col items-center">
                 <div className="mb-6 text-4xl text-white/90 flex items-center justify-center">

@@ -87,8 +87,8 @@ const AddVideosModal = ({
                                             className="relative aspect-[3/4] shadow-inner rounded overflow-hidden"
                                             onClick={() => handleSelect(index)}
                                         >
-                                            <VideoPlayer src={video.video} />
-                                            <div className="absolute top-2 right-2 w-5 h-5">
+                                            <VideoPlayer posterVideo={video.thumbnail} src={video.url} />
+                                            <div className="absolute top-2 right-2 w-5 h-5 bg-transparent">
                                                 <input
                                                     checked={video.isSelected}
                                                     type="checkbox"

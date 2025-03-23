@@ -1,5 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import eruda from 'eruda';
 
 import App from './App';
 import GlobalStyles from './utils/init/globalStyles';
@@ -10,6 +11,11 @@ import { store } from './store';
 import '~/i18n/i18n';
 import ToastProvider from './contexts/toast/toastProvider';
 import ThemeProvider from './contexts/theme/ThemeProvider';
+
+// Chỉ bật Eruda(devtools ở mobile) khi chạy trên mobile (tránh ảnh hưởng môi trường production)
+if (process.env.NODE_ENV === 'development' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    eruda.init();
+}
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>

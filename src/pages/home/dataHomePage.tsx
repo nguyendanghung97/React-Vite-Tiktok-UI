@@ -1,6 +1,7 @@
 import videos from '~/assets/videos';
 import images from '~/assets/images';
 import { User } from '~/store/users';
+import { Video } from '~/store/videos';
 
 export const articles: IArticle[] = [
     {
@@ -14,8 +15,11 @@ export const articles: IArticle[] = [
             likes_count: 15.5,
             bio: 'TÍCH CỰC-VUI VẺ-TỬ TẾ Contact for work anh Quỳnh: 0967489998 Booking@vtmgr.me',
         },
-        video: videos.Video1,
-        imageCover: images.ImageCover1,
+        video: {
+            id: 1,
+            url: videos.Video1,
+            thumbnail: images.ImageCover1,
+        },
         title: 'PREVIEW Đi Giữa Trời Rực Rỡ Tập 41.',
         tags: [],
         hashtags: ['skpictures', 'digiuatroirucro'],
@@ -35,8 +39,11 @@ export const articles: IArticle[] = [
             likes_count: 15.5,
             bio: 'TÍCH CỰC-VUI VẺ-TỬ TẾ Contact for work anh Quỳnh: 0967489998 Booking@vtmgr.me',
         },
-        video: videos.Video2,
-        imageCover: images.ImageCover2,
+        video: {
+            id: 2,
+            url: videos.Video2,
+            thumbnail: images.ImageCover2,
+        },
         title: 'Áng mấy kia rong chơi đâu rồi',
         tags: ['Trolykim'],
         hashtags: ['kimoanh', 'trolykim'],
@@ -56,8 +63,11 @@ export const articles: IArticle[] = [
             likes_count: 15.5,
             bio: 'TÍCH CỰC-VUI VẺ-TỬ TẾ Contact for work anh Quỳnh: 0967489998 Booking@vtmgr.me',
         },
-        video: videos.Video3,
-        imageCover: images.ImageCover3,
+        video: {
+            id: 3,
+            url: videos.Video3,
+            thumbnail: images.ImageCover3,
+        },
         title: 'Anh giờ ở nơi đâu??',
         tags: [],
         hashtags: ['FanEnt', 'Nhachaymoingay', 'Nhaccover', 'shayda', 'taisaovay'],
@@ -77,8 +87,11 @@ export const articles: IArticle[] = [
             likes_count: 15.5,
             bio: 'TÍCH CỰC-VUI VẺ-TỬ TẾ Contact for work anh Quỳnh: 0967489998 Booking@vtmgr.me',
         },
-        video: videos.Video4,
-        imageCover: images.ImageCover4,
+        video: {
+            id: 4,
+            url: videos.Video4,
+            thumbnail: images.ImageCover4,
+        },
         title: '',
         likesArticle: 3000,
         comments: 169,
@@ -91,8 +104,8 @@ export type IArticle = {
     id: number;
     title?: string;
     user: User;
-    video: string;
-    imageCover: string;
+    video: Video;
+    // imageCover: string;
     likesArticle: number;
     comments: number;
     favorites: number;

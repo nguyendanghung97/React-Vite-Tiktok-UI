@@ -27,4 +27,8 @@ export default defineConfig({
             },
         },
     },
+    server: {
+        host: '0.0.0.0', // Mở kết nối cho tất cả thiết bị
+        port: 5173, // Chọn cổng bất kỳ
+    },
 });

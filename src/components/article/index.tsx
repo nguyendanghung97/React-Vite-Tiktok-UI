@@ -23,11 +23,11 @@ const Article: React.FC<Type> = ({
 }) => {
     return (
         <article className={classNames(className, 'h-full p-4 flex justify-center overflow-hidden')}>
-            <div className="flex">
+            <div className="flex justify-center items-center">
                 <section className="hidden sm:flex w-16 shrink-0"></section>
-                <section className="flex-1 flex items-center h-full aspect-[3/5]">
+                <section className="flex-1 flex items-center justify-center h-full aspect-[3/5]">
                     <VideoPlayer
-                        className="rounded-2xl"
+                        posterVideo={data.video.thumbnail}
                         controls={(props: ControlsProps) => (
                             <VideoPlayerControls
                                 swiperRef={swiperRef}
@@ -41,7 +41,7 @@ const Article: React.FC<Type> = ({
                         )}
                         index={index}
                         muted={isMuted}
-                        src={data.video}
+                        src={data.video.url}
                     />
                 </section>
                 {/* <div className="w-8 lg:w-12 h-full flex flex-col justify-end">

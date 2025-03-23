@@ -33,8 +33,9 @@ export const profileTabs: ITab[] = [
 ];
 
 export const idAndVideos: Video[] = articles.map((article) => ({
-    id: article.id,
-    video: article.video,
+    id: article.video.id,
+    url: article.video.url,
+    thumbnail: article.video.thumbnail,
 }));
 
 export const favoriteVideos = idAndVideos.slice(0, 3);

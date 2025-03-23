@@ -76,7 +76,7 @@ export const collectionsSlice = createSlice({
             if (collection) {
                 collection.collectionVideos = [
                     ...collection.collectionVideos,
-                    ...action.payload.videos.map(({ id, video }) => ({ id, video })),
+                    ...action.payload.videos.map(({ id, url, thumbnail }) => ({ id, url, thumbnail })),
                 ];
             }
         },

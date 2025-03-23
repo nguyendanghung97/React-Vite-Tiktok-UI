@@ -304,7 +304,8 @@ const MyCollection = () => {
                                     onClick={() => handleSelect(index)}
                                 >
                                     <VideoPlayer
-                                        src={collectionVideo.video}
+                                        posterVideo={collectionVideo.thumbnail}
+                                        src={collectionVideo.url}
                                         onMouseEnter={(e) => e.currentTarget.play()}
                                         onMouseLeave={(e) => {
                                             e.currentTarget.pause();
@@ -312,7 +313,7 @@ const MyCollection = () => {
                                         }}
                                     />
                                     {isControlsDeleteVideos && (
-                                        <div className="absolute top-2 right-2 w-5 h-5">
+                                        <div className="absolute top-2 right-2 w-5 h-5 bg-transparent">
                                             <input
                                                 checked={collectionVideo.isRemoved}
                                                 type="checkbox"

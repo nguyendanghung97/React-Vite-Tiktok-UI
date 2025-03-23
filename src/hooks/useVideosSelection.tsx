@@ -7,11 +7,13 @@ const useVideosSelection = () => {
     const uncollectedVideos = useSelector((state: RootState) => state.videos.uncollectedVideos);
 
     const [videosToAddVideosModal, setVideosToAddVideosModal] = useState<VideoSelect[]>(() =>
-        uncollectedVideos.map(({ id, video }) => ({ id, video, isSelected: false })),
+        uncollectedVideos.map(({ id, url, thumbnail }) => ({ id, url, thumbnail, isSelected: false })),
     );
 
     useEffect(() => {
-        setVideosToAddVideosModal(uncollectedVideos.map(({ id, video }) => ({ id, video, isSelected: false })));
+        setVideosToAddVideosModal(
+            uncollectedVideos.map(({ id, url, thumbnail }) => ({ id, url, thumbnail, isSelected: false })),
+        );
     }, [uncollectedVideos]);
 
     return { videosToAddVideosModal, setVideosToAddVideosModal };

@@ -96,7 +96,7 @@ const Profile = () => {
 
         const collectionId = uuidv4();
         // Lọc chỉ lấy id và video từ selectedVideos
-        const collectionVideos = selectedVideos.map(({ id, video }) => ({ id, video }));
+        const collectionVideos = selectedVideos.map(({ id, url, thumbnail }) => ({ id, url, thumbnail }));
 
         // Logic cho profile
         const newCollection: ICollection = {
@@ -207,7 +207,7 @@ const Profile = () => {
             
         */}
             {isOpenModal && modals[activeModalIndex]}
-            <div className="flex-1 overflow-x-hidden overflow-y-scroll overscroll-contain h-[calc(100vh-4rem)]">
+            <div className="flex-1 overflow-x-hidden overflow-y-scroll h-[calc(100vh-4rem)]">
                 <div className="py-9 px-8">
                     <InfoAccount account={selectedAccount}></InfoAccount>
 
@@ -381,11 +381,18 @@ const Profile = () => {
                                                 )}
                                             >
                                                 <VideoPlayer
+                                                    posterVideo={
+                                                        collection.collectionVideos.length > 0
+                                                            ? collection.collectionVideos[
+                                                                  collection.collectionVideos.length - 1
+                                                              ].thumbnail
+                                                            : ''
+                                                    }
                                                     src={
                                                         collection.collectionVideos.length > 0
                                                             ? collection.collectionVideos[
                                                                   collection.collectionVideos.length - 1
-                                                              ].video
+                                                              ].url
                                                             : ''
                                                     }
                                                 />
@@ -418,7 +425,8 @@ const Profile = () => {
                                     {displayedVideos.map((item, index) => (
                                         <div key={index} className="w-full aspect-[3/4] overflow-hidden relative">
                                             <VideoPlayer
-                                                src={item.video}
+                                                posterVideo={item.thumbnail}
+                                                src={item.url}
                                                 onMouseEnter={(e) => e.currentTarget.play()}
                                                 onMouseLeave={(e) => {
                                                     e.currentTarget.pause();

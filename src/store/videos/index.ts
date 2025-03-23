@@ -1,22 +1,32 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { favoriteVideos } from '~/pages/profile/dataProfilePage';
 
-export interface Video {
+export type Video = {
     id: number;
-    video: string;
-}
+    url: string;
+    thumbnail: string;
+};
 
-export interface VideoToAdd extends Video {
+export type VideoToAdd = {
+    id: number;
+    url: string;
+    thumbnail: string;
     isInCollection: boolean;
-}
+};
 
-export interface VideoSelect extends Video {
+export type VideoSelect = {
+    id: number;
+    url: string;
+    thumbnail: string;
     isSelected: boolean; // Dữ liệu đầu vào
-}
+};
 
-export interface VideoRemove extends Video {
+export type VideoRemove = {
+    id: number;
+    url: string;
+    thumbnail: string;
     isRemoved: boolean; // Dữ liệu đầu vào
-}
+};
 
 interface State {
     uncollectedVideos: VideoToAdd[];
@@ -55,9 +65,10 @@ export const videoSlice = createSlice({
 
             state.collectedVideos = favoriteVideos
                 .filter((item) => [...state.collectedVideos, ...action.payload].some((v) => v.id === item.id))
-                .map(({ id, video }) => ({
+                .map(({ id, url, thumbnail }) => ({
                     id,
-                    video,
+                    url,
+                    thumbnail,
                     isInCollection: true,
                 }));
 
@@ -75,9 +86,10 @@ export const videoSlice = createSlice({
         increaseUncollectedVideos: (state, action: PayloadAction<VideoRemove[]>) => {
             state.uncollectedVideos = favoriteVideos
                 .filter((item) => [...state.uncollectedVideos, ...action.payload].some((v) => v.id === item.id))
-                .map(({ id, video }) => ({
+                .map(({ id, url, thumbnail }) => ({
                     id,
-                    video,
+                    url,
+                    thumbnail,
                     isInCollection: false,
                 }));
 

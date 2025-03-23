@@ -19,7 +19,7 @@ const Image = forwardRef<HTMLDivElement, Type>(
                 )}
             >
                 <img
-                    loading="lazy"
+                    // loading="lazy"
                     src={fallback || src}
                     alt={alt}
                     className="w-full h-full object-cover bg-[#88888880]"

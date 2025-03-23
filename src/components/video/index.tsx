@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 
 const VideoPlayer: React.FC<Type> = ({
+    // posterVideo: mobile không tự động phát video để tối ưu dung lượng phải thêm nó để fix giao diện hiển thị khi video chưa load
+    posterVideo,
     controls,
     src,
     muted,
@@ -13,6 +15,7 @@ const VideoPlayer: React.FC<Type> = ({
 }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const video = videoRef.current;
+
     const [isPlaying, setIsPlaying] = useState(true);
     const [time, setTime] = useState(0);
     const [isPiP, setIsPiP] = useState(false);
@@ -95,12 +98,33 @@ const VideoPlayer: React.FC<Type> = ({
     };
 
     return (
-        <div className={classNames('w-full h-full relative overflow-hidden rounded', className)} {...passProps}>
-            <div className="absolute bottom-0 top-3/4 left-0 right-0 bg-gradient-to-b from-light-text/0 to-light-text/50"></div>
+        <div
+            className={classNames(
+                'relative z-0',
+                'h-full w-full overflow-hidden',
+                {
+                    rounded: !controls,
+                    'rounded-2xl': controls,
+                },
+                className,
+            )}
+            {...passProps}
+        >
+            <div
+                className={classNames(
+                    'absolute bottom-0 top-3/4 left-0 right-0 bg-gradient-to-b from-light-text/0 to-light-text/50',
+                    {
+                        rounded: !controls,
+                        'rounded-2xl': controls,
+                    },
+                )}
+            ></div>
             <video
-                playsInline
+                playsInline // Phát video trong giao diện web thay vì toàn màn hình
+                preload="auto" // Giúp trình duyệt tải trước video
+                poster={posterVideo}
                 id={index !== undefined ? `video-${index}` : undefined}
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
                 ref={videoRef}
                 src={src}
                 // autoPlay={!!controls}
@@ -145,6 +169,7 @@ type Type = {
     controls?: (props: ControlsProps) => React.ReactNode; // Hàm controls trả về JSX
     onMouseEnter?: (e: React.MouseEvent<HTMLVideoElement>) => void;
     onMouseLeave?: (e: React.MouseEvent<HTMLVideoElement>) => void;
+    posterVideo?: string;
 };
 
 export default VideoPlayer;
