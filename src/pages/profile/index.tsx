@@ -400,15 +400,15 @@ const Profile = () => {
                                                     {collection.collectionVideos.length < 1 && <FavoriteDoubleIcon />}
                                                     <div className="text-white flex items-end justify-between absolute left-3.5 right-3.5 bottom-4">
                                                         <div className="flex flex-col">
-                                                            <span className="text-base font-semibold">
+                                                            <span className="text-base font-semibold line-clamp-1 break-all">
                                                                 {collection.collectionName}
                                                             </span>
-                                                            <span className="text-xs">
+                                                            <span className="text-xs line-clamp-1 break-all">
                                                                 {collection.collectionVideos.length} videos
                                                             </span>
                                                         </div>
                                                         {!collection.isPublic && (
-                                                            <span className="text-xl">
+                                                            <span className="shrink-0 text-lg sm:text-xl">
                                                                 <LockIcon />
                                                             </span>
                                                         )}
