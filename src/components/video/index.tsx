@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 
 const VideoPlayer: React.FC<Type> = ({
     // posterVideo: mobile không tự động phát video để tối ưu dung lượng phải thêm nó để fix giao diện hiển thị khi video chưa load
@@ -9,6 +9,8 @@ const VideoPlayer: React.FC<Type> = ({
     muted,
     index,
     className,
+    hoverPlay,
+    thumbnail,
     onMouseEnter,
     onMouseLeave,
     ...passProps
@@ -19,6 +21,7 @@ const VideoPlayer: React.FC<Type> = ({
     const [isPlaying, setIsPlaying] = useState(true);
     const [time, setTime] = useState(0);
     const [isPiP, setIsPiP] = useState(false);
+    const [showPoster, setShowPoster] = useState(true);
 
     useEffect(() => {
         const videoElement = videoRef.current;
@@ -97,6 +100,17 @@ const VideoPlayer: React.FC<Type> = ({
         }
     };
 
+    const handleMouseEnter = (e: MouseEvent<HTMLVideoElement>) => {
+        e.currentTarget.play();
+        setShowPoster(false);
+    };
+
+    const handleMouseLeave = (e: MouseEvent<HTMLVideoElement>) => {
+        e.currentTarget.pause();
+        e.currentTarget.currentTime = 0; // Đặt lại video về đầu khi rời chuột};
+        setShowPoster(true);
+    };
+
     return (
         <div
             className={classNames(
@@ -119,21 +133,28 @@ const VideoPlayer: React.FC<Type> = ({
                     },
                 )}
             ></div>
+
             <video
                 playsInline // Phát video trong giao diện web thay vì toàn màn hình
-                preload="auto" // Giúp trình duyệt tải trước video
+                // preload="auto" // Giúp trình duyệt tải trước video
                 poster={posterVideo}
                 id={index !== undefined ? `video-${index}` : undefined}
-                className="h-full w-full object-cover"
+                className={classNames('h-full w-full object-cover', {
+                    'relative z-10': hoverPlay,
+                })}
                 ref={videoRef}
                 src={src}
                 // autoPlay={!!controls}
                 muted={controls ? muted : true}
                 onTimeUpdate={onTimeUpdate}
                 onEnded={(e) => handleEnded(e)}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
+                onMouseEnter={!hoverPlay ? onMouseEnter : handleMouseEnter}
+                // onMouseEnter={() => (hoverPlay ? handleMouseEnter : onMouseEnter)}
+                onMouseLeave={hoverPlay ? handleMouseLeave : onMouseLeave}
             />
+            {hoverPlay && showPoster && (
+                <img src={thumbnail} alt="Thumbnail" className="absolute inset-0 z-0 w-full h-full object-cover" />
+            )}
             {controls &&
                 controls({
                     isPlaying,
@@ -170,6 +191,8 @@ type Type = {
     onMouseEnter?: (e: React.MouseEvent<HTMLVideoElement>) => void;
     onMouseLeave?: (e: React.MouseEvent<HTMLVideoElement>) => void;
     posterVideo?: string;
+    hoverPlay?: boolean;
+    thumbnail?: string;
 };
 
 export default VideoPlayer;

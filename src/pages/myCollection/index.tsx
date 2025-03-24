@@ -95,7 +95,9 @@ const MyCollection = () => {
     //     );
     // };
     const handleSelect = (index: number) => {
-        toggleVideoProperty(setCollectionVideos, index, 'isRemoved');
+        if (isControlsDeleteVideos) {
+            toggleVideoProperty(setCollectionVideos, index, 'isRemoved');
+        }
     };
 
     const handleSelectAll = () => {
@@ -304,13 +306,9 @@ const MyCollection = () => {
                                     onClick={() => handleSelect(index)}
                                 >
                                     <VideoPlayer
-                                        posterVideo={collectionVideo.thumbnail}
+                                        hoverPlay
                                         src={collectionVideo.url}
-                                        onMouseEnter={(e) => e.currentTarget.play()}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.pause();
-                                            e.currentTarget.currentTime = 0; // Đặt lại video về đầu khi rời chuột
-                                        }}
+                                        thumbnail={collectionVideo.thumbnail}
                                     />
                                     {isControlsDeleteVideos && (
                                         <div className="absolute top-2 right-2 w-5 h-5 bg-transparent">

@@ -25,9 +25,15 @@ const Article: React.FC<Type> = ({
         <article className={classNames(className, 'h-full p-4 flex justify-center overflow-hidden')}>
             <div className="flex justify-center items-center">
                 <section className="hidden sm:flex w-16 shrink-0"></section>
-                <section className="flex-1 flex items-center justify-center h-full aspect-[3/5]">
+                <section
+                    className={classNames(
+                        // w-min: width không thể lớn hơn mức mà aspect-ratio yêu cầu
+                        'h-full w-min aspect-[3/5]',
+                        'flex-1 flex items-center justify-center',
+                    )}
+                >
                     <VideoPlayer
-                        posterVideo={data.video.thumbnail}
+                        // posterVideo={data.video.thumbnail}
                         controls={(props: ControlsProps) => (
                             <VideoPlayerControls
                                 swiperRef={swiperRef}
@@ -44,15 +50,6 @@ const Article: React.FC<Type> = ({
                         src={data.video.url}
                     />
                 </section>
-                {/* <div className="w-8 lg:w-12 h-full flex flex-col justify-end">
-                    <div className="w-full flex flex-col items-center gap-y-7">
-                        <div className="w-full aspect-square bg-gray-300"></div>
-                        <div className="w-full aspect-square bg-gray-300"></div>
-                        <div className="w-full aspect-square bg-gray-300"></div>
-                        <div className="w-full aspect-square bg-gray-300"></div>
-                        <div className="w-full aspect-square bg-gray-300"></div>
-                    </div>
-                </div> */}
                 <section className="hidden w-16 shrink-0 sm:flex justify-end items-end overflow-hidden">
                     <ActionsArticle
                         UrlArticleActive={UrlArticleActive}

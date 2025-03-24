@@ -427,10 +427,13 @@ const Profile = () => {
                                             <VideoPlayer
                                                 posterVideo={item.thumbnail}
                                                 src={item.url}
-                                                onMouseEnter={(e) => e.currentTarget.play()}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.play();
+                                                }}
                                                 onMouseLeave={(e) => {
                                                     e.currentTarget.pause();
-                                                    e.currentTarget.currentTime = 0; // Đặt lại video về đầu khi rời chuột
+                                                    e.currentTarget.currentTime = 0; // Đặt lại video về đầu khi rời chuột};
+                                                    e.currentTarget.load();
                                                 }}
                                             />
                                         </div>
