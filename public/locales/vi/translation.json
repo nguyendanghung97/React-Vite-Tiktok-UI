@@ -47,6 +47,10 @@
         }
     },
     "components": {
+        "toast": {
+            "Copied": "Đã sao chép",
+            "Collection name changed": "Đã đổi tên bộ sưu tập"
+        },
         "modal": {
             "share": {
                 "Title": "Chia sẻ với",

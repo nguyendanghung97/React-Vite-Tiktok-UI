@@ -19,11 +19,6 @@ if (import.meta.env.DEV && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
         .catch(console.error);
 }
 
-// Chỉ bật Eruda(devtools ở mobile) khi chạy trên mobile (tránh ảnh hưởng môi trường production)
-// if (process.env.NODE_ENV === 'development' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-//     eruda.init();
-// }
-
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider store={store}>

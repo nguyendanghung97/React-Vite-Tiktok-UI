@@ -47,6 +47,10 @@
         }
     },
     "components": {
+        "toast": {
+            "Copied": "Copied",
+            "Collection name changed": "Collection name changed"
+        },
         "modal": {
             "share": {
                 "Title": "Share to",

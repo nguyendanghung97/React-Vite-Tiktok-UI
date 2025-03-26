@@ -20,10 +20,10 @@ const ShareModal: React.FC<Type> = ({ isOpen, onClose, currentUrl }) => {
                 component: (
                     <div
                         className={classNames(
-                            'w-1/2 py-2.5 px-2 text-center text-sm text-white rounded-sm bg-slate-700',
+                            'w-1/2 py-2.5 px-2 text-center bg-slate-700 rounded-sm animate-toast-top-entered',
                         )}
                     >
-                        Đã sao chép
+                        {t('components.toast.Copied')}
                     </div>
                 ),
 

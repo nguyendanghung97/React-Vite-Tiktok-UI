@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { TickIcon } from '~/assets/images/svgs';
+import { TickBlueIcon } from '~/assets/images/svgs';
 import Image from '~/components/image';
 
 const AccountItem = ({ isCollapsed, account, className, accNav, ...passProps }: Type) => {
@@ -56,7 +56,7 @@ const AccountItem = ({ isCollapsed, account, className, accNav, ...passProps }: 
                             {account.nickname}
                             {account.tick && (
                                 <span className="ml-1 text-sm">
-                                    <TickIcon />
+                                    <TickBlueIcon />
                                 </span>
                             )}
                         </h4>

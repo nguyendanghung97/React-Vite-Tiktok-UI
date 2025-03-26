@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import PopperWrapper from '~/components/popper';
 import ContentPopperWrapper from '../../contentWrapper';
-import { DeleteIcon, EditTextIcon, LockIcon } from '~/assets/images/svgs';
+import { DeleteIcon, EditTextIcon, LockIcon, TickIcon } from '~/assets/images/svgs';
 import Switch from '~/components/switch';
 import NameCollectionModal from '~/components/modal/forms/nameCollection';
 import ConfirmModal from '~/components/modal/confirm';
@@ -12,6 +12,7 @@ import { toggleCollectionPublic, updateCollectionName } from '~/store/collection
 import MenuItem from '../menuItem';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import useToast from '~/contexts/toast/useToast';
 
 const collectionActionsData = [
     {
@@ -39,6 +40,8 @@ const CollectionActions = ({
 }: Type) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const { openToast } = useToast();
+
     const collections = useSelector((state: RootState) => state.collections.collections);
 
     const currentCollection = collections.find((collection) => collection.id === collectionId);
@@ -56,6 +59,21 @@ const CollectionActions = ({
     const handleSave = () => {
         dispatch(updateCollectionName({ id: collectionId, name: nameCollecton }));
         setIsOpenModal(false);
+
+        openToast(
+            {
+                position: 'center',
+                component: (
+                    <div className="px-4 py-3 flex items-center bg-slate-700 rounded-xl animate-toast-top-entered">
+                        <span className="mr-2">
+                            <TickIcon />
+                        </span>
+                        <p className="font-normal">{t('components.toast.Collection name changed')}</p>
+                    </div>
+                ),
+            },
+            1000,
+        );
     };
 
     const handleClickItem = (title: string) => {

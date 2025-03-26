@@ -58,6 +58,7 @@ export const getSearchUsers = createAsyncThunk<User[], { query: string; type: 'm
     },
 );
 
+// createAsyncThunk giúp gọi API dễ dàng trong Redux
 export const getSideBarUsers = createAsyncThunk<User[], { query: string; type: 'more' | 'less' }>(
     // <User[], { query: string; type: 'more' | 'less' }>
     // trả về: User[]
@@ -66,6 +67,7 @@ export const getSideBarUsers = createAsyncThunk<User[], { query: string; type: '
     async ({ query, type }, { rejectWithValue }) => {
         try {
             // `https://tiktok.fullstack.edu.vn/api/users/search?q=${query}&type=${type}`
+            // quá trình gọi API để lấy dữ liệu từ server.
             const response = await request.get(`users/search`, {
                 params: { q: query, type },
             });
@@ -86,6 +88,7 @@ export const UsersSlice = createSlice({
             state.error = null;
         },
     },
+    // extraReducers giúp quản lý trạng thái khi gọi API
     extraReducers: (builder) => {
         builder
             .addCase(getSearchUsers.pending, (state) => {

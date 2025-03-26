@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const { transform } = require('typescript');
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
@@ -48,6 +49,10 @@ module.exports = {
                         transform: 'translateX(0px)',
                     },
                 },
+                toastTopEnter: {
+                    '0%': { opacity: 0, transform: 'translateY(-100%)' },
+                    '100%': { opacity: 1, transform: 'translateY(0%)' },
+                },
             },
             animation: {
                 spinCustom: 'spinCustom 1s infinite normal none running',
@@ -56,14 +61,8 @@ module.exports = {
                 'burger-hover-2': 'burgerHover 1s infinite ease-in-out alternate forwards 200ms',
                 'burger-hover-4': 'burgerHover 1s infinite ease-in-out alternate forwards 400ms',
                 'burger-hover-6': 'burgerHover 1s infinite ease-in-out alternate forwards 600ms',
+                'toast-top-entered': 'toastTopEnter .2s ease-in',
             },
-        },
-    },
-    variants: {
-        extend: {
-            textColor: ['red', 'blue', 'dark'],
-            backgroundColor: ['red', 'blue'],
-            // Thêm các thuộc tính khác nếu bạn muốn hỗ trợ chúng cho các tiền tố như red:, blue:
         },
     },
     // // Thêm class dark

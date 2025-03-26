@@ -20,6 +20,7 @@ import LiveStudioIcon from './live-studio.svg';
 import CheckIcon from './check.svg';
 import BackIcon from './back.svg';
 import TickIcon from './tick.svg';
+import TickBlueIcon from './tickblue.svg';
 import ElipsesIcon from './elipses.svg';
 import ReportIcon from './report.svg';
 import IrrelevantIcon from './irrelevant.svg';
@@ -122,6 +123,7 @@ export {
     CheckIcon,
     BackIcon,
     TickIcon,
+    TickBlueIcon,
     ElipsesIcon,
     ReportIcon,
     IrrelevantIcon,

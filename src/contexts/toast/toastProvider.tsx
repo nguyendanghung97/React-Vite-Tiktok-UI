@@ -44,17 +44,20 @@ const ToastProvider = ({ children }: Type) => {
                 <div
                     className={classNames('fixed top-4 z-40 w-full flex flex-col justify-center items-center gap-y-2')}
                 >
-                    {toasts
-                        .filter((toast) => toast.position === 'center')
-                        .map((toast) => (
-                            <Toast
-                                component={toast.component}
-                                ref={toastRef}
-                                key={toast.id}
-                                showButtonClose={toast.showButtonClose}
-                                close={() => closeToast(toast.id)}
-                            />
-                        ))}
+                    <div className="w-full flex flex-col items-center">
+                        {toasts
+                            .filter((toast) => toast.position === 'center')
+                            .map((toast) => (
+                                <Toast
+                                    className="text-sm text-white pointer-events-none"
+                                    component={toast.component}
+                                    ref={toastRef}
+                                    key={toast.id}
+                                    showButtonClose={toast.showButtonClose}
+                                    close={() => closeToast(toast.id)}
+                                />
+                            ))}
+                    </div>
                 </div>
             </ToastContext.Provider>
         </>,
