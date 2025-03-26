@@ -22,7 +22,6 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
         },
         ref,
     ) => {
-        // const videoRef = useRef<HTMLVideoElement>(null);
         const localVideoRef = useRef<HTMLVideoElement>(null);
         const videoElement = localVideoRef.current;
         // const video = videoRef.current;
@@ -67,6 +66,35 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
                 setIsPiP!(false);
             };
 
+            // Pause video khi user rời khỏi trình duyệt
+            const handleBlur = async () => {
+                if (document.pictureInPictureElement === videoElement) {
+                    try {
+                        await videoElement.pause();
+                        console.log('⏸ Video đã tạm dừng do user rời khỏi trình duyệt.');
+                    } catch (err) {
+                        console.error('❌ Lỗi khi pause video:', err);
+                    }
+                }
+            };
+
+            // Resume video khi user quay lại
+            const handleFocus = async () => {
+                // User quay lại trình duyệt
+                if (document.pictureInPictureElement === videoElement && document.hasFocus()) {
+                    try {
+                        await videoElement.play();
+                        console.log('⏸ Video đã phát lại khi user trở lại trình duyệt.');
+                    } catch (err) {
+                        console.error('❌ Lỗi khi play video:', err);
+                    }
+                }
+            };
+
+            // Dùng blur để lắng nghe sự kiện khi thoát khỏi trình duyệt
+            window.addEventListener('blur', handleBlur);
+            // Dùng blur để lắng nghe sự kiện khi trở lại trình duyệt
+            window.addEventListener('focus', handleFocus);
             // Gắn các sự kiện cho video
             videoElement.addEventListener('play', handlePlay);
             videoElement.addEventListener('pause', handlePause);
@@ -79,8 +107,10 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
                 videoElement.removeEventListener('pause', handlePause);
                 videoElement.removeEventListener('enterpictureinpicture', handleEnterPiP);
                 videoElement.removeEventListener('leavepictureinpicture', handleExitPiP);
+                window.removeEventListener('blur', handleBlur);
+                window.removeEventListener('focus', handleFocus);
             };
-        }, [setIsPiP]);
+        }, []);
 
         const handlePlayPause = () => {
             if (isPlaying) {
