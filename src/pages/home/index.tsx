@@ -4,17 +4,28 @@ import { Keyboard, Mousewheel, Navigation } from 'swiper/modules';
 // import 'swiper/swiper-bundle.css';
 import { Swiper as SwiperClass } from 'swiper';
 
-import Article from '~/components/article';
-import { articles, IArticle } from './dataHomePage';
-
 import './index.less';
+
+import { articles, IArticle } from './dataHomePage';
 import Button from '~/components/button';
 import { ArrowDownIcon } from '~/assets/images/svgs';
 import classNames from 'classnames';
+import ActionsArticle from '~/components/article/actionsArticle';
+import VideoPlayer, { ControlsProps } from '~/components/video';
+import VideoPlayerControls from '~/components/videoControls';
 
 const Home = () => {
     const swiperRef = useRef<SwiperClass | null>(null);
+
+    const prevRef = useRef<HTMLButtonElement>(null);
+    const nextRef = useRef<HTMLButtonElement>(null);
     // console.log('swiperRef', typeof swiperRef!);
+
+    const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+    // console.log('videoRefs', videoRefs);
+
+    const [isPiP, setIsPiP] = useState(false);
 
     const [isMuted, setIsMuted] = useState(true);
     const [volume, setVolume] = useState(0);
@@ -28,19 +39,18 @@ const Home = () => {
     useEffect(() => {
         document.title = 'TikTok - Make Your Day';
     }, []);
+
     useEffect(() => {
-        setActiveItem(articles[activeIndex]);
-        const videos = document.querySelectorAll<HTMLVideoElement>('video');
-        const activeVideo = document.querySelector<HTMLVideoElement>(`#video-${activeIndex}`);
-        videos.forEach((video) => {
-            if (video === activeVideo) {
-                video.play(); // Chỉ play video active
+        videoRefs.current.forEach((video, index) => {
+            if (index === activeIndex) {
+                video!.play();
             } else {
-                video.pause(); // Pause tất cả video khác
-                video.currentTime = 0; // Reset về 0 nếu muốn
+                video!.pause();
+                video!.currentTime = 0; // Reset về 0 nếu muốn
             }
         });
     }, [activeIndex]);
+
     useEffect(() => {
         if (showComments === true) {
             // Thay đổi URL mà không tải lại trang
@@ -72,9 +82,40 @@ const Home = () => {
         });
     };
 
-    const prevRef = useRef<HTMLButtonElement>(null);
-    const nextRef = useRef<HTMLButtonElement>(null);
+    const handleEnterPiP = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        videoRefs.current[activeIndex]!.requestPictureInPicture();
+        setIsPiP(true);
+    };
 
+    const handleExitPiP = () => {
+        if (document.pictureInPictureElement) {
+            document.exitPictureInPicture();
+            setIsPiP(false);
+        }
+    };
+
+    const handleSlideChange = async (swiper: any) => {
+        const newVideo = videoRefs.current[swiper.activeIndex];
+
+        if (isPiP) {
+            if (window.innerWidth <= 768) {
+                // Nếu là mobile, thoát PiP khi đổi slide
+                try {
+                    await document.exitPictureInPicture();
+                } catch (err) {
+                    console.error('❌ PiP Exit Error:', err);
+                }
+            } else if (newVideo) {
+                // Nếu là PC, chuyển video trong PiP
+                try {
+                    await newVideo.requestPictureInPicture();
+                } catch (err) {
+                    console.error('❌ PiP Error:', err);
+                }
+            }
+        }
+    };
     return (
         <Swiper
             modules={[Mousewheel, Keyboard, Navigation]}
@@ -109,24 +150,63 @@ const Home = () => {
             grabCursor={true}
             onSlideChange={(swiper) => {
                 setActiveIndex(swiper.activeIndex);
+                setActiveItem(articles[swiper.activeIndex]);
+                // const videoActive = videoRefs.current[swiper.activeIndex];
+                // if (isPiP && videoActive) {
+                //     videoActive.requestPictureInPicture();
+                // }
+                handleSlideChange(swiper);
             }}
         >
             {articles.map((item, index) => {
                 return (
                     <SwiperSlide key={index}>
-                        <Article
-                            showComments={showComments}
-                            setShowComments={setShowComments}
-                            activeItem={activeItem}
-                            UrlArticleActive={UrlArticleActive}
-                            swiperRef={swiperRef}
-                            isMuted={isMuted}
-                            toggleMute={toggleMute}
-                            volume={volume}
-                            onChangeVolume={onChangeVolume}
-                            index={index}
-                            data={item}
-                        />
+                        <article className={classNames('h-full p-4 flex justify-center overflow-hidden')}>
+                            <div className="flex justify-center items-center">
+                                <section className="hidden sm:flex w-16 shrink-0"></section>
+                                <section
+                                    className={classNames(
+                                        // w-min: width không thể lớn hơn mức mà aspect-ratio yêu cầu
+                                        'h-full w-min aspect-[3/5]',
+                                        'flex-1 flex items-center justify-center',
+                                    )}
+                                >
+                                    <VideoPlayer
+                                        // Lấy ra list videoElement
+                                        ref={(el) => (videoRefs.current[index] = el)}
+                                        posterVideo={item.video.thumbnail}
+                                        controls={(props: ControlsProps) => (
+                                            <VideoPlayerControls
+                                                swiperRef={swiperRef}
+                                                article={item}
+                                                {...props}
+                                                isMuted={isMuted}
+                                                toggleMute={toggleMute}
+                                                volume={volume}
+                                                onChangeVolume={onChangeVolume}
+                                            />
+                                        )}
+                                        muted={isMuted}
+                                        src={item.video.url}
+                                        handleEnterPiP={handleEnterPiP}
+                                        handleExitPiP={handleExitPiP}
+                                        isPiP={isPiP}
+                                        setIsPiP={setIsPiP}
+                                        // time={time}
+                                        // setTime={setTime}
+                                    />
+                                </section>
+                                <section className="hidden w-16 shrink-0 sm:flex justify-end items-end overflow-hidden">
+                                    <ActionsArticle
+                                        UrlArticleActive={UrlArticleActive}
+                                        showComments={showComments}
+                                        setShowComments={setShowComments}
+                                        className="w-12"
+                                        data={activeItem}
+                                    />
+                                </section>
+                            </div>
+                        </article>
                     </SwiperSlide>
                 );
             })}

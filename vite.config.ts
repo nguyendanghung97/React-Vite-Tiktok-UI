@@ -16,12 +16,12 @@ export default defineConfig({
     build: {
         rollupOptions: {
             output: {
-                // Cấu hình manualChunks để tách thư viện lớn:  Giảm tải JS chính, tối ưu cache
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
                         if (id.includes('react') || id.includes('react-dom')) return 'vendor-react';
                         if (id.includes('lodash')) return 'vendor-lodash';
-                        return 'vendor'; // Tách thư viện ngoài vào chunk riêng
+                        if (id.includes('eruda')) return 'vendor-eruda'; // Tách riêng eruda
+                        return 'vendor'; // Chunk chung cho các thư viện khác
                     }
                 },
             },

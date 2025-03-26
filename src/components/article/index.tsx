@@ -10,7 +10,6 @@ import classNames from 'classnames';
 const Article: React.FC<Type> = ({
     className,
     data,
-    index,
     isMuted,
     toggleMute,
     volume,
@@ -45,7 +44,6 @@ const Article: React.FC<Type> = ({
                                 onChangeVolume={onChangeVolume}
                             />
                         )}
-                        index={index}
                         muted={isMuted}
                         src={data.video.url}
                     />

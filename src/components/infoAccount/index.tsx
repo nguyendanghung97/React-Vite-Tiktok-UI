@@ -57,7 +57,7 @@ const InfoAccount: React.FC<Type> = ({ account }) => {
                             >
                                 <strong className="text-lg">{item.value}</strong>
                                 <small
-                                    className={classNames('text-base', {
+                                    className={classNames('text-base line-clamp-1', {
                                         'hover:underline': item.unit !== 'Likes',
                                     })}
                                 >

@@ -407,11 +407,12 @@ const Profile = () => {
                                                                 {collection.collectionVideos.length} videos
                                                             </span>
                                                         </div>
-                                                        {!collection.isPublic && (
-                                                            <span className="shrink-0 text-lg sm:text-xl">
-                                                                <LockIcon />
-                                                            </span>
-                                                        )}
+
+                                                        <span className="w-5 shrink-0">
+                                                            {!collection.isPublic && (
+                                                                <LockIcon className="text-lg sm:text-xl" />
+                                                            )}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </Link>
