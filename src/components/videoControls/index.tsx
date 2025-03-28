@@ -141,6 +141,7 @@ const VideoPlayerControls = ({
                             offset={[-10, 0]}
                             content={t('components.tooltip.Floating Player')}
                             arrow={false}
+                            disabled={isPiP} // Tắt tooltip khi isPiP = true
                         >
                             <button
                                 className="text-xl w-10 h-10 flex items-center justify-center"

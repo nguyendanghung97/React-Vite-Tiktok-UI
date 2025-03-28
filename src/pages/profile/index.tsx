@@ -207,44 +207,46 @@ const Profile = () => {
             
         */}
             {isOpenModal && modals[activeModalIndex]}
-            <div className="flex-1 overflow-x-hidden overflow-y-scroll h-[calc(100vh-4rem)]">
-                <div className="py-9 px-8">
-                    <InfoAccount account={selectedAccount}></InfoAccount>
+            {/* 100vh nghĩa là 100% chiều cao của viewport (khung nhìn của trình duyệt). */}
+            {/* 100dvh là 100% chiều cao thực tế của thiết bị, không bị ảnh hưởng bởi thanh địa chỉ của trình duyệt. */}
+            {/* 100dvh giúp UI ổn định với mọi thiết bị */}
+            <div className="py-9 px-8 flex-1 overflow-x-hidden overflow-y-scroll sm:h-[calc(100dvh-4rem)]">
+                <InfoAccount account={selectedAccount}></InfoAccount>
 
-                    <div className="flex flex-col">
-                        <div className="relative mb-6 flex items-center justify-between border-b border-light-text/10 dark:border-dark-text/5">
-                            <ul className="flex items-center h-11 relative overflow-auto md:overflow-hidden scroll-tabs">
-                                {profileTabsDisplay.map((tab, index) => {
-                                    // const isActive = tab.title === activeTab; // Kiểm tra phần tử có phải là phần tử đang active không
-                                    return (
-                                        <Tab
-                                            data={tab}
-                                            setActiveTab={setActiveTab}
-                                            key={index}
-                                            // Lưu trữ các li theo đúng thứ tự
-                                            ref={(el) => liRefs?.current && (liRefs.current[index] = el)}
-                                            className="px-8 gap-x-1 text-xl"
-                                            isActive={tab.title === activeTab}
-                                        >
-                                            {tab.icon}
-                                            <span className="text-lg font-semibold line-clamp-1 break-all">
-                                                {t(`components.tabs.${tab.title}`)}
-                                            </span>
-                                        </Tab>
-                                    );
-                                })}
+                <div className="flex flex-col">
+                    <div className="relative mb-6 flex items-center justify-between border-b border-light-text/10 dark:border-dark-text/5">
+                        <ul className="flex items-center h-11 relative overflow-auto md:overflow-hidden scroll-tabs">
+                            {profileTabsDisplay.map((tab, index) => {
+                                // const isActive = tab.title === activeTab; // Kiểm tra phần tử có phải là phần tử đang active không
+                                return (
+                                    <Tab
+                                        data={tab}
+                                        setActiveTab={setActiveTab}
+                                        key={index}
+                                        // Lưu trữ các li theo đúng thứ tự
+                                        ref={(el) => liRefs?.current && (liRefs.current[index] = el)}
+                                        className="px-8 gap-x-1 text-xl"
+                                        isActive={tab.title === activeTab}
+                                    >
+                                        {tab.icon}
+                                        <span className="text-lg font-semibold line-clamp-1 break-all">
+                                            {t(`components.tabs.${tab.title}`)}
+                                        </span>
+                                    </Tab>
+                                );
+                            })}
 
-                                {/* TabIndicator nếu có */}
-                                {liRefs && (
-                                    <TabIndicator
-                                        className="-translate-y-0.5"
-                                        liRefs={liRefs}
-                                        activeIndex={profileTabsDisplay.findIndex((tab) => tab.title === activeTab)}
-                                    />
-                                )}
-                            </ul>
+                            {/* TabIndicator nếu có */}
+                            {liRefs && (
+                                <TabIndicator
+                                    className="-translate-y-0.5"
+                                    liRefs={liRefs}
+                                    activeIndex={profileTabsDisplay.findIndex((tab) => tab.title === activeTab)}
+                                />
+                            )}
+                        </ul>
 
-                            {/* <Tabs
+                        {/* <Tabs
                             className="h-11 relative"
                             tabClassName="px-8 h-full inline-flex gap-x-1 text-xl cursor-pointer"
                             // activeClassName="!text-color"
@@ -260,93 +262,83 @@ const Profile = () => {
                             )}
                         /> */}
 
-                            {activeTab === 'Videos' ? (
-                                <>
-                                    {(() => {
-                                        const subTabs = profileTabsDisplay.find(
-                                            (item) => item.title === 'Videos',
-                                        )?.subTabs;
+                        {activeTab === 'Videos' ? (
+                            <>
+                                {(() => {
+                                    const subTabs = profileTabsDisplay.find((item) => item.title === 'Videos')?.subTabs;
 
-                                        return (
-                                            <Tabs
-                                                className="hidden lg:flex absolute -right-3 p-0.5 bg-light-text/5 dark:bg-dark-text/5 rounded-md"
-                                                tabClassName="px-2.5 py-1.5 text-[13px] text-color/50 font-semibold rounded-md"
-                                                activeClassName="bg-white dark:bg-white/20 shadow"
-                                                tabs={subTabs || []}
-                                                activeTab={activeSubTabVideo}
-                                                setActiveTab={setActiveSubTabVideo}
-                                                renderTabContent={(subTab) => (
-                                                    <>{t(`components.tabs.${subTab.title}`)}</>
-                                                )}
-                                            />
-                                        );
-                                    })()}
-                                </>
-                            ) : activeTab === 'Favorites' ? (
+                                    return (
+                                        <Tabs
+                                            className="hidden lg:flex absolute -right-3 p-0.5 bg-light-text/5 dark:bg-dark-text/5 rounded-md"
+                                            tabClassName="px-2.5 py-1.5 text-[13px] text-color/50 font-semibold rounded-md"
+                                            activeClassName="bg-white dark:bg-white/20 shadow"
+                                            tabs={subTabs || []}
+                                            activeTab={activeSubTabVideo}
+                                            setActiveTab={setActiveSubTabVideo}
+                                            renderTabContent={(subTab) => <>{t(`components.tabs.${subTab.title}`)}</>}
+                                        />
+                                    );
+                                })()}
+                            </>
+                        ) : activeTab === 'Favorites' ? (
+                            <Button
+                                className="hidden lg:flex px-3 h-8 text-[15px] font-semibold"
+                                leftIcon={<CreateIcon />}
+                                onClick={() => setIsOpenModal(true)}
+                            >
+                                {t('components.button.Create')}
+                            </Button>
+                        ) : null}
+                    </div>
+
+                    <div className="min-h-96 flex flex-col">
+                        {activeTab === 'Videos' && (
+                            <div className="relative flex justify-between mb-6">
+                                {(() => {
+                                    const subTabs = profileTabsDisplay.find((item) => item.title === 'Videos')?.subTabs;
+
+                                    return (
+                                        <Tabs
+                                            className="lg:hidden w-fit p-0.5 bg-light-text/5 dark:bg-dark-text/5 rounded-md"
+                                            tabClassName="px-2.5 py-1.5 text-[13px] text-color/50 font-semibold rounded-md"
+                                            activeClassName="bg-white dark:bg-white/20 shadow"
+                                            tabs={subTabs || []}
+                                            activeTab={activeSubTabVideo}
+                                            setActiveTab={setActiveSubTabVideo}
+                                            renderTabContent={(subTab) => <>{t(`components.tabs.${subTab.title}`)}</>}
+                                        />
+                                    );
+                                })()}
+                            </div>
+                        )}
+
+                        {activeTab === 'Favorites' && (
+                            <div className="relative flex justify-between mb-6">
+                                <Tabs
+                                    className="flex gap-x-2 h-8"
+                                    tabClassName="h-full min-w-24 justify-center px-3 text-sm font-semibold rounded-md
+                               hover:bg-light-text/10 dark:hover:bg-dark-text/20"
+                                    activeClassName="!text-color bg-light-text/5 dark:bg-dark-text/10"
+                                    tabs={profileTabsDisplay.find((item) => item.title === 'Favorites')?.subTabs || []}
+                                    activeTab={activeSubTabFavorite}
+                                    setActiveTab={setActiveSubTabFavorite}
+                                    renderTabContent={(subTab) => (
+                                        <>
+                                            {t(`components.tabs.${subTab.title}`)}{' '}
+                                            {subTab.title === 'Posts' ? favoriteVideos.length : collections.length}
+                                        </>
+                                    )}
+                                />
+
                                 <Button
-                                    className="hidden lg:flex px-3 h-8 text-[15px] font-semibold"
+                                    className="lg:hidden ml-3.5 px-3 h-8 text-[15px] font-semibold"
                                     leftIcon={<CreateIcon />}
                                     onClick={() => setIsOpenModal(true)}
                                 >
                                     {t('components.button.Create')}
                                 </Button>
-                            ) : null}
-                        </div>
 
-                        <div className="min-h-96 flex flex-col">
-                            {activeTab === 'Videos' && (
-                                <div className="relative flex justify-between mb-6">
-                                    {(() => {
-                                        const subTabs = profileTabsDisplay.find(
-                                            (item) => item.title === 'Videos',
-                                        )?.subTabs;
-
-                                        return (
-                                            <Tabs
-                                                className="lg:hidden w-fit p-0.5 bg-light-text/5 dark:bg-dark-text/5 rounded-md"
-                                                tabClassName="px-2.5 py-1.5 text-[13px] text-color/50 font-semibold rounded-md"
-                                                activeClassName="bg-white dark:bg-white/20 shadow"
-                                                tabs={subTabs || []}
-                                                activeTab={activeSubTabVideo}
-                                                setActiveTab={setActiveSubTabVideo}
-                                                renderTabContent={(subTab) => (
-                                                    <>{t(`components.tabs.${subTab.title}`)}</>
-                                                )}
-                                            />
-                                        );
-                                    })()}
-                                </div>
-                            )}
-
-                            {activeTab === 'Favorites' && (
-                                <div className="relative flex justify-between mb-6">
-                                    <Tabs
-                                        className="flex gap-x-2 h-8"
-                                        tabClassName="h-full min-w-24 justify-center px-3 text-sm font-semibold rounded-md
-                               hover:bg-light-text/10 dark:hover:bg-dark-text/20"
-                                        activeClassName="!text-color bg-light-text/5 dark:bg-dark-text/10"
-                                        tabs={
-                                            profileTabsDisplay.find((item) => item.title === 'Favorites')?.subTabs || []
-                                        }
-                                        activeTab={activeSubTabFavorite}
-                                        setActiveTab={setActiveSubTabFavorite}
-                                        renderTabContent={(subTab) => (
-                                            <>
-                                                {t(`components.tabs.${subTab.title}`)}{' '}
-                                                {subTab.title === 'Posts' ? favoriteVideos.length : collections.length}
-                                            </>
-                                        )}
-                                    />
-
-                                    <Button
-                                        className="lg:hidden ml-3.5 px-3 h-8 text-[15px] font-semibold"
-                                        leftIcon={<CreateIcon />}
-                                        onClick={() => setIsOpenModal(true)}
-                                    >
-                                        {t('components.button.Create')}
-                                    </Button>
-
-                                    {/* <Button
+                                {/* <Button
                                className="px-3 min-w-24 h-8 text-sm font-semibold"
                                onClick={() => {
                                    dispatch(resetCollections());
@@ -357,93 +349,92 @@ const Profile = () => {
                            >
                                {t('components.button.Reset')}
                            </Button> */}
-                                </div>
-                            )}
+                            </div>
+                        )}
 
-                            {activeTab === 'Favorites' && activeSubTabFavorite === 'Collections' ? (
-                                collections.length > 0 ? (
-                                    <div className="grid grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
-                                        {collections.map((collection, index) => (
-                                            <Link
-                                                key={index}
-                                                to={`${config.routes.myProfile}/collection/${collection.id}`}
-                                                state={{
-                                                    collectionId: collection.id,
-                                                    collectionName: collection.collectionName,
-                                                }}
-                                                className={classNames(
-                                                    'flex justify-center items-center',
-                                                    'w-full aspect-[3/4] overflow-hidden rounded relative',
-                                                    {
-                                                        'bg-black/10 dark:bg-white/20':
-                                                            collection.collectionVideos.length < 1,
-                                                    },
-                                                )}
-                                            >
-                                                <VideoPlayer
-                                                    posterVideo={
-                                                        collection.collectionVideos.length > 0
-                                                            ? collection.collectionVideos[
-                                                                  collection.collectionVideos.length - 1
-                                                              ].thumbnail
-                                                            : ''
-                                                    }
-                                                    src={
-                                                        collection.collectionVideos.length > 0
-                                                            ? collection.collectionVideos[
-                                                                  collection.collectionVideos.length - 1
-                                                              ].url
-                                                            : ''
-                                                    }
-                                                />
-                                                <div className="absolute inset-0 flex justify-center items-center">
-                                                    {collection.collectionVideos.length < 1 && <FavoriteDoubleIcon />}
-                                                    <div className="text-white flex items-end justify-between absolute left-3.5 right-3.5 bottom-4">
-                                                        <div className="flex flex-col">
-                                                            <span className="text-base font-semibold line-clamp-1 break-all">
-                                                                {collection.collectionName}
-                                                            </span>
-                                                            <span className="text-xs line-clamp-1 break-all">
-                                                                {collection.collectionVideos.length} videos
-                                                            </span>
-                                                        </div>
-
-                                                        <span className="w-5 shrink-0">
-                                                            {!collection.isPublic && (
-                                                                <LockIcon className="text-lg sm:text-xl" />
-                                                            )}
+                        {activeTab === 'Favorites' && activeSubTabFavorite === 'Collections' ? (
+                            collections.length > 0 ? (
+                                <div className="grid grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
+                                    {collections.map((collection, index) => (
+                                        <Link
+                                            key={index}
+                                            to={`${config.routes.myProfile}/collection/${collection.id}`}
+                                            state={{
+                                                collectionId: collection.id,
+                                                collectionName: collection.collectionName,
+                                            }}
+                                            className={classNames(
+                                                'flex justify-center items-center',
+                                                'w-full aspect-[3/4] overflow-hidden rounded relative',
+                                                {
+                                                    'bg-black/10 dark:bg-white/20':
+                                                        collection.collectionVideos.length < 1,
+                                                },
+                                            )}
+                                        >
+                                            <VideoPlayer
+                                                posterVideo={
+                                                    collection.collectionVideos.length > 0
+                                                        ? collection.collectionVideos[
+                                                              collection.collectionVideos.length - 1
+                                                          ].thumbnail
+                                                        : ''
+                                                }
+                                                src={
+                                                    collection.collectionVideos.length > 0
+                                                        ? collection.collectionVideos[
+                                                              collection.collectionVideos.length - 1
+                                                          ].url
+                                                        : ''
+                                                }
+                                            />
+                                            <div className="absolute inset-0 flex justify-center items-center">
+                                                {collection.collectionVideos.length < 1 && <FavoriteDoubleIcon />}
+                                                <div className="text-white flex items-end justify-between absolute left-3.5 right-3.5 bottom-4">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-base font-semibold line-clamp-1 break-all">
+                                                            {collection.collectionName}
+                                                        </span>
+                                                        <span className="text-xs line-clamp-1 break-all">
+                                                            {collection.collectionVideos.length} videos
                                                         </span>
                                                     </div>
+
+                                                    <span className="w-5 shrink-0">
+                                                        {!collection.isPublic && (
+                                                            <LockIcon className="text-lg sm:text-xl" />
+                                                        )}
+                                                    </span>
                                                 </div>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <EmptyState {...emptyStateData} onClickButton={() => setIsOpenModal(true)} />
-                                )
-                            ) : displayedVideos.length > 0 ? (
-                                <div className="grid grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
-                                    {displayedVideos.map((item, index) => (
-                                        <div key={index} className="w-full aspect-[3/4] overflow-hidden relative">
-                                            <VideoPlayer
-                                                posterVideo={item.thumbnail}
-                                                src={item.url}
-                                                onMouseEnter={(e) => {
-                                                    e.currentTarget.play();
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.currentTarget.pause();
-                                                    e.currentTarget.currentTime = 0; // Đặt lại video về đầu khi rời chuột};
-                                                    e.currentTarget.load();
-                                                }}
-                                            />
-                                        </div>
+                                            </div>
+                                        </Link>
                                     ))}
                                 </div>
                             ) : (
-                                <EmptyState activeTab={activeTab} {...emptyStateData} />
-                            )}
-                        </div>
+                                <EmptyState {...emptyStateData} onClickButton={() => setIsOpenModal(true)} />
+                            )
+                        ) : displayedVideos.length > 0 ? (
+                            <div className="grid grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
+                                {displayedVideos.map((item, index) => (
+                                    <div key={index} className="w-full aspect-[3/4] overflow-hidden relative">
+                                        <VideoPlayer
+                                            posterVideo={item.thumbnail}
+                                            src={item.url}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.play();
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.pause();
+                                                e.currentTarget.currentTime = 0; // Đặt lại video về đầu khi rời chuột};
+                                                e.currentTarget.load();
+                                            }}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <EmptyState activeTab={activeTab} {...emptyStateData} />
+                        )}
                     </div>
                 </div>
             </div>

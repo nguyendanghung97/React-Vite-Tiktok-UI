@@ -84,7 +84,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
                 if (document.pictureInPictureElement === videoElement && document.hasFocus()) {
                     try {
                         await videoElement.play();
-                        console.log('⏸ Video đã phát lại khi user trở lại trình duyệt.');
+                        console.log('Video đã phát lại khi user trở lại trình duyệt.');
                     } catch (err) {
                         console.error('❌ Lỗi khi play video:', err);
                     }

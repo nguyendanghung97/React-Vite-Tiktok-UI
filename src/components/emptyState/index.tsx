@@ -3,11 +3,24 @@ import Button from '../button';
 import config from '~/configs';
 import { PlusRoundedIcon } from '~/assets/images/svgs';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
-const EmptyState = ({ icon, title, description, textButton, onClickButton, activeTab }: IEmptyState) => {
+const EmptyState = ({
+    icon,
+    title,
+    description,
+    textButton,
+    onClickButton,
+    activeTab,
+    className,
+    ...passProps
+}: IEmptyState) => {
     const { t } = useTranslation();
     return (
-        <div className="flex-1 h-full w-full flex flex-col items-center justify-center">
+        <div
+            className={classNames('flex-1 h-full w-full flex flex-col items-center justify-center', className)}
+            {...passProps}
+        >
             {activeTab === 'Videos' ? (
                 <Button to={config.routes.upload} className="w-24 h-24 !rounded-full" leftIcon={icon}></Button>
             ) : (
@@ -37,6 +50,6 @@ export type IEmptyState = {
     textButton?: string;
     activeTab?: string;
     onClickButton?: () => void;
-};
+} & React.HTMLAttributes<HTMLElement>;
 
 export default EmptyState;

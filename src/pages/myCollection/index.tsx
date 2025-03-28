@@ -135,11 +135,7 @@ const MyCollection = () => {
     };
 
     return (
-        <div
-            className={classNames('px-6 pt-8 pb-9 h-[2000px] flex-1', {
-                'overflow-hidden': !isControlsDeleteVideos,
-            })}
-        >
+        <div className={classNames('px-6 pt-8 pb-9 h-[2000px] flex-1')}>
             <div
                 className={classNames('h-16 mb-5', {
                     'sticky z-20 top-24 bg-light-bg dark:bg-dark-bg': isControlsDeleteVideos,

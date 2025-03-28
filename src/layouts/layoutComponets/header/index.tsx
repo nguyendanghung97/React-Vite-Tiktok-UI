@@ -34,9 +34,30 @@ const Header = () => {
         // header
         <header className="h-16 fixed top-0 left-0 right-0 z-40 px-4 shadow shadow-light-text/10 dark:shadow-dark-text/10 bg-light-bg dark:bg-dark-bg">
             <div className="h-full relative flex items-center justify-between">
-                <Link className="w-72 flex" to={config.routes.home}>
+                <Link
+                    className="w-72 flex"
+                    to={config.routes.home}
+                    // ép trình duyệt tải lại bằng cách thêm window.location.href => Lúc này nó tương tự như thẻ a
+                    onClick={() => (window.location.href = config.routes.home)}
+                >
                     <Logo className="ml-9 sm:ml-0" title="Logo" />
                 </Link>
+                {/* {isHome ? (
+                    // tag a: là một navigation bình thường của trình duyệt, Trình duyệt giữ nguyên trạng thái UI trước đó, bao gồm thanh địa chỉ bị ẩn nếu nó đang bị ẩn trước đó
+                    <a className="w-72 flex" href="/">
+                        <Logo className="ml-9 sm:ml-0" title="Logo" />
+                    </a>
+                ) : (
+                    // Safari có cơ chế riêng để quyết định khi nào thanh địa chỉ hiển thị lại, và việc điều hướng thông qua React Router có thể kích hoạt hành vi này, làm thanh nhóm tab xuất hiện lại
+                    <Link
+                        className="w-72 flex"
+                        to={config.routes.home}
+                        // ép trình duyệt tải lại bằng cách thêm window.location.href
+                        onClick={() => (window.location.href = config.routes.home)}
+                    >
+                        <Logo className="ml-9 sm:ml-0" title="Logo" />
+                    </Link>
+                )} */}
 
                 {/* Search */}
                 <div className={classNames('flex-1 px-3 min-w-80 max-w-[500px]', 'hidden sm:flex justify-center')}>
