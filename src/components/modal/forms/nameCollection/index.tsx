@@ -6,6 +6,7 @@ import { CloseIcon, WarningIcon } from '~/assets/images/svgs';
 import Button from '~/components/button';
 import Switch from '~/components/switch';
 import { useTranslation } from 'react-i18next';
+import useToast from '~/contexts/toast/useToast';
 
 const NameCollectionModal: React.FC<Type> = ({
     showPublicToggle,
@@ -20,6 +21,7 @@ const NameCollectionModal: React.FC<Type> = ({
     handleNext,
     handleSave,
 }) => {
+    const { openToast } = useToast();
     const { t } = useTranslation();
 
     const [inValid, setInValid] = useState(false);
@@ -48,8 +50,13 @@ const NameCollectionModal: React.FC<Type> = ({
                     }
                     if (handleSave) {
                         handleSave();
+                        openToast({
+                            type: 'success',
+                            position: 'center',
+                            message: t('components.toast.Collection name changed'),
+                            // duration: 1000,
+                        });
                     }
-                    // handleSubmit();
                 }}
             >
                 <div className="px-2 h-14 flex items-center justify-between">

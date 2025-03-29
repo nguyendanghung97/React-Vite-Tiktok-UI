@@ -49,7 +49,10 @@
     "components": {
         "toast": {
             "Copied": "Đã sao chép",
-            "Collection name changed": "Đã đổi tên bộ sưu tập"
+            "Collection name changed": "Đã đổi tên bộ sưu tập",
+            "Collection created successfully": "Đã tạo bộ sưu tập thành công",
+            "Add videos": "Đã thêm {{count}} video",
+            "Remove video": "Đã xóa {{count}} video"
         },
         "modal": {
             "share": {

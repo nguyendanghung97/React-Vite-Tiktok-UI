@@ -28,21 +28,18 @@ import EmptyState from '~/components/emptyState';
 import { increaseUncollectedVideos, reduceUncollectedVideos, VideoRemove, VideoSelect } from '~/store/videos';
 import useVideosSelection from '~/hooks/useVideosSelection';
 import { toggleVideoProperty } from '~/utils';
+import useToast from '~/contexts/toast/useToast';
 
 const MyCollection = () => {
-    // const history = useHistory();
+    const { openToast } = useToast();
     const navigate = useNavigate(); // Sử dụng để điều hướng
     const dispatch = useDispatch();
     const { t } = useTranslation();
 
     // Dùng useParams() để lấy ra collectionId từ URL
     // Thay vì dùng state được truyền từ navigate khi reload sẽ bị reset
-    const { collectionId } = useParams();
-
-    // console.log('collectionId', collectionId);
-
-    // const location = useLocation();
     // const { collectionId } = location.state || {}; // Lấy id từ state của the Link
+    const { collectionId } = useParams();
 
     const collections = useSelector((state: RootState) => state.collections.collections);
     // console.log('collections', collections);
@@ -88,12 +85,6 @@ const MyCollection = () => {
         setCollectionVideos((prev) => prev?.map((video) => ({ ...video, isRemoved: false })));
     };
 
-    // Hàm toggle trạng thái isSelected
-    // const handleSelect = (index: number) => {
-    //     setCollectionVideos((prevVideos) =>
-    //         prevVideos.map((video, i) => (i === index ? { ...video, isRemoved: !video.isRemoved } : video)),
-    //     );
-    // };
     const handleSelect = (index: number) => {
         if (isControlsDeleteVideos) {
             toggleVideoProperty(setCollectionVideos, index, 'isRemoved');
@@ -109,6 +100,14 @@ const MyCollection = () => {
         handleCancelManageVideos();
         dispatch(removeVideosFromCollection({ id: collectionId!, videos: videosRemoved }));
         dispatch(increaseUncollectedVideos(videosRemoved));
+        openToast({
+            type: 'success',
+            position: 'center',
+            message: t('components.toast.Remove video', {
+                count: videosRemoved.length,
+            }),
+            // duration: 1000,
+        });
     };
 
     const handleDeleteCollection = () => {
@@ -199,18 +198,16 @@ const MyCollection = () => {
                                 {t('components.button.Add Videos')}
                             </Button>
                             {isOpenModal && (
-                                <>
-                                    <AddVideosModal
-                                        context="myCollection"
-                                        videosToAddVideosModal={videosToAddVideosModal}
-                                        setVideosToAddVideosModal={setVideosToAddVideosModal}
-                                        isOpenModal={isOpenModal}
-                                        selectedVideos={selectedVideos}
-                                        // setSelectedVideos={setSelectedVideos}
-                                        handleCloseModal={handleCloseModal}
-                                        handleSubmit={handleSubmitAddVideosModal}
-                                    />
-                                </>
+                                <AddVideosModal
+                                    context="myCollection"
+                                    videosToAddVideosModal={videosToAddVideosModal}
+                                    setVideosToAddVideosModal={setVideosToAddVideosModal}
+                                    isOpenModal={isOpenModal}
+                                    selectedVideos={selectedVideos}
+                                    // setSelectedVideos={setSelectedVideos}
+                                    handleCloseModal={handleCloseModal}
+                                    handleSubmit={handleSubmitAddVideosModal}
+                                />
                             )}
 
                             {currentCollection!.collectionVideos.length > 0 && (

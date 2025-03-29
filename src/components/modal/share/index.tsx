@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CloseIcon, CopyLinkIcon } from '~/assets/images/svgs';
@@ -14,23 +13,12 @@ const ShareModal: React.FC<Type> = ({ isOpen, onClose, currentUrl }) => {
 
     const handleCopyLink = () => {
         onClose();
-        // toast?.open('Đã sao chép', true);
-        openToast(
-            {
-                component: (
-                    <div
-                        className={classNames(
-                            'w-1/2 py-2.5 px-2 text-center bg-slate-700 rounded-sm animate-toast-top-entered',
-                        )}
-                    >
-                        {t('components.toast.Copied')}
-                    </div>
-                ),
-
-                position: 'center',
-            },
-            1000,
-        );
+        openToast({
+            type: 'copied',
+            position: 'center',
+            message: t('components.toast.Copied'),
+            // duration: 1000,
+        });
     };
 
     return (

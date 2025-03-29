@@ -101,9 +101,9 @@ const Profile = () => {
         // Logic cho profile
         const newCollection: ICollection = {
             id: collectionId,
-            collectionName: collectionName!,
+            collectionName: collectionName,
             collectionVideos: collectionVideos,
-            isPublic: isChecked!,
+            isPublic: isChecked,
         };
 
         dispatch(addCollection(newCollection));

@@ -49,7 +49,12 @@
     "components": {
         "toast": {
             "Copied": "Copied",
-            "Collection name changed": "Collection name changed"
+            "Collection name changed": "Collection name changed",
+            "Collection created successfully": "Collection created successfully",
+            "Add videos_one": "{{count}} video added",
+            "Add videos_other": "{{count}} videos added",
+            "Remove video_one": "{{count}} video removed",
+            "Remove video_other": "{{count}} videos removed"
         },
         "modal": {
             "share": {
