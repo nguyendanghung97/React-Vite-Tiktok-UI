@@ -43,13 +43,13 @@ const NameCollectionModal: React.FC<Type> = ({
                 // w-dvw (Dynamic Viewport Width) giúp modal luôn có chiều rộng bằng với viewport, nhưng không vượt quá max-w-80.
                 // khi thêm w-dvw, modal luôn mở rộng đến max-w nếu màn hình đủ lớn.
                 className={classNames('max-w-80 w-dvw', className)}
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                     e.preventDefault();
                     if (handleNext) {
                         handleNext();
                     }
                     if (handleSave) {
-                        handleSave();
+                        await handleSave();
                         openToast({
                             type: 'success',
                             position: 'center',

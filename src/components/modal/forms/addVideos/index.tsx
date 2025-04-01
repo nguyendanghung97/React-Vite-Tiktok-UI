@@ -37,13 +37,14 @@ const AddVideosModal = ({
 
                 // h-[calc(100vh-5rem)]
                 className="max-w-[480px] sm:w-dvw aspect-[3/4] flex flex-col"
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                     e.preventDefault();
                     if (context === 'myCollection' && selectedVideos.length < 1) {
                         handleCloseModal();
                         return;
                     } else {
-                        handleSubmit();
+                        await handleSubmit();
+                        // Chờ submit xong mới hiện toast message
                         openToast({
                             type: 'success',
                             position: 'center',

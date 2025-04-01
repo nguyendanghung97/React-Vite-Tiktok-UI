@@ -95,19 +95,31 @@ const MyCollection = () => {
         setCollectionVideos((prev) => prev.map((video) => ({ ...video, isRemoved: true })));
     };
 
-    const handleRemove = () => {
+    const handleRemove = async () => {
+        // Đóng modal xác nhận
         setIsOpenConfirmModal(false);
+
+        // Hủy bỏ việc quản lý video
         handleCancelManageVideos();
-        dispatch(removeVideosFromCollection({ id: collectionId!, videos: videosRemoved }));
-        dispatch(increaseUncollectedVideos(videosRemoved));
-        openToast({
-            type: 'success',
-            position: 'center',
-            message: t('components.toast.Remove video', {
-                count: videosRemoved.length,
-            }),
-            // duration: 1000,
-        });
+
+        try {
+            // Đợi các thao tác bất đồng bộ (nếu có)
+            await dispatch(removeVideosFromCollection({ id: collectionId!, videos: videosRemoved }));
+            await dispatch(increaseUncollectedVideos(videosRemoved));
+
+            // Sau khi dispatch thành công, hiển thị toast
+            openToast({
+                type: 'success',
+                position: 'center',
+                message: t('components.toast.Remove video', {
+                    count: videosRemoved.length,
+                }),
+                // duration: 1000,
+            });
+        } catch (error) {
+            // Xử lý lỗi nếu có
+            console.error('Có lỗi xảy ra khi xử lý video:', error);
+        }
     };
 
     const handleDeleteCollection = () => {
