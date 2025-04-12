@@ -5,21 +5,6 @@ import { TickBlueIcon } from '~/assets/images/svgs';
 import Image from '~/components/image';
 
 const AccountItem = ({ isCollapsed, account, className, accNav, ...passProps }: Type) => {
-    // const MemoizedImage = React.memo(
-    //     ({ account, accNav, isCollapsed }: { account: any; accNav: boolean; isCollapsed: boolean }) => {
-    //         return (
-    //             <Image
-    //                 className={classNames('rounded-full', {
-    //                     'mr-3 w-9 h-10': !accNav,
-    //                     'w-8 h-8': accNav,
-    //                     'mr-3': !isCollapsed,
-    //                 })}
-    //                 src={account.avatar}
-    //                 alt="Đăng Hùng"
-    //             />
-    //         );
-    //     },
-    // );
     return (
         <Link
             to={`/profile/@${account.nickname}`}
@@ -37,7 +22,7 @@ const AccountItem = ({ isCollapsed, account, className, accNav, ...passProps }: 
                     'mr-3': !isCollapsed,
                 })}
                 src={account.avatar}
-                alt="Đăng Hùng"
+                alt={account.nickname}
             />
             {/* {!isCollapsed && ( */}
             <div

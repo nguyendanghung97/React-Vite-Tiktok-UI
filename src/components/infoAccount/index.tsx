@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from '~/components/image';
 import Avatar from '../avatar';
 import { TickIcon } from '~/assets/images/svgs';
 import ProfileControls from '~/pages/profile/profileControls';
@@ -27,7 +26,7 @@ const InfoAccount: React.FC<Type> = ({ account }) => {
     return (
         <div className="mb-5 flex flex-col md:flex-row justify-center items-center gap-5 md:gap-7">
             <div className="w-52 h-52 flex overflow-hidden">
-                {account ? <Image className="w-full h-full" src={account.avatar} alt={account.nickname} /> : <Avatar />}
+                {<Avatar className="w-full h-full" src={account?.avatar} alt={account?.nickname} />}
             </div>
             <div className="flex-1 flex flex-col justify-center gap-y-3">
                 <div className="flex justify-center md:justify-start gap-x-3">
