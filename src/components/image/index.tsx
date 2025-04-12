@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import images from '~/assets/images';
@@ -6,6 +6,10 @@ import images from '~/assets/images';
 const Image = forwardRef<HTMLDivElement, Type>(
     ({ src, alt, className, fallback: customFallback = images.noImage }, ref) => {
         const [fallback, setFallback] = useState('');
+        // Reset fallback mỗi khi src thay đổi
+        useEffect(() => {
+            setFallback('');
+        }, [src]);
 
         const handleError = () => {
             setFallback(customFallback);
