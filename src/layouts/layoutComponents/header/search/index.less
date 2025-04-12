@@ -1,0 +1,15 @@
+.h-custom {
+    max-height: ~'min(calc(100vh - 156px), 734px)';
+}
+
+.search {
+    &:hover {
+        .search-btn {
+            @apply !text-opacity-90 !bg-opacity-10 bg-light-text dark:bg-dark-text;
+        }
+    }
+
+    input::placeholder {
+        color: rgba(var(--text-color), 0.75);
+    }
+}

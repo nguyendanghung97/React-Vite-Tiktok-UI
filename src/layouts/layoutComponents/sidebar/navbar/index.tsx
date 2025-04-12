@@ -1,4 +1,4 @@
-import { INav } from '~/layouts/layoutComponets/sidebar/navbar/navData';
+import { INav } from '~/layouts/layoutComponents/sidebar/navbar/navData';
 // import NavItem from './navItem';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';

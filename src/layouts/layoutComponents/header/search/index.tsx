@@ -110,9 +110,9 @@ const Search = () => {
             <div
                 ref={searchWrapperRef}
                 className={classNames(
-                    'relative',
+                    'search relative',
                     'flex justify-between items-center',
-                    'group w-full h-11 rounded-3xl',
+                    'w-full h-11 rounded-3xl',
                     'hover:border hover:border-light-text/20 dark:hover:border-dark-text/20',
                     'focus-within:border focus-within:border-light-text/20 dark:focus-within:border-dark-text/20',
                 )}
@@ -144,12 +144,11 @@ const Search = () => {
 
                 <button
                     className={classNames(
-                        'h-full pl-3 pr-4 text-light-text dark:text-dark-text flex items-center rounded-r-3xl',
+                        'search-btn h-full pl-3 pr-4 text-light-text dark:text-dark-text flex items-center rounded-r-3xl',
                         {
                             '!text-opacity-35': !!searchValue == false,
                             '!text-opacity-70': !!searchValue,
                         },
-                        'group-hover:!text-opacity-90 group-hover:!bg-opacity-10 group-hover:bg-light-text dark:group-hover:bg-dark-text',
                     )}
                 >
                     <SearchIcon title="Search Icon" />

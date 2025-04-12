@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import Header from '~/layouts/layoutComponets';
+import Header from '~/layouts/layoutComponents';
 
 const HeaderOnly = ({ children }: PropsWithChildren) => {
     return (

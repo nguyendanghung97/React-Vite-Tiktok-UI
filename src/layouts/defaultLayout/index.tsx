@@ -3,8 +3,8 @@ import classNames from 'classnames';
 
 import './index.less';
 
-import Header from '~/layouts/layoutComponets';
-import SideBar from '../layoutComponets/sidebar';
+import Header from '~/layouts/layoutComponents';
+import SideBar from '../layoutComponents/sidebar';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
     const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 1024); // Khởi tạo dựa trên window.innerWidth

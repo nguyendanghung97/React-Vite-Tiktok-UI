@@ -10,7 +10,7 @@ import Separate from '~/components/separate';
 import './index.less';
 import { ArrowDownIcon } from '~/assets/images/svgs';
 import classNames from 'classnames';
-import Footer from '~/layouts/layoutComponets/footer';
+import Footer from '~/layouts/layoutComponents/footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '~/store';
 import { getSideBarUsers } from '~/store/users';
