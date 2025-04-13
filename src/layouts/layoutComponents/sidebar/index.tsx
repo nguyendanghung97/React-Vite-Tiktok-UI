@@ -8,14 +8,16 @@ import SuggestedAccounts from './suggestedAccounts';
 import Separate from '~/components/separate';
 
 import './index.less';
-import { ArrowDownIcon } from '~/assets/images/svgs';
+import { ArrowDownIcon, Logo } from '~/assets/images/svgs';
 import classNames from 'classnames';
 import Footer from '~/layouts/layoutComponents/footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '~/store';
 import { getSideBarUsers } from '~/store/users';
+import { Link } from 'react-router-dom';
+import config from '~/configs';
 
-const SideBar: React.FC<Type> = ({ isCollapsed, className, ...passProps }) => {
+const SideBar: React.FC<Type> = ({ isCollapsed, isDesktop, className, ...passProps }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { t } = useTranslation();
 
@@ -36,12 +38,21 @@ const SideBar: React.FC<Type> = ({ isCollapsed, className, ...passProps }) => {
     };
 
     return (
-        <div
-            className={classNames(className, 'fixed z-30 h-[calc(100dvh-4rem)] bg-light-bg dark:bg-dark-bg')}
-            {...passProps}
-        >
+        <div className={classNames(className, 'fixed -mt-16 h-dvh bg-light-bg dark:bg-dark-bg')} {...passProps}>
             {/* <Separate className="lg:hidden absolute z-10 inset-0 border-r" /> */}
             <Separate className="absolute z-10 inset-0 border-r" />
+            <div className="h-16 relative z-20">
+                {!isDesktop && (
+                    <Link
+                        className="px-4 w-full h-full flex items-center shadow shadow-light-text/10 dark:shadow-dark-text/10"
+                        to={config.routes.home}
+                        // ép trình duyệt tải lại bằng cách thêm window.location.href => Lúc này nó tương tự như thẻ a
+                        onClick={() => (window.location.href = config.routes.home)}
+                    >
+                        <Logo className="ml-9 sm:ml-0" title="Logo" />
+                    </Link>
+                )}
+            </div>
 
             {/* <div
                 onClick={toggleCollapse}
@@ -56,10 +67,10 @@ const SideBar: React.FC<Type> = ({ isCollapsed, className, ...passProps }) => {
                 </div>
             </div> */}
 
-            <div className="pr-1 h-full">
+            <div className="pr-1 h-[calc(100dvh-4rem)]">
                 <div
                     className={classNames(
-                        'pl-2.5 h-full overflow-x-hidden overflow-y-scroll scrollbar-aside relative z-10',
+                        'pl-2.5 h-full overflow-x-hidden overflow-y-scroll overscroll-contain scrollbar-aside relative z-10',
                     )}
                 >
                     <div
@@ -79,7 +90,10 @@ const SideBar: React.FC<Type> = ({ isCollapsed, className, ...passProps }) => {
                                         'flex justify-center': isCollapsed,
                                     },
                                 )}
-                                onClick={handleClick}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleClick();
+                                }}
                             >
                                 {loadingSidebar ? (
                                     '...'
@@ -128,6 +142,7 @@ const SideBar: React.FC<Type> = ({ isCollapsed, className, ...passProps }) => {
 type Type = {
     className?: string;
     isCollapsed: boolean;
+    isDesktop: boolean;
     toggleCollapse?: () => void;
 } & React.HTMLAttributes<HTMLDivElement>;
 

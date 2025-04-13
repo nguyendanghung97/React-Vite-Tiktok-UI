@@ -32,13 +32,20 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
         };
     }, []);
 
-    useEffect(() => {
+    const handleCollapse = () => {
         if (!isDesktop && !isCollapsed) {
             // location.pathname: setIsCollapsed(true) khi có pathname thay đổi (điều hướng)
             setIsCollapsed(true);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname]);
+    };
+
+    // useEffect(() => {
+    //     if (!isDesktop && !isCollapsed) {
+    //         // location.pathname: setIsCollapsed(true) khi có pathname thay đổi (điều hướng)
+    //         setIsCollapsed(true);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [location.pathname]);
 
     return (
         <>
@@ -59,10 +66,12 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                 <div
                     onClick={toggleCollapse}
                     className={classNames(
-                        'fixed top-16 z-30 inset-0 bg-black/50 dark:bg-black/70 transition-all ease-linear duration-300',
+                        'fixed inset-0 bg-black/50 dark:bg-black/70 transition-all ease-linear duration-300',
                         {
                             'visible opacity-100': !isCollapsed, // Trượt vào vị trí (hiển thị)
                             'invisible opacity-0': isCollapsed, // Trượt ra khỏi màn hình (ẩn)
+                            'z-20': isDesktop,
+                            'z-40': !isDesktop,
                         },
                     )}
                 ></div>
@@ -78,13 +87,17 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                     })}
                 >
                     <SideBar
+                        onClick={handleCollapse}
                         key={location.pathname}
                         className={classNames('transition-all ease-linear duration-300', {
                             'w-60': !isCollapsed,
                             'w-20': isCollapsed,
                             '-left-20': isCollapsed && !isDesktop,
+                            'z-20': isDesktop,
+                            'z-40': !isDesktop,
                         })}
                         isCollapsed={isCollapsed}
+                        isDesktop={isDesktop}
                         // toggleCollapse={toggleCollapse}
                     />
                 </div>

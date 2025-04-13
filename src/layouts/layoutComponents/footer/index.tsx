@@ -15,7 +15,12 @@ const Footer = () => {
     };
 
     return (
-        <footer className="relative pt-4 pl-2">
+        <footer
+            className="relative pt-4 pl-2"
+            onClick={(e) => {
+                e.stopPropagation();
+            }}
+        >
             <Separate className="absolute top-0 left-2 right-2 border-t" />
             <div className="relative mb-5 pr-2">
                 <a
