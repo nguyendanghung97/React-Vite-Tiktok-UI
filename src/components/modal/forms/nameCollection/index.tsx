@@ -45,6 +45,14 @@ const NameCollectionModal: React.FC<Type> = ({
                 className={classNames('max-w-80 w-dvw', className)}
                 onSubmit={async (e) => {
                     e.preventDefault();
+                    const formData = new FormData(e.currentTarget); // Lấy form data
+                    const params: Record<string, string> = {};
+
+                    for (const [key, value] of formData.entries()) {
+                        params[key] = value.toString(); // Chuyển value thành string
+                    }
+
+                    console.log('Params:', params); // Xem dữ liệu từ form
                     if (handleNext) {
                         handleNext();
                     }
@@ -94,6 +102,7 @@ const NameCollectionModal: React.FC<Type> = ({
                         <div className="px-3.5 h-12 rounded-lg">
                             <input
                                 type="text"
+                                name="collectionName"
                                 className="text-base w-full h-full bg-transparent outline-none caret-primary"
                                 placeholder={t('components.modal.forms.nameCollection.Placeholder')}
                                 value={collectionName}

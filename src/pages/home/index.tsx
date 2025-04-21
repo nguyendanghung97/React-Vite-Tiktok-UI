@@ -49,6 +49,33 @@ const Home = () => {
                 video!.currentTime = 0; // Reset về 0 nếu muốn
             }
         });
+
+        // nhớ trạng thái trước khi chuyển tab
+        let wasPlaying = false;
+
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                // Chuyển tab: nếu video đang play thì pause và đánh dấu
+                if (!videoRefs.current[activeIndex]!.paused) {
+                    videoRefs.current[activeIndex]!.pause();
+                    // Video pause vì chuyển tab
+                    wasPlaying = true;
+                }
+            } else {
+                // Quay lại tab: nếu trước đó đang phát thì play lại
+                if (wasPlaying) {
+                    videoRefs.current[activeIndex]!.play();
+                    // Video play lại khi quay lại tab
+                    wasPlaying = false;
+                }
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
     }, [activeIndex]);
 
     useEffect(() => {
@@ -61,11 +88,10 @@ const Home = () => {
         }
     }, [showComments, UrlArticleActive]);
 
-    const toggleMute = () => {
-        const videos = document.querySelectorAll<HTMLVideoElement>('video');
-        videos.forEach((video) => {
+    const handleToggleMute = () => {
+        videoRefs.current.forEach((video) => {
             if (isMuted && volume === 0) {
-                video.volume = 1;
+                video!.volume = 1;
                 setVolume(100);
             }
         });
@@ -73,12 +99,11 @@ const Home = () => {
         setIsMuted((prev) => !prev);
     };
 
-    const onChangeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const videos = document.querySelectorAll<HTMLVideoElement>('video');
-        videos.forEach((video) => {
+    const handleChangeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+        videoRefs.current.forEach((video) => {
             video!.volume = Number(e.target.value) / 100;
             setVolume(Number(e.target.value));
-            setIsMuted(video.volume === 0);
+            setIsMuted(video!.volume === 0);
         });
     };
 
@@ -86,6 +111,12 @@ const Home = () => {
         e.stopPropagation();
         videoRefs.current[activeIndex]!.requestPictureInPicture();
         setIsPiP(true);
+        // if (isMuted === true) {
+        //     videoRefs.current.forEach((v) => {
+        //         setIsMuted(false);
+        //         v!.volume = 0.001;
+        //     });
+        // }
     };
 
     const handleExitPiP = () => {
@@ -97,9 +128,10 @@ const Home = () => {
 
     const handleSlideChange = async (swiper: any) => {
         const newVideo = videoRefs.current[swiper.activeIndex];
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
         if (isPiP) {
-            if (window.innerWidth <= 768) {
+            if (isMobile) {
                 // Nếu là mobile, thoát PiP khi đổi slide
                 try {
                     await document.exitPictureInPicture();
@@ -182,12 +214,12 @@ const Home = () => {
                                                 article={item}
                                                 {...props}
                                                 isMuted={isMuted}
-                                                toggleMute={toggleMute}
+                                                toggleMute={handleToggleMute}
                                                 volume={volume}
-                                                onChangeVolume={onChangeVolume}
+                                                onChangeVolume={handleChangeVolume}
                                             />
                                         )}
-                                        muted={isMuted}
+                                        isMuted={isMuted}
                                         src={item.video.url}
                                         handleEnterPiP={handleEnterPiP}
                                         handleExitPiP={handleExitPiP}

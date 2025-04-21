@@ -38,7 +38,7 @@ const SideBar: React.FC<Type> = ({ isCollapsed, isDesktop, className, ...passPro
     };
 
     return (
-        <div className={classNames(className, 'fixed -mt-16 h-dvh bg-light-bg dark:bg-dark-bg')} {...passProps}>
+        <div className={classNames(className, 'fixed -mt-16 bg-light-bg dark:bg-dark-bg')} {...passProps}>
             {/* <Separate className="lg:hidden absolute z-10 inset-0 border-r" /> */}
             <Separate className="absolute z-10 inset-0 border-r" />
             <div className="h-16 relative z-20">

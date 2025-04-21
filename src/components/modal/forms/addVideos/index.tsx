@@ -39,6 +39,18 @@ const AddVideosModal = ({
                 className="max-w-[480px] sm:w-dvw aspect-[3/4] flex flex-col"
                 onSubmit={async (e) => {
                     e.preventDefault();
+                    // const formData = new FormData(e.currentTarget);
+                    // const selectedVideoIds = formData.getAll('selectedVideos'); // getAll vì checkbox nhiều
+
+                    // console.log('IDs được chọn:', typeof selectedVideoIds[0]);
+                    // const selectedVideosOke = videosToAddVideosModal.filter(
+                    //     (video) => selectedVideoIds.includes(String(video.id)), // So sánh id đã chọn với các video trong mảng
+                    // );
+
+                    // console.log('Các video đã chọn:', selectedVideosOke);
+
+                    // const selectedVideos = videosList.filter((video) => selectedVideoIds.includes(String(video.id)));
+
                     if (context === 'myCollection' && selectedVideos.length < 1) {
                         handleCloseModal();
                         return;
@@ -95,10 +107,13 @@ const AddVideosModal = ({
                                             <VideoPlayer hoverPlay thumbnail={video.thumbnail} src={video.url} />
                                             <div className="absolute top-2 right-2 w-5 h-5 bg-transparent">
                                                 <input
+                                                    name="selectedVideos" // name giống nhau => getAll sẽ gom lại
                                                     checked={video.isSelected}
+                                                    onChange={() => handleSelect(index)}
                                                     type="checkbox"
                                                     className="appearance-none absolute inset-0"
-                                                    readOnly
+                                                    value={video.id}
+                                                    // readOnly
                                                 />
                                                 <div
                                                     className={classNames(

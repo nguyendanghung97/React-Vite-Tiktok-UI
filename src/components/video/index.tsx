@@ -12,7 +12,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
             posterVideo,
             controls,
             src,
-            muted,
+            isMuted,
             className,
             hoverPlay,
             thumbnail,
@@ -43,6 +43,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
 
         // Lắng nghe các sự kiện ở chế độ PiP để cập nhật ở chế độ thường
         useEffect(() => {
+            const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
             const videoElement = localVideoRef.current;
             if (!videoElement) return;
 
@@ -82,6 +83,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
             const handleFocus = async () => {
                 // User quay lại trình duyệt
                 if (document.pictureInPictureElement === videoElement && document.hasFocus()) {
+                    // document.hasFocus(): play đúng video đang focus
                     try {
                         await videoElement.play();
                         console.log('Video đã phát lại khi user trở lại trình duyệt.');
@@ -91,10 +93,11 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
                 }
             };
 
-            // Dùng blur để lắng nghe sự kiện khi thoát khỏi trình duyệt
-            window.addEventListener('blur', handleBlur);
-            // Dùng blur để lắng nghe sự kiện khi trở lại trình duyệt
-            window.addEventListener('focus', handleFocus);
+            if (isMobile) {
+                window.addEventListener('blur', handleBlur);
+                window.addEventListener('focus', handleFocus);
+            }
+
             // Gắn các sự kiện cho video
             videoElement.addEventListener('play', handlePlay);
             videoElement.addEventListener('pause', handlePause);
@@ -107,8 +110,11 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
                 videoElement.removeEventListener('pause', handlePause);
                 videoElement.removeEventListener('enterpictureinpicture', handleEnterPiP);
                 videoElement.removeEventListener('leavepictureinpicture', handleExitPiP);
-                window.removeEventListener('blur', handleBlur);
-                window.removeEventListener('focus', handleFocus);
+
+                if (isMobile) {
+                    window.removeEventListener('blur', handleBlur);
+                    window.removeEventListener('focus', handleFocus);
+                }
             };
         }, []);
 
@@ -197,7 +203,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
                     })}
                     ref={localVideoRef}
                     src={src}
-                    muted={controls ? muted : true}
+                    muted={controls ? isMuted : true}
                     onTimeUpdate={onTimeUpdate}
                     onEnded={(e) => handleEnded(e)}
                     onMouseEnter={!hoverPlay ? onMouseEnter : handleMouseEnter}
@@ -239,7 +245,7 @@ type Type = {
     className?: string;
     src: string; // Đường dẫn của video
     imgCover?: string;
-    muted?: boolean;
+    isMuted?: boolean;
     controls?: (props: ControlsProps) => React.ReactNode; // Hàm controls trả về JSX
     onMouseEnter?: (e: React.MouseEvent<HTMLVideoElement>) => void;
     onMouseLeave?: (e: React.MouseEvent<HTMLVideoElement>) => void;
