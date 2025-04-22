@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './index.less';
 import classNames from 'classnames';
 
-const Slider: React.FC<Type> = ({ percentage = 0, onChange, muted, time }) => {
+const Slider: React.FC<SliderProps> = ({ percentage = 0, onChange, muted, time, className }) => {
     // console.log(muted);
     const [positionThumb, setPositionThumb] = useState(0);
     const [marginLeft, setMarginLeft] = useState(0);
@@ -26,7 +26,9 @@ const Slider: React.FC<Type> = ({ percentage = 0, onChange, muted, time }) => {
     }, [percentage, muted]);
 
     return (
-        <div className="slider-wrapper h-full w-full relative flex items-center !bg-transparent">
+        <div
+            className={classNames(className, 'slider-wrapper h-full w-full relative flex items-center !bg-transparent')}
+        >
             <div
                 className="progress-bar absolute top-1/2 -translate-y-1/2 left-0 bg-white rounded-lg"
                 style={{
@@ -58,11 +60,12 @@ const Slider: React.FC<Type> = ({ percentage = 0, onChange, muted, time }) => {
     );
 };
 
-type Type = {
+export type SliderProps = {
+    className?: string;
     percentage: number;
     onChange: React.ChangeEventHandler<HTMLInputElement>;
     muted?: boolean;
     time?: boolean;
-};
+} & React.HTMLAttributes<HTMLElement>;
 
 export default Slider;

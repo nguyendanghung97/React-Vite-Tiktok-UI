@@ -4,10 +4,6 @@ import React, { forwardRef, MouseEvent, useEffect, useRef, useState } from 'reac
 const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
     (
         {
-            isPiP,
-            setIsPiP,
-            handleEnterPiP,
-            handleExitPiP,
             // posterVideo: mobile không tự động phát video để tối ưu dung lượng phải thêm nó để fix giao diện hiển thị khi video chưa load
             posterVideo,
             controls,
@@ -27,8 +23,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
         // const video = videoRef.current;
 
         const [isPlaying, setIsPlaying] = useState(true);
-        const [time, setTime] = useState(0);
-        // s
+        // const [time, setTime] = useState(0);
         // const [isPiP, setIsPiP] = useState(false);
         const [showPoster, setShowPoster] = useState(true);
 
@@ -55,16 +50,6 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
             // Hàm xử lý khi video pause
             const handlePause = () => {
                 setIsPlaying(false);
-            };
-
-            // Hàm xử lý khi vào chế độ PiP
-            const handleEnterPiP = () => {
-                setIsPiP!(true);
-            };
-
-            // Hàm xử lý khi thoát khỏi chế độ PiP
-            const handleExitPiP = () => {
-                setIsPiP!(false);
             };
 
             // Pause video khi user rời khỏi trình duyệt
@@ -101,15 +86,11 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
             // Gắn các sự kiện cho video
             videoElement.addEventListener('play', handlePlay);
             videoElement.addEventListener('pause', handlePause);
-            videoElement.addEventListener('enterpictureinpicture', handleEnterPiP);
-            videoElement.addEventListener('leavepictureinpicture', handleExitPiP);
 
             // Cleanup sự kiện khi component unmount
             return () => {
                 videoElement.removeEventListener('play', handlePlay);
                 videoElement.removeEventListener('pause', handlePause);
-                videoElement.removeEventListener('enterpictureinpicture', handleEnterPiP);
-                videoElement.removeEventListener('leavepictureinpicture', handleExitPiP);
 
                 if (isMobile) {
                     window.removeEventListener('blur', handleBlur);
@@ -127,17 +108,17 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
             setIsPlaying((prev) => !prev);
         };
 
-        const onChangeTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-            videoElement!.currentTime = (videoElement!.duration / 100) * parseFloat(e.target.value);
-            setTime!(parseFloat(e.target.value));
-        };
+        // const handleChangeTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+        //     videoElement!.currentTime = (videoElement!.duration / 100) * parseFloat(e.target.value);
+        //     // setTime!(parseFloat(e.target.value));
+        // };
 
-        const onTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
-            // console.log('duration', e.currentTarget.duration);
-            const percent = ((e.currentTarget.currentTime / e.currentTarget.duration) * 100).toFixed(2);
+        // const handleTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+        //     // console.log('duration', e.currentTarget.duration);
+        //     const percent = ((e.currentTarget.currentTime / e.currentTarget.duration) * 100).toFixed(2);
 
-            setTime!(+percent);
-        };
+        //     setTime!(+percent);
+        // };
 
         const handleEnded = (e: React.SyntheticEvent<HTMLVideoElement>) => {
             const video = e.currentTarget;
@@ -204,7 +185,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
                     ref={localVideoRef}
                     src={src}
                     muted={controls ? isMuted : true}
-                    onTimeUpdate={onTimeUpdate}
+                    // onTimeUpdate={handleTimeUpdate}
                     onEnded={(e) => handleEnded(e)}
                     onMouseEnter={!hoverPlay ? onMouseEnter : handleMouseEnter}
                     onMouseLeave={hoverPlay ? handleMouseLeave : onMouseLeave}
@@ -216,48 +197,32 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
                     controls({
                         isPlaying,
                         handlePlayPause,
-                        time,
-                        onChangeTime,
-                        onTimeUpdate,
-                        isPiP,
-                        // setIsPiP,
-                        handleEnterPiP,
-                        handleExitPiP,
+                        // time,
+                        // handleChangeTime,
                     })}
             </div>
         );
     },
 );
 
-export interface ControlsProps {
+export type LocalVideoControls = {
     isPlaying: boolean;
     handlePlayPause: () => void;
-    time: number;
-    onChangeTime: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onTimeUpdate: (e: React.SyntheticEvent<HTMLVideoElement>) => void;
-    handleEnterPiP?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    handleExitPiP?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    isPiP?: boolean;
-    setIsPiP?: React.Dispatch<React.SetStateAction<boolean>>;
-}
+    // time?: number;
+    // handleChangeTime?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
 type Type = {
     className?: string;
     src: string; // Đường dẫn của video
     imgCover?: string;
-    isMuted?: boolean;
-    controls?: (props: ControlsProps) => React.ReactNode; // Hàm controls trả về JSX
+    controls?: (props: LocalVideoControls) => React.ReactNode; // Hàm controls trả về JSX
     onMouseEnter?: (e: React.MouseEvent<HTMLVideoElement>) => void;
     onMouseLeave?: (e: React.MouseEvent<HTMLVideoElement>) => void;
     posterVideo?: string;
     hoverPlay?: boolean;
     thumbnail?: string;
-    handleEnterPiP?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    handleExitPiP?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    isPiP?: boolean;
-    setIsPiP?: React.Dispatch<React.SetStateAction<boolean>>;
-    time?: number;
-    setTime?: React.Dispatch<React.SetStateAction<number>>;
+    isMuted?: boolean;
 };
 
 export default VideoPlayer;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Mousewheel, Navigation } from 'swiper/modules';
 // import 'swiper/swiper-bundle.css';
@@ -11,30 +11,32 @@ import Button from '~/components/button';
 import { ArrowDownIcon } from '~/assets/images/svgs';
 import classNames from 'classnames';
 import ActionsArticle from '~/components/article/actionsArticle';
-import VideoPlayer, { ControlsProps } from '~/components/video';
+import VideoPlayer, { LocalVideoControls } from '~/components/video';
 import VideoPlayerControls from '~/components/videoControls';
+import TimeSlider from '~/components/slider/TimeSlider';
 
 const Home = () => {
-    const swiperRef = useRef<SwiperClass | null>(null);
-
-    const prevRef = useRef<HTMLButtonElement>(null);
-    const nextRef = useRef<HTMLButtonElement>(null);
-    // console.log('swiperRef', typeof swiperRef!);
-
-    const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-
-    // console.log('videoRefs', videoRefs);
-
     const [isPiP, setIsPiP] = useState(false);
-
     const [isMuted, setIsMuted] = useState(true);
     const [volume, setVolume] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0); // Theo dõi slide hiện tại
     const [activeItem, setActiveItem] = useState<IArticle>(articles[0]);
     // console.log('activeItem', activeItem);
     const [showComments, setShowComments] = useState(false);
-    // const urlOriginal = window.location.origin;
-    const UrlArticleActive = `${window.location.origin}/@${activeItem.user.nickname}/video/${activeItem.id}`;
+
+    const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+    // console.log('videoRefs', videoRefs);
+    const activeVideo = videoRefs.current[activeIndex];
+
+    const swiperRef = useRef<SwiperClass | null>(null);
+    // console.log('swiperRef', typeof swiperRef!);
+    const prevRef = useRef<HTMLButtonElement>(null);
+    const nextRef = useRef<HTMLButtonElement>(null);
+
+    // UrlArticleActive có truyền xuống chlid nên sử dụng useMemo
+    const UrlArticleActive = useMemo(() => {
+        return `${window.location.origin}/@${activeItem.user.nickname}/video/${activeItem.id}`;
+    }, [activeItem]);
 
     useEffect(() => {
         document.title = 'TikTok - Make Your Day';
@@ -49,22 +51,25 @@ const Home = () => {
                 video!.currentTime = 0; // Reset về 0 nếu muốn
             }
         });
+    }, [activeIndex]);
 
+    useEffect(() => {
         // nhớ trạng thái trước khi chuyển tab
         let wasPlaying = false;
 
         const handleVisibilityChange = () => {
+            if (!activeVideo) return;
             if (document.hidden) {
                 // Chuyển tab: nếu video đang play thì pause và đánh dấu
-                if (!videoRefs.current[activeIndex]!.paused) {
-                    videoRefs.current[activeIndex]!.pause();
+                if (!activeVideo.paused) {
+                    activeVideo.pause();
                     // Video pause vì chuyển tab
                     wasPlaying = true;
                 }
             } else {
                 // Quay lại tab: nếu trước đó đang phát thì play lại
                 if (wasPlaying) {
-                    videoRefs.current[activeIndex]!.play();
+                    activeVideo.play();
                     // Video play lại khi quay lại tab
                     wasPlaying = false;
                 }
@@ -76,7 +81,7 @@ const Home = () => {
         return () => {
             document.removeEventListener('visibilitychange', handleVisibilityChange);
         };
-    }, [activeIndex]);
+    }, [activeVideo]);
 
     useEffect(() => {
         if (showComments === true) {
@@ -88,43 +93,47 @@ const Home = () => {
         }
     }, [showComments, UrlArticleActive]);
 
-    const handleToggleMute = () => {
-        videoRefs.current.forEach((video) => {
-            if (isMuted && volume === 0) {
-                video!.volume = 1;
-                setVolume(100);
+    const globalVideoControls = {
+        volume,
+        isMuted,
+        isPiP,
+        setIsPiP,
+        handleToggleMute: useCallback(() => {
+            videoRefs.current.forEach((video) => {
+                if (isMuted && volume === 0) {
+                    video!.volume = 1;
+                    setVolume(100);
+                }
+            });
+            setIsMuted((prev) => !prev);
+        }, [isMuted, volume]),
+
+        handleChangeVolume: (e: React.ChangeEvent<HTMLInputElement>) => {
+            videoRefs.current.forEach((video) => {
+                video!.volume = Number(e.target.value) / 100;
+                setVolume(Number(e.target.value));
+                setIsMuted(video!.volume === 0);
+            });
+        },
+
+        handleEnterPiP: useCallback(
+            (e: React.MouseEvent<HTMLButtonElement>) => {
+                e.stopPropagation();
+                activeVideo!.requestPictureInPicture();
+                setIsPiP(true);
+            },
+            [activeVideo],
+        ),
+
+        handleExitPiP: () => {
+            if (document.pictureInPictureElement) {
+                document.exitPictureInPicture();
+                setIsPiP(false);
             }
-        });
-
-        setIsMuted((prev) => !prev);
+        },
     };
 
-    const handleChangeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-        videoRefs.current.forEach((video) => {
-            video!.volume = Number(e.target.value) / 100;
-            setVolume(Number(e.target.value));
-            setIsMuted(video!.volume === 0);
-        });
-    };
-
-    const handleEnterPiP = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-        videoRefs.current[activeIndex]!.requestPictureInPicture();
-        setIsPiP(true);
-        // if (isMuted === true) {
-        //     videoRefs.current.forEach((v) => {
-        //         setIsMuted(false);
-        //         v!.volume = 0.001;
-        //     });
-        // }
-    };
-
-    const handleExitPiP = () => {
-        if (document.pictureInPictureElement) {
-            document.exitPictureInPicture();
-            setIsPiP(false);
-        }
-    };
+    // console.log(globalVideoControls.volume);
 
     const handleSlideChange = async (swiper: any) => {
         const newVideo = videoRefs.current[swiper.activeIndex];
@@ -133,18 +142,10 @@ const Home = () => {
         if (isPiP) {
             if (isMobile) {
                 // Nếu là mobile, thoát PiP khi đổi slide
-                try {
-                    await document.exitPictureInPicture();
-                } catch (err) {
-                    console.error('❌ PiP Exit Error:', err);
-                }
+                await document.exitPictureInPicture();
             } else if (newVideo) {
                 // Nếu là PC, chuyển video trong PiP
-                try {
-                    await newVideo.requestPictureInPicture();
-                } catch (err) {
-                    console.error('❌ PiP Error:', err);
-                }
+                await newVideo.requestPictureInPicture();
             }
         }
     };
@@ -184,10 +185,6 @@ const Home = () => {
             onSlideChange={(swiper) => {
                 setActiveIndex(swiper.activeIndex);
                 setActiveItem(articles[swiper.activeIndex]);
-                // const videoActive = videoRefs.current[swiper.activeIndex];
-                // if (isPiP && videoActive) {
-                //     videoActive.requestPictureInPicture();
-                // }
                 handleSlideChange(swiper);
             }}
         >
@@ -207,26 +204,27 @@ const Home = () => {
                                     <VideoPlayer
                                         // Lấy ra list videoElement
                                         ref={(el) => (videoRefs.current[index] = el)}
-                                        posterVideo={item.video.thumbnail}
-                                        controls={(props: ControlsProps) => (
-                                            <VideoPlayerControls
-                                                swiperRef={swiperRef}
-                                                article={item}
-                                                {...props}
-                                                isMuted={isMuted}
-                                                toggleMute={handleToggleMute}
-                                                volume={volume}
-                                                onChangeVolume={handleChangeVolume}
-                                            />
-                                        )}
-                                        isMuted={isMuted}
                                         src={item.video.url}
-                                        handleEnterPiP={handleEnterPiP}
-                                        handleExitPiP={handleExitPiP}
-                                        isPiP={isPiP}
-                                        setIsPiP={setIsPiP}
-                                        // time={time}
-                                        // setTime={setTime}
+                                        posterVideo={item.video.thumbnail}
+                                        isMuted={isMuted}
+                                        controls={(props: LocalVideoControls) => {
+                                            return (
+                                                <div className="group absolute inset-0">
+                                                    <VideoPlayerControls
+                                                        swiperRef={swiperRef}
+                                                        article={item}
+                                                        {...props}
+                                                        globalVideoControls={globalVideoControls}
+                                                    />
+                                                    {/* TimeSlider */}
+                                                    <div className="cursor-pointer absolute z-0 left-10 right-10 h-10 flex items-center opacity-0 group-hover:opacity-100 bottom-3 transition-all ease duration-300">
+                                                        <div className="flex-1 h-3 mx-3 flex justify-center">
+                                                            <TimeSlider video={videoRefs.current[activeIndex]} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }}
                                     />
                                 </section>
                                 <section className="hidden w-16 shrink-0 sm:flex justify-end items-end overflow-hidden">

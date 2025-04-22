@@ -2,7 +2,7 @@ import React from 'react';
 import { Swiper as SwiperClass } from 'swiper';
 
 import ActionsArticle from './actionsArticle';
-import VideoPlayer, { ControlsProps } from '~/components/video';
+import VideoPlayer, { LocalVideoControls } from '~/components/video';
 import VideoPlayerControls from '~/components/videoControls';
 import { IArticle } from '~/pages/home/dataHomePage';
 import classNames from 'classnames';
@@ -11,9 +11,6 @@ const Article: React.FC<Type> = ({
     className,
     data,
     isMuted,
-    toggleMute,
-    volume,
-    onChangeVolume,
     swiperRef,
     activeItem,
     UrlArticleActive,
@@ -33,18 +30,10 @@ const Article: React.FC<Type> = ({
                 >
                     <VideoPlayer
                         // posterVideo={data.video.thumbnail}
-                        controls={(props: ControlsProps) => (
-                            <VideoPlayerControls
-                                swiperRef={swiperRef}
-                                article={data}
-                                {...props}
-                                isMuted={isMuted}
-                                toggleMute={toggleMute}
-                                volume={volume}
-                                onChangeVolume={onChangeVolume}
-                            />
+                        controls={(props: LocalVideoControls) => (
+                            <VideoPlayerControls swiperRef={swiperRef} article={data} {...props} />
                         )}
-                        muted={isMuted}
+                        isMuted={isMuted}
                         src={data.video.url}
                     />
                 </section>

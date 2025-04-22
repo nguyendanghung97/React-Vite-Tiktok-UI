@@ -313,7 +313,7 @@ const MyCollection = () => {
                                     <VideoPlayer
                                         hoverPlay
                                         src={collectionVideo.url}
-                                        thumbnail={collectionVideo.thumbnail}
+                                        posterVideo={collectionVideo.thumbnail}
                                     />
                                     {isControlsDeleteVideos && (
                                         <div className="absolute top-2 right-2 w-5 h-5 bg-transparent">
