@@ -110,7 +110,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
 
         // const handleChangeTime = (e: React.ChangeEvent<HTMLInputElement>) => {
         //     videoElement!.currentTime = (videoElement!.duration / 100) * parseFloat(e.target.value);
-        //     // setTime!(parseFloat(e.target.value));
+        //     setTime!(parseFloat(e.target.value));
         // };
 
         // const handleTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
