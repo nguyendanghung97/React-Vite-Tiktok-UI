@@ -23,6 +23,7 @@ const Home = () => {
     const [activeItem, setActiveItem] = useState<IArticle>(articles[0]);
     // console.log('activeItem', activeItem);
     const [showComments, setShowComments] = useState(false);
+    const [videoRefsReady, setVideoRefsReady] = useState(false);
 
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
     // console.log('videoRefs', videoRefs);
@@ -37,6 +38,16 @@ const Home = () => {
     const UrlArticleActive = useMemo(() => {
         return `${window.location.origin}/@${activeItem.user.nickname}/video/${activeItem.id}`;
     }, [activeItem]);
+
+    // Dùng useEffect để kiểm tra khi tất cả các video element đã được gán
+    useEffect(() => {
+        // Kiểm tra khi tất cả videoRefs đã được gán giá trị không phải null
+        if (videoRefs.current.every((ref) => ref !== null)) {
+            // console.log('videoRefs', videoRefs);
+            setVideoRefsReady(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [articles]);
 
     useEffect(() => {
         document.title = 'TikTok - Make Your Day';
@@ -192,7 +203,7 @@ const Home = () => {
                 return (
                     <SwiperSlide key={index}>
                         <article className={classNames('h-full p-4 flex justify-center overflow-hidden')}>
-                            <div className="flex justify-center items-center">
+                            <div className="flex justify-center">
                                 <section className="hidden sm:flex w-16 shrink-0"></section>
                                 <section
                                     className={classNames(
@@ -203,12 +214,16 @@ const Home = () => {
                                 >
                                     <VideoPlayer
                                         // Lấy ra list videoElement
-                                        ref={(el) => (videoRefs.current[index] = el)}
+                                        ref={(el) => {
+                                            if (el) {
+                                                videoRefs.current[index] = el;
+                                            }
+                                        }}
                                         src={item.video.url}
                                         posterVideo={item.video.thumbnail}
                                         isMuted={isMuted}
-                                        controls={(props: LocalVideoControls) => {
-                                            return (
+                                        controls={(props: LocalVideoControls) =>
+                                            videoRefsReady && (
                                                 <div className="group absolute inset-0">
                                                     <VideoPlayerControls
                                                         swiperRef={swiperRef}
@@ -216,15 +231,14 @@ const Home = () => {
                                                         {...props}
                                                         globalVideoControls={globalVideoControls}
                                                     />
-                                                    {/* TimeSlider */}
                                                     <div className="cursor-pointer absolute z-0 left-10 right-10 h-10 flex items-center opacity-0 group-hover:opacity-100 bottom-3 transition-all ease duration-300">
                                                         <div className="flex-1 h-3 mx-3 flex justify-center">
-                                                            <TimeSlider video={videoRefs.current[activeIndex]} />
+                                                            <TimeSlider video={videoRefs.current[index]} />
                                                         </div>
                                                     </div>
                                                 </div>
-                                            );
-                                        }}
+                                            )
+                                        }
                                     />
                                 </section>
                                 <section className="hidden w-16 shrink-0 sm:flex justify-end items-end overflow-hidden">
