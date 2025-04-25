@@ -57,6 +57,9 @@ export const videoSlice = createSlice({
     name: 'videos',
     initialState,
     reducers: {
+        resetVideos: (state) => {
+            state.uncollectedVideos = favoriteVideos.map((video) => ({ ...video, isInCollection: false }));
+        },
         // cập nhật uncollectedVideos: loại bỏ mảng gồm các videos đã được selected
         reduceUncollectedVideos: (state, action: PayloadAction<VideoSelect[]>) => {
             state.uncollectedVideos = state.uncollectedVideos.filter(
@@ -100,4 +103,4 @@ export const videoSlice = createSlice({
     },
 });
 
-export const { reduceUncollectedVideos, increaseUncollectedVideos } = videoSlice.actions;
+export const { reduceUncollectedVideos, increaseUncollectedVideos, resetVideos } = videoSlice.actions;

@@ -339,16 +339,14 @@ const Profile = () => {
                                 </Button>
 
                                 {/* <Button
-                               className="px-3 min-w-24 h-8 text-sm font-semibold"
-                               onClick={() => {
-                                   dispatch(resetCollections());
-                                   setUnselectedVideos(
-                                       favoriteVideos.map((video) => ({ ...video, isSelected: false })),
-                                   );
-                               }}
-                           >
-                               {t('components.button.Reset')}
-                           </Button> */}
+                                    className="px-3 min-w-24 h-8 text-sm font-semibold"
+                                    onClick={() => {
+                                        dispatch(resetCollections());
+                                        dispatch(resetVideos());
+                                    }}
+                                >
+                                    {t('components.button.Reset')}
+                                </Button> */}
                             </div>
                         )}
 

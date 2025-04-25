@@ -103,7 +103,6 @@ const Home = () => {
             window.history.replaceState({}, '', '/');
         }
     }, [showComments, UrlArticleActive]);
-
     const globalVideoControls = {
         volume,
         isMuted,

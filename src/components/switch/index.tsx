@@ -23,11 +23,13 @@ const Switch = ({ isChecked, setIsChecked, id, className, checkedColor, isOpenMe
         }
     }, [isOpenMenu, isChecked]);
 
-    // const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const value = e.target.checked;
-    //     console.log('value', value);
-    //     // setIsChecked(value);
-    // };
+    const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.checked;
+        // console.log('value', value);
+        if (setIsChecked) {
+            setIsChecked(value);
+        }
+    };
 
     return (
         <div
@@ -39,7 +41,6 @@ const Switch = ({ isChecked, setIsChecked, id, className, checkedColor, isOpenMe
                     [checkedColor]: isChecked,
                 },
             )}
-            // onClick={() => setIsChecked((prev) => !prev)}
         >
             <input
                 id={id}
@@ -47,13 +48,12 @@ const Switch = ({ isChecked, setIsChecked, id, className, checkedColor, isOpenMe
                 checked={isChecked}
                 type="checkbox"
                 role="switch"
-                onChange={() => setIsChecked((prev) => !prev)}
+                onChange={handleCheck}
             />
             <div
                 ref={thumbSwitchRef}
                 className={classNames(
                     'relative z-30 h-full aspect-square bg-white rounded-3xl shadow-lg pointer-events-none transition-all ease-in duration-150',
-                    { 'translate-x-5': isChecked },
                 )}
             ></div>
         </div>
@@ -65,7 +65,7 @@ type Type = {
     className: string;
     checkedColor: string;
     isChecked: boolean;
-    setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
     isOpenMenu?: boolean;
 };
 

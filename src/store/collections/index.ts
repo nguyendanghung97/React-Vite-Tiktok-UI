@@ -47,8 +47,6 @@ export const collectionsSlice = createSlice({
             // Đặt lại state về giá trị ban đầu
             state.collections = [];
         },
-
-        // ✅ Cập nhật tên collection
         updateCollectionName: (state, action: PayloadAction<{ id: string; name: string }>) => {
             const collection = state.collections.find((c) => c.id === action.payload.id);
             if (collection) {

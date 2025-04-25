@@ -33,8 +33,8 @@ const CollectionActions = ({
     children,
     isOpenMenu,
     setIsOpenMenu,
-    isChecked,
-    setIsChecked,
+    // isChecked,
+    // setIsChecked,
     handleDeleteCollection,
 }: Type) => {
     const { t } = useTranslation();
@@ -97,8 +97,7 @@ const CollectionActions = ({
                                     <Switch
                                         checkedColor="!bg-[#20d5ec]"
                                         className="p-1 w-10 h-6 shrink-0"
-                                        isChecked={isChecked}
-                                        setIsChecked={setIsChecked}
+                                        isChecked={currentCollection!.isPublic}
                                         isOpenMenu={isOpenMenu}
                                     />
                                 )
@@ -141,8 +140,8 @@ type Type = {
     children: React.ReactElement;
     isOpenMenu: boolean;
     setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
-    isChecked: boolean;
-    setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+    isChecked?: boolean;
+    setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
     handleDeleteCollection: (collectionId: any) => void;
     collectionId: string;
 };

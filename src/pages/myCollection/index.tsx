@@ -53,7 +53,7 @@ const MyCollection = () => {
 
     // const [unselectedVideos, setUnselectedVideos] = useState<VideoSelect[]>([]);
     const [selectedVideos, setSelectedVideos] = useState<VideoSelect[]>([]);
-    const [isChecked, setIsChecked] = useState(currentCollection!.isPublic);
+    // const [isChecked, setIsChecked] = useState(currentCollection!.isPublic);
     const [isControlsDeleteVideos, setIsControlsDeleteVideos] = useState(false);
 
     const [collectionVideos, setCollectionVideos] = useState<VideoRemove[]>(
@@ -238,8 +238,6 @@ const MyCollection = () => {
                                 collectionId={collectionId!}
                                 isOpenMenu={isOpenMenu}
                                 setIsOpenMenu={setIsOpenMenu}
-                                isChecked={isChecked}
-                                setIsChecked={setIsChecked}
                                 handleDeleteCollection={handleDeleteCollection}
                             >
                                 <Button

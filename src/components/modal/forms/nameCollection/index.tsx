@@ -45,14 +45,14 @@ const NameCollectionModal: React.FC<Type> = ({
                 className={classNames('max-w-80 w-dvw', className)}
                 onSubmit={async (e) => {
                     e.preventDefault();
-                    const formData = new FormData(e.currentTarget); // Lấy form data
-                    const params: Record<string, string> = {};
+                    // const formData = new FormData(e.currentTarget); // Lấy form data
+                    // const params: Record<string, string> = {};
 
-                    for (const [key, value] of formData.entries()) {
-                        params[key] = value.toString(); // Chuyển value thành string
-                    }
+                    // for (const [key, value] of formData.entries()) {
+                    //     params[key] = value.toString(); // Chuyển value thành string
+                    // }
 
-                    console.log('Params:', params); // Xem dữ liệu từ form
+                    // console.log('Params:', params); // Xem dữ liệu từ form
                     if (handleNext) {
                         handleNext();
                     }
