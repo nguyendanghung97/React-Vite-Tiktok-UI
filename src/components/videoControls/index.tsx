@@ -71,7 +71,7 @@ const VideoPlayerControls = React.memo(
 
         return (
             <>
-                {console.log('re-render')}
+                {/* {console.log('re-render')} */}
                 <div
                     className="absolute z-0 inset-0 flex flex-col justify-between rounded-2xl overflow-hidden text-white cursor-pointer"
                     onClick={handlePlayPause}

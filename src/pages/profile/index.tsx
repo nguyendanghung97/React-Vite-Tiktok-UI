@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,7 +31,11 @@ const Profile = () => {
     // Ref để lưu trữ tham chiếu đến các phần tử DOM
     const liRefs = useRef<(HTMLLIElement | null)[]>([]);
     const { state } = useLocation();
-    const { selectedAccount, myCollectionRedirectTab, myCollectionRedirectSubTab } = state || {};
+    const { selectedAccount, myCollectionRedirectTab, myCollectionRedirectSubTab } = useMemo(() => {
+        console.log('selectedAccount');
+        return state || {};
+    }, [state]);
+    // const { selectedAccount, myCollectionRedirectTab, myCollectionRedirectSubTab } = state || {};
 
     const collections = useSelector((state: RootState) => state.collections.collections);
 
@@ -139,23 +143,37 @@ const Profile = () => {
     ];
 
     // (IIFE - Immediately Invoked Function Expression)
-    const profileTabsDisplay = (() => {
-        // Nếu có selectedAccount
+    // const profileTabsDisplay = (() => {
+    //     // Nếu có selectedAccount
+    //     if (selectedAccount) {
+    //         // Nếu không có video reposts, ẩn 'Reposts'
+    //         if (repostVideos.length === 0) {
+    //             return profileTabs.filter((item) => item.title !== 'Reposts' && item.title !== 'Favorites');
+    //         }
+    //         // Nếu có video repost, chỉ ẩn 'Favorites'
+    //         return profileTabs.filter((item) => item.title !== 'Favorites');
+    //     } else {
+    //         if (repostVideos.length === 0) {
+    //             return profileTabs.filter((item) => item.title !== 'Reposts');
+    //         }
+    //     }
+    //     // Trả về tất cả các tab nếu không có điều kiện nào
+    //     return profileTabs;
+    // })();
+
+    const profileTabsDisplay = useMemo(() => {
+        let excludeTabs: string[] = [];
+
         if (selectedAccount) {
-            // Nếu không có video reposts, ẩn 'Reposts'
-            if (repostVideos.length === 0) {
-                return profileTabs.filter((item) => item.title !== 'Reposts' && item.title !== 'Favorites');
-            }
-            // Nếu có video repost, chỉ ẩn 'Favorites'
-            return profileTabs.filter((item) => item.title !== 'Favorites');
+            excludeTabs = repostVideos.length === 0 ? ['Reposts', 'Favorites'] : ['Favorites'];
         } else {
             if (repostVideos.length === 0) {
-                return profileTabs.filter((item) => item.title !== 'Reposts');
+                excludeTabs = ['Reposts'];
             }
         }
-        // Trả về tất cả các tab nếu không có điều kiện nào
-        return profileTabs;
-    })();
+
+        return profileTabs.filter((tab) => !excludeTabs.includes(tab.title));
+    }, [selectedAccount]);
 
     useEffect(() => {
         // Chỉ đặt lại activeSubTabFavorite khi activeTab thay đổi từ 'Favorites' sang một tab khác
@@ -201,15 +219,15 @@ const Profile = () => {
 
     return (
         <>
+            {console.log('re-renderProfile')}
             {/* Nguyên nhân dẫn đến UI bị rung:
             Trình duyệt không biết vùng nào được phép cuộn tiếp, nên sự kiện wheel bị đẩy lên phần tử cha (body, html, hoặc page).
             Nếu phần tử con (sidebar) đã cuộn hết, trình duyệt mặc định chuyển cuộn sang phần tử cha → gây hiệu ứng giật/rung khi page cũng bắt đầu cuộn.
             
         */}
             {isOpenModal && modals[activeModalIndex]}
-            {/* 100vh nghĩa là 100% chiều cao của viewport (khung nhìn của trình duyệt). */}
+
             {/* 100dvh là 100% chiều cao thực tế của thiết bị, không bị ảnh hưởng bởi thanh địa chỉ của trình duyệt. */}
-            {/* 100dvh giúp UI ổn định với mọi thiết bị */}
             <div className="py-9 px-8 flex-1 overflow-x-hidden overflow-y-scroll sm:h-[calc(100dvh-4rem)]">
                 <InfoAccount account={selectedAccount}></InfoAccount>
 
