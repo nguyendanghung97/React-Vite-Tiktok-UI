@@ -14,8 +14,11 @@ import ActionsArticle from '~/components/article/actionsArticle';
 import VideoPlayer, { LocalVideoControls } from '~/components/video';
 import VideoPlayerControls from '~/components/videoControls';
 import TimeSlider from '~/components/slider/TimeSlider';
+import { useNavigate } from 'react-router-dom';
+import config from '~/configs';
 
 const Home = () => {
+    const navigate = useNavigate();
     const [isPiP, setIsPiP] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
     const [volume, setVolume] = useState(0);
@@ -38,6 +41,17 @@ const Home = () => {
     const UrlArticleActive = useMemo(() => {
         return `${window.location.origin}/@${activeItem.user.nickname}/video/${activeItem.id}`;
     }, [activeItem]);
+
+    useEffect(() => {
+        if (showComments === true) {
+            // Thay đổi URL mà không tải lại trang
+            window.history.replaceState({}, '', UrlArticleActive);
+            // // Cập nhật URL liên tục: replaceState + PopStateEvent = navigate
+            // window.dispatchEvent(new PopStateEvent('popstate')); // Thêm dòng này
+        } else {
+            navigate(config.routes.home);
+        }
+    }, [showComments, UrlArticleActive, navigate]);
 
     // Dùng useEffect để kiểm tra khi tất cả các video element đã được gán
     useEffect(() => {
@@ -94,15 +108,6 @@ const Home = () => {
         };
     }, [activeVideo]);
 
-    useEffect(() => {
-        if (showComments === true) {
-            // Thay đổi URL mà không tải lại trang
-            window.history.replaceState({}, '', UrlArticleActive);
-        } else {
-            // Quay lại URL ban đầu
-            window.history.replaceState({}, '', '/');
-        }
-    }, [showComments, UrlArticleActive]);
     const globalVideoControls = {
         volume,
         isMuted,
@@ -159,6 +164,7 @@ const Home = () => {
             }
         }
     };
+
     return (
         <Swiper
             modules={[Mousewheel, Keyboard, Navigation]}

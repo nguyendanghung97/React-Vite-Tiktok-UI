@@ -116,4 +116,4 @@ type Type = {
     setShowComments: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default ActionsArticle;
+export default React.memo(ActionsArticle);

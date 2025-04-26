@@ -1,5 +1,6 @@
 const routes: Record<string, any> = {
     home: '/',
+    homeShowComment: '/:nickname/video/:id',
     following: '/following',
     profile: '/profile/:username',
     myProfile: '/profile/@dhung61097',
