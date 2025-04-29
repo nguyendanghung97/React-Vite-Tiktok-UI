@@ -15,11 +15,8 @@ const Tab = forwardRef<HTMLLIElement, Type>(
                     'shrink-0 h-full flex items-center justify-center cursor-pointer text-light-text/60 dark:text-dark-text/50 hover:text-light-text dark:hover:text-dark-text/90',
                     className,
                     {
-                        '!text-light-text dark:!text-dark-text': isActive,
+                        '!text-light-text dark:!text-dark-text/90': isActive,
                     },
-                    // {
-                    //     '!text-light-text dark:!text-dark-text': activeClass,
-                    // },
                 )}
                 {...passProps}
             >
@@ -40,7 +37,7 @@ type Type = {
     className: string;
     children: React.ReactNode;
     setActiveTab: React.Dispatch<React.SetStateAction<string>>;
-    isActive: boolean;
+    isActive?: boolean;
 };
 
 export default Tab;

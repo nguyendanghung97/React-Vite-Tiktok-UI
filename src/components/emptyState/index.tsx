@@ -16,6 +16,7 @@ const EmptyState = ({
     ...passProps
 }: IEmptyState) => {
     const { t } = useTranslation();
+
     return (
         <div
             className={classNames('flex-1 h-full w-full flex flex-col items-center justify-center', className)}
