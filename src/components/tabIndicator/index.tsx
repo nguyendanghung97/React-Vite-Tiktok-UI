@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 
 const TabIndicator = ({ liRefs, activeIndex, className }: Type) => {
     const indicatorRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         const activeElement = liRefs.current[activeIndex]; // Lấy ra phần tử DOM đang active
         const indicator = indicatorRef.current; // Tham chiếu đến div cần điều chỉnh left và width

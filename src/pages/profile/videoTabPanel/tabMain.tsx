@@ -1,22 +1,16 @@
-import classNames from 'classnames';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import Tab, { ITab } from '~/components/tab';
 import TabIndicator from '~/components/tabIndicator';
 
-const TabMain = ({ tabs, activeTab, setActiveTab, className }: Type) => {
+const TabMain = ({ tabs, activeTab, setActiveTab }: Type) => {
     const { t } = useTranslation();
 
     // Ref để lưu trữ tham chiếu đến các phần tử DOM
     const liRefs = useRef<(HTMLLIElement | null)[]>([]);
 
     return (
-        <ul
-            className={classNames(
-                className,
-                'flex justify-between items-center h-11 overflow-auto md:overflow-hidden scroll-tabs',
-            )}
-        >
+        <ul className="flex items-center h-11 relative overflow-auto md:overflow-hidden scroll-tabs">
             {tabs.map((tab, index) => {
                 // const isActive = tab.title === activeTab; // Kiểm tra phần tử có phải là phần tử đang active không
                 return (
@@ -26,7 +20,7 @@ const TabMain = ({ tabs, activeTab, setActiveTab, className }: Type) => {
                         key={index}
                         // Lưu trữ các li theo đúng thứ tự
                         ref={(el) => liRefs?.current && (liRefs.current[index] = el)}
-                        className="px-6 xl:px-8 gap-x-1 text-xl"
+                        className="px-8 gap-x-1 text-xl"
                         isActive={tab.title === activeTab}
                     >
                         {tab.icon}
