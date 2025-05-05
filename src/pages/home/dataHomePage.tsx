@@ -20,9 +20,11 @@ export const articles: IArticle[] = [
             url: videos.Video1,
             thumbnail: images.ImageCover1,
         },
-        title: 'PREVIEW Đi Giữa Trời Rực Rỡ Tập 41.',
-        tags: [],
-        hashtags: ['skpictures', 'digiuatroirucro'],
+        desc: {
+            title: 'PREVIEW Đi Giữa Trời Rực Rỡ Tập 41.',
+            tags: [],
+            hashtags: ['skpictures', 'digiuatroirucro'],
+        },
         likesArticle: 9000,
         comments: 169,
         favorites: 670,
@@ -44,9 +46,11 @@ export const articles: IArticle[] = [
             url: videos.Video2,
             thumbnail: images.ImageCover2,
         },
-        title: 'Áng mấy kia rong chơi đâu rồi',
-        tags: ['Trolykim'],
-        hashtags: ['kimoanh', 'trolykim'],
+        desc: {
+            title: 'Áng mấy kia rong chơi đâu rồi',
+            tags: ['Trolykim'],
+            hashtags: ['kimoanh', 'trolykim'],
+        },
         likesArticle: 8438,
         comments: 169,
         favorites: 670,
@@ -68,9 +72,11 @@ export const articles: IArticle[] = [
             url: videos.Video3,
             thumbnail: images.ImageCover3,
         },
-        title: 'Anh giờ ở nơi đâu??',
-        tags: [],
-        hashtags: ['FanEnt', 'Nhachaymoingay', 'Nhaccover', 'shayda', 'taisaovay'],
+        desc: {
+            title: 'Anh giờ ở nơi đâu??',
+            tags: [],
+            hashtags: ['FanEnt', 'Nhachaymoingay', 'Nhaccover', 'shayda', 'taisaovay'],
+        },
         likesArticle: 2000,
         comments: 169,
         favorites: 670,
@@ -92,7 +98,6 @@ export const articles: IArticle[] = [
             url: videos.Video4,
             thumbnail: images.ImageCover4,
         },
-        title: '',
         likesArticle: 3000,
         comments: 169,
         favorites: 670,
@@ -102,7 +107,6 @@ export const articles: IArticle[] = [
 
 export type IArticle = {
     id: number;
-    title?: string;
     user: User;
     video: Video;
     // imageCover: string;
@@ -110,6 +114,9 @@ export type IArticle = {
     comments: number;
     favorites: number;
     shares: number;
-    tags?: string[];
-    hashtags?: string[];
+    desc?: {
+        title: string;
+        tags?: string[];
+        hashtags?: string[];
+    };
 };

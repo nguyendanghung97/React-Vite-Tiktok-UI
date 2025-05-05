@@ -123,7 +123,9 @@ const VideoPlayerControls = React.memo(
                                 </Link>
                             </div>
 
-                            <ContentArticle className="flex-1" swiperRef={swiperRef} article={article} />
+                            {article.desc && (
+                                <ContentArticle className="flex-1" swiperRef={swiperRef} article={article} />
+                            )}
 
                             <div className="h-fit mt-0.5 ml-0.5 flex items-center">
                                 <span className="mr-1.5 text-sm">
