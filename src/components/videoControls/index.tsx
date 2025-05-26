@@ -22,6 +22,7 @@ import Image from '../image';
 import { IArticle } from '~/pages/home/dataHomePage';
 
 import './index.less';
+import TimeSlider from '../slider/TimeSlider';
 
 const VideoPlayerControls = React.memo(
     ({
@@ -32,6 +33,7 @@ const VideoPlayerControls = React.memo(
         // time,
         // handleChangeTime,
         globalVideoControls,
+        video,
     }: VideoControlsProps) => {
         const { t } = useTranslation();
         const [showSlider, setShowSlider] = useState(false);
@@ -69,11 +71,15 @@ const VideoPlayerControls = React.memo(
             };
         }, []);
 
+        {
+            console.log('re-render');
+        }
+
         return (
             <>
                 {/* {console.log('re-render')} */}
                 <div
-                    className="absolute z-0 inset-0 flex flex-col justify-between rounded-2xl overflow-hidden text-white cursor-pointer"
+                    className="group absolute z-0 inset-0 flex flex-col justify-between rounded-2xl overflow-hidden text-white cursor-pointer"
                     onClick={handlePlayPause}
                 >
                     <div className="bg-gradient-top opacity-100 group-hover:opacity-100 transition-all ease duration-300 p-1 flex justify-between">
@@ -151,6 +157,16 @@ const VideoPlayerControls = React.memo(
                                 {isPlaying ? <PauseIcon /> : <PlayIcon />}
                             </button>
 
+                            {/* Slider */}
+                            <div
+                                className="flex-1 px-3 h-4 flex items-center group-hover:mb-3 transition-all ease duration-300"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <TimeSlider video={video} />
+                            </div>
+
+                            {/* <TimeSlider video={video} /> */}
+
                             <TooltipTippy
                                 className="!text-sm"
                                 placement="top"
@@ -217,6 +233,7 @@ interface VideoControlsProps extends LocalVideoControls {
     article: IArticle;
     swiperRef: React.MutableRefObject<SwiperClass | null>;
     globalVideoControls?: GlobalVideoControls;
+    video: HTMLVideoElement | null;
 }
 
 export default VideoPlayerControls;

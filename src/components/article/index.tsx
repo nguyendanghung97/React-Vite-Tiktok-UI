@@ -16,6 +16,7 @@ const Article: React.FC<Type> = ({
     UrlArticleActive,
     showComments,
     setShowComments,
+    video,
 }) => {
     return (
         <article className={classNames(className, 'h-full p-4 flex justify-center overflow-hidden')}>
@@ -31,7 +32,7 @@ const Article: React.FC<Type> = ({
                     <VideoPlayer
                         // posterVideo={data.video.thumbnail}
                         controls={(props: LocalVideoControls) => (
-                            <VideoPlayerControls swiperRef={swiperRef} article={data} {...props} />
+                            <VideoPlayerControls swiperRef={swiperRef} article={data} video={video} {...props} />
                         )}
                         isMuted={isMuted}
                         src={data.video.url}
@@ -64,6 +65,7 @@ type Type = {
     swiperRef: React.MutableRefObject<SwiperClass | null>;
     showComments: boolean;
     setShowComments: React.Dispatch<React.SetStateAction<boolean>>;
+    video: HTMLVideoElement | null;
 };
 
 export default Article;

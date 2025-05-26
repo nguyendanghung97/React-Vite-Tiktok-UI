@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from '.';
 
 type TimeSliderProps = {
     video: HTMLVideoElement | null;
-};
+} & React.HTMLAttributes<HTMLElement>;
 
 const TimeSlider = ({ video }: TimeSliderProps) => {
     const [progress, setProgress] = useState(0);

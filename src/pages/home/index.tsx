@@ -13,7 +13,6 @@ import classNames from 'classnames';
 import ActionsArticle from '~/components/article/actionsArticle';
 import VideoPlayer, { LocalVideoControls } from '~/components/video';
 import VideoPlayerControls from '~/components/videoControls';
-import TimeSlider from '~/components/slider/TimeSlider';
 import { useNavigate } from 'react-router-dom';
 import config from '~/configs';
 
@@ -26,7 +25,6 @@ const Home = () => {
     const [activeItem, setActiveItem] = useState<IArticle>(articles[0]);
     // console.log('activeItem', activeItem);
     const [showComments, setShowComments] = useState(false);
-    const [videoRefsReady, setVideoRefsReady] = useState(false);
 
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
     // console.log('videoRefs', videoRefs);
@@ -52,16 +50,6 @@ const Home = () => {
             navigate(config.routes.home);
         }
     }, [showComments, UrlArticleActive, navigate]);
-
-    // Dùng useEffect để kiểm tra khi tất cả các video element đã được gán
-    useEffect(() => {
-        // Kiểm tra khi tất cả videoRefs đã được gán giá trị không phải null
-        if (videoRefs.current.every((ref) => ref !== null)) {
-            // console.log('videoRefs', videoRefs);
-            setVideoRefsReady(true);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [articles]);
 
     useEffect(() => {
         document.title = 'TikTok - Make Your Day';
@@ -228,20 +216,14 @@ const Home = () => {
                                         posterVideo={item.video.thumbnail}
                                         isMuted={isMuted}
                                         controls={(props: LocalVideoControls) =>
-                                            videoRefsReady && (
-                                                <div className="group absolute inset-0">
-                                                    <VideoPlayerControls
-                                                        swiperRef={swiperRef}
-                                                        article={item}
-                                                        {...props}
-                                                        globalVideoControls={globalVideoControls}
-                                                    />
-                                                    <div className="cursor-pointer absolute z-0 left-10 right-10 h-10 flex items-center opacity-0 group-hover:opacity-100 bottom-3 transition-all ease duration-300">
-                                                        <div className="flex-1 h-3 mx-3 flex justify-center">
-                                                            <TimeSlider video={videoRefs.current[index]} />
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            videoRefs && (
+                                                <VideoPlayerControls
+                                                    swiperRef={swiperRef}
+                                                    article={item}
+                                                    {...props}
+                                                    globalVideoControls={globalVideoControls}
+                                                    video={videoRefs.current[index]}
+                                                />
                                             )
                                         }
                                     />
