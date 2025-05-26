@@ -6,7 +6,6 @@ import ContentPopperWrapper from '../../contentWrapper';
 import { DeleteIcon, EditTextIcon, LockIcon } from '~/assets/images/svgs';
 import Switch from '~/components/switch';
 import NameCollectionModal from '~/components/modal/forms/nameCollection';
-import ConfirmModal from '~/components/modal/confirm';
 import { RootState } from '~/store';
 import { toggleCollectionPublic, updateCollectionName } from '~/store/collections';
 import MenuItem from '../menuItem';
@@ -33,10 +32,11 @@ const CollectionActions = ({
     children,
     isOpenMenu,
     setIsOpenMenu,
-    // isChecked,
-    // setIsChecked,
-    handleDeleteCollection,
-}: Type) => {
+    openDeleteModal,
+}: // isChecked,
+// setIsChecked,
+// handleDeleteCollection,
+Type) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
 
@@ -45,13 +45,11 @@ const CollectionActions = ({
     const currentCollection = collections.find((collection) => collection.id === collectionId);
 
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
     const [nameCollecton, setNameCollection] = useState(currentCollection!.collectionName);
 
     const handleCloseModal = () => {
         setNameCollection(currentCollection!.collectionName);
         setIsOpenModal(false);
-        setIsOpenConfirmModal(false);
     };
 
     const handleSave = () => {
@@ -69,8 +67,9 @@ const CollectionActions = ({
                 setIsOpenMenu(false);
                 break;
             case 'Delete collection':
-                setIsOpenConfirmModal(true);
-                setIsOpenMenu(false);
+                // setIsOpenConfirmModal(true);
+                // setIsOpenMenu(false);
+                openDeleteModal();
                 break;
         }
     };
@@ -116,18 +115,6 @@ const CollectionActions = ({
                             handleSave={handleSave}
                         />
                     )}
-
-                    {isOpenConfirmModal && (
-                        <ConfirmModal
-                            // title={`Delete ${currentCollection?.collectionName}`}
-                            title={t('components.modal.confirm.delete.Title', {
-                                nameCollection: currentCollection?.collectionName,
-                            })}
-                            isOpenModal={isOpenConfirmModal}
-                            setIsOpenModal={setIsOpenConfirmModal}
-                            handleDelete={() => handleDeleteCollection(currentCollection?.id)}
-                        />
-                    )}
                 </ContentPopperWrapper>
             }
         >
@@ -142,8 +129,9 @@ type Type = {
     setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
     isChecked?: boolean;
     setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
-    handleDeleteCollection: (collectionId: any) => void;
+    // handleDeleteCollection: (collectionId: any) => void;
     collectionId: string;
+    openDeleteModal: () => void;
 };
 
 export default CollectionActions;

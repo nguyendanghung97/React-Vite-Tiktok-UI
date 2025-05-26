@@ -150,6 +150,8 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Type>(
             setShowPoster(true);
         };
 
+        console.log('VideoPlayer Re-render');
+
         return (
             <div
                 className={classNames(
@@ -225,4 +227,4 @@ type Type = {
     isMuted?: boolean;
 };
 
-export default VideoPlayer;
+export default React.memo(VideoPlayer);
