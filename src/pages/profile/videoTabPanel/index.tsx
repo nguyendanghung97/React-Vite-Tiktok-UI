@@ -157,7 +157,7 @@ const VideoTabPanel = ({
                                 {collections.map((collection, index) => (
                                     <Link
                                         key={index}
-                                        to={`${config.routes.myProfile}/collection/${collection.id}`}
+                                        to={config.routes.myCollection(collection.id)}
                                         state={{
                                             collectionId: collection.id,
                                             collectionName: collection.collectionName,
@@ -209,7 +209,7 @@ const VideoTabPanel = ({
                                 ))}
                             </div>
                         ) : (
-                            <EmptyState {...emptyStateData} onClickButton={handleOpenModal} />
+                            <EmptyState {...emptyStateData} handleOpenAddVideosModal={handleOpenModal} />
                         )
                     ) : videosToDisplay.length > 0 ? (
                         <div className="grid grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">

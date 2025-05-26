@@ -249,7 +249,7 @@ const MyCollection = () => {
                                 title={t('pages.myCollection.empty.Title')}
                                 description={t('pages.myCollection.empty.Desc')}
                                 textButton="Add Videos"
-                                onClickButton={() => setIsOpenModal(true)}
+                                handleOpenAddVideosModal={handleOpenAddVideosModal}
                             />
                         )}
                     </div>

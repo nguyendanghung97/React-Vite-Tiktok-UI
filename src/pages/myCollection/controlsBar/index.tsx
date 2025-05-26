@@ -90,25 +90,11 @@ Type) => {
                             disabled={videosRemoved.length < 1}
                             className="px-4 h-10 text-base font-semibold"
                             onClick={openRemoveModal}
-                            // onClick={() => {
-                            //     setIsOpenConfirmModal(true);
-                            // }}
                         >
                             {`${t('components.button.Remove')} ${
                                 videosRemoved.length > 0 ? `(${videosRemoved.length})` : ''
                             }`}
                         </Button>
-                        {/* {isOpenConfirmModal && (
-                            <ConfirmModal
-                                title={t('components.modal.confirm.remove.Title', {
-                                    length: videosRemoved.length,
-                                    nameCollection: currentCollection?.collectionName,
-                                })}
-                                isOpenModal={isOpenConfirmModal}
-                                setIsOpenModal={setIsOpenConfirmModal}
-                                handleRemove={handleRemove}
-                            />
-                        )} */}
 
                         <Button className="px-4 h-10 text-base font-semibold" onClick={handleSelectAll}>
                             {t('components.button.Select All')}

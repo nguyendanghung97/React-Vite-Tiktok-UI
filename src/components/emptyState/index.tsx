@@ -10,7 +10,7 @@ const EmptyState = ({
     title,
     description,
     textButton,
-    onClickButton,
+    handleOpenAddVideosModal,
     activeTab,
     className,
     ...passProps
@@ -34,7 +34,7 @@ const EmptyState = ({
                     primary
                     className="mt-6 px-4 h-10 text-base font-semibold"
                     leftIcon={<PlusRoundedIcon />}
-                    onClick={onClickButton}
+                    onClick={handleOpenAddVideosModal}
                 >
                     {t(`components.button.${textButton}`)}
                 </Button>
@@ -50,7 +50,7 @@ export type IEmptyState = {
     description: string;
     textButton?: string;
     activeTab?: string;
-    onClickButton?: () => void;
+    handleOpenAddVideosModal?: () => void;
 } & React.HTMLAttributes<HTMLElement>;
 
 export default EmptyState;

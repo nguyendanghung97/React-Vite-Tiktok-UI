@@ -22,14 +22,14 @@ interface RouteType {
 }
 
 export const publicRoutes: RouteType[] = [
-    { path: config.routes.home, component: Home },
-    { path: config.routes.homeShowComment, component: Home },
-    { path: config.routes.following, component: Following },
-    { path: config.routes.search, component: Search, layout: null },
-    { path: config.routes.upload, component: Upload, layout: HeaderOnly },
-    { path: config.routes.profile, component: Profile },
-    { path: config.routes.live, component: LIVE },
-    { path: config.routes.friends, component: Friends },
-    { path: config.routes.explore, component: Explore },
-    { path: config.routes.myCollection, component: MyCollection },
+    { path: config.paths.home, component: Home },
+    { path: config.paths.homeShowComment, component: Home },
+    { path: config.paths.following, component: Following },
+    { path: config.paths.search, component: Search, layout: null },
+    { path: config.paths.upload, component: Upload, layout: HeaderOnly },
+    { path: config.paths.profile, component: Profile },
+    { path: config.paths.live, component: LIVE },
+    { path: config.paths.friends, component: Friends },
+    { path: config.paths.explore, component: Explore },
+    { path: config.paths.myCollection, component: MyCollection },
 ];

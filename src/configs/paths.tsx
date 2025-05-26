@@ -1,10 +1,10 @@
-const routes: Record<string, any> = {
-    profile: (username: string) => `/profile/${username}`,
-    myCollection: (id: string) => `/profile/@dhung61097/collection/${id}`,
+const paths: Record<string, string> = {
     home: '/',
     homeShowComment: '/:nickname/video/:id',
     following: '/following',
+    profile: '/profile/:username',
     myProfile: '/profile/@dhung61097',
+    myCollection: '/profile/@dhung61097/collection/:collectionId',
     upload: '/upload',
     search: '/search',
     explore: '/explore',
@@ -17,4 +17,4 @@ const routes: Record<string, any> = {
     creators: '/live/creators',
 };
 
-export default routes;
+export default paths;

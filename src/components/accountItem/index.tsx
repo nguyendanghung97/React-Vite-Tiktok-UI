@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 import { TickBlueIcon } from '~/assets/images/svgs';
 import Image from '~/components/image';
+import config from '~/configs';
 
 const AccountItem = ({ isCollapsed, account, className, accNav, ...passProps }: Type) => {
     return (
         <Link
-            to={`/profile/@${account.nickname}`}
+            to={config.routes.profile(account.nickname)}
             state={{ selectedAccount: account }}
             className={classNames('flex items-center cursor-pointer', className, {
                 'justify-center': isCollapsed,
