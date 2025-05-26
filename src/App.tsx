@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Fragment } from 'react/jsx-runtime';
 
 import { publicRoutes } from './routes';
@@ -37,6 +37,9 @@ function App() {
                                 />
                             );
                         })}
+
+                        {/* Route bắt tất cả các URL không hợp lệ và chuyển hướng về trang chủ */}
+                        <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                 </Suspense>
             </div>

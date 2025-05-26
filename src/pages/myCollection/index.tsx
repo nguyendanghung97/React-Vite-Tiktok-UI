@@ -27,15 +27,21 @@ const MyCollection = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
 
+    const collections = useSelector((state: RootState) => state.collections.collections);
+    // console.log('collections', collections);
     // Dùng useParams() để lấy ra collectionId từ URL
     // Thay vì dùng state được truyền từ navigate khi reload sẽ bị reset
     // const { collectionId } = location.state || {}; // Lấy id từ state của the Link
     const { collectionId } = useParams();
-
-    const collections = useSelector((state: RootState) => state.collections.collections);
-    // console.log('collections', collections);
     const currentCollection = collections.find((collection) => collection.id === collectionId);
     // console.log('currentCollection', currentCollection);
+
+    useEffect(() => {
+        if (!currentCollection) {
+            navigate('/', { replace: true });
+            return;
+        }
+    }, [currentCollection, navigate]);
 
     const { videosToAddVideosModal, setVideosToAddVideosModal } = useVideosSelection();
 
@@ -180,73 +186,75 @@ const MyCollection = () => {
                 />
             )}
 
-            <div className={classNames('px-6 pt-8 pb-9 h-[2000px] flex-1')}>
-                <CollectionControlsBar
-                    isControlsDeleteVideos={isControlsDeleteVideos}
-                    setIsControlsDeleteVideos={setIsControlsDeleteVideos}
-                    videosRemoved={videosRemoved}
-                    onOpenAddVideosModal={handleOpenAddVideosModal}
-                    openDeleteModal={openDeleteModal}
-                    openRemoveModal={openRemoveModal}
-                    handleCancelManageVideos={handleCancelManageVideos}
-                    handleSelectAll={handleSelectAll}
-                    // handleDeleteCollection={handleDeleteCollection}
-                />
+            {currentCollection && (
+                <div className={classNames('px-6 pt-8 pb-9 h-[2000px] flex-1')}>
+                    <CollectionControlsBar
+                        isControlsDeleteVideos={isControlsDeleteVideos}
+                        setIsControlsDeleteVideos={setIsControlsDeleteVideos}
+                        videosRemoved={videosRemoved}
+                        onOpenAddVideosModal={handleOpenAddVideosModal}
+                        openDeleteModal={openDeleteModal}
+                        openRemoveModal={openRemoveModal}
+                        handleCancelManageVideos={handleCancelManageVideos}
+                        handleSelectAll={handleSelectAll}
+                        // handleDeleteCollection={handleDeleteCollection}
+                    />
 
-                <div className="min-h-[490px] flex flex-col">
-                    {currentCollection!.collectionVideos.length > 0 ? (
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-6 gap-x-4">
-                            {collectionVideos?.map((collectionVideo, index: number) => {
-                                // console.log('collectionVideo', collectionVideo);
-                                return (
-                                    <div
-                                        key={collectionVideo.id}
-                                        className="aspect-[3/4] rounded overflow-hidden relative"
-                                        onClick={() => handleSelect(index)}
-                                    >
-                                        <VideoPlayer
-                                            hoverPlay
-                                            src={collectionVideo.url}
-                                            posterVideo={collectionVideo.thumbnail}
-                                        />
-                                        {isControlsDeleteVideos && (
-                                            <div className="absolute top-2 right-2 w-5 h-5 bg-transparent">
-                                                <input
-                                                    checked={collectionVideo.isRemoved}
-                                                    type="checkbox"
-                                                    className="appearance-none absolute inset-0"
-                                                    readOnly
-                                                />
-                                                <div
-                                                    className={classNames(
-                                                        'flex justify-center items-center w-full h-full text-sm rounded-full',
-                                                        {
-                                                            'border-none text-white bg-primary':
-                                                                collectionVideo.isRemoved,
-                                                            'border-2': !collectionVideo.isRemoved,
-                                                        },
-                                                    )}
-                                                >
-                                                    {' '}
-                                                    {collectionVideo.isRemoved && <CheckIcon />}
+                    <div className="min-h-[490px] flex flex-col">
+                        {collectionVideos.length > 0 ? (
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-6 gap-x-4">
+                                {collectionVideos?.map((collectionVideo, index: number) => {
+                                    // console.log('collectionVideo', collectionVideo);
+                                    return (
+                                        <div
+                                            key={collectionVideo.id}
+                                            className="aspect-[3/4] rounded overflow-hidden relative"
+                                            onClick={() => handleSelect(index)}
+                                        >
+                                            <VideoPlayer
+                                                hoverPlay
+                                                src={collectionVideo.url}
+                                                posterVideo={collectionVideo.thumbnail}
+                                            />
+                                            {isControlsDeleteVideos && (
+                                                <div className="absolute top-2 right-2 w-5 h-5 bg-transparent">
+                                                    <input
+                                                        checked={collectionVideo.isRemoved}
+                                                        type="checkbox"
+                                                        className="appearance-none absolute inset-0"
+                                                        readOnly
+                                                    />
+                                                    <div
+                                                        className={classNames(
+                                                            'flex justify-center items-center w-full h-full text-sm rounded-full',
+                                                            {
+                                                                'border-none text-white bg-primary':
+                                                                    collectionVideo.isRemoved,
+                                                                'border-2': !collectionVideo.isRemoved,
+                                                            },
+                                                        )}
+                                                    >
+                                                        {' '}
+                                                        {collectionVideo.isRemoved && <CheckIcon />}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    ) : (
-                        <EmptyState
-                            icon={<FavoriteCollectionIcon fontSize={72} />}
-                            title={t('pages.myCollection.empty.Title')}
-                            description={t('pages.myCollection.empty.Desc')}
-                            textButton="Add Videos"
-                            onClickButton={() => setIsOpenModal(true)}
-                        />
-                    )}
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <EmptyState
+                                icon={<FavoriteCollectionIcon fontSize={72} />}
+                                title={t('pages.myCollection.empty.Title')}
+                                description={t('pages.myCollection.empty.Desc')}
+                                textButton="Add Videos"
+                                onClickButton={() => setIsOpenModal(true)}
+                            />
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };
