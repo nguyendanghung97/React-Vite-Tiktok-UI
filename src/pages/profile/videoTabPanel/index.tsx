@@ -77,6 +77,10 @@ const VideoTabPanel = ({
     }, [activeTab, activeSubTabFavorite]);
 
     useEffect(() => {
+        setActiveTab('Videos');
+    },[selectedAccount])
+
+    useEffect(() => {
         if (myCollectionRedirectTab && myCollectionRedirectSubTab) {
             setActiveTab(myCollectionRedirectTab); // Đặt giá trị mặc định là 'Videos' nếu không có state
             setActiveSubTabFavorite(myCollectionRedirectSubTab); // Đặt giá trị mặc định cho subTab khi ở tab Favorites
